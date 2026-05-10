@@ -8,7 +8,7 @@
 
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap');
 
-body[data-theme="neon-cyberpunk"] {
+body[data-custom-theme="neon-cyberpunk"] {
   /* Re-map all design tokens to the cyberpunk palette */
   --bg:           #0a0014;
   --bg-2:         #140828;
@@ -47,50 +47,50 @@ body[data-theme="neon-cyberpunk"] {
 }
 
 /* Hide industrial corner brackets — this theme uses sharp 1px frames */
-body[data-theme="neon-cyberpunk"] .modal-corners { display: none !important; }
+body[data-custom-theme="neon-cyberpunk"] .modal-corners { display: none !important; }
 
 /* Titlebar — gradient pink-to-cyan accent strip + dark backing */
-body[data-theme="neon-cyberpunk"] .titlebar {
+body[data-custom-theme="neon-cyberpunk"] .titlebar {
   background: linear-gradient(90deg, rgba(255,0,170,0.18) 0%, rgba(20,8,40,0.95) 50%, rgba(0,245,255,0.18) 100%);
   border-bottom: 1px solid rgba(255, 0, 170, 0.5);
   box-shadow: 0 1px 12px rgba(255, 0, 170, 0.3);
   color: #e0d0ff;
   font-family: 'JetBrains Mono', monospace;
 }
-body[data-theme="neon-cyberpunk"] .tb-title {
+body[data-custom-theme="neon-cyberpunk"] .tb-title {
   color: #ff00aa;
   text-shadow: 0 0 8px rgba(255, 0, 170, 0.7);
   font-weight: 700;
 }
-body[data-theme="neon-cyberpunk"] .tb-sub { color: #00f5ff; }
+body[data-custom-theme="neon-cyberpunk"] .tb-sub { color: #00f5ff; }
 
 /* Scrollbars — glowing pink */
-body[data-theme="neon-cyberpunk"] ::-webkit-scrollbar { width: 10px; height: 10px; }
-body[data-theme="neon-cyberpunk"] ::-webkit-scrollbar-track { background: #0a0014; }
-body[data-theme="neon-cyberpunk"] ::-webkit-scrollbar-thumb {
+body[data-custom-theme="neon-cyberpunk"] ::-webkit-scrollbar { width: 10px; height: 10px; }
+body[data-custom-theme="neon-cyberpunk"] ::-webkit-scrollbar-track { background: #0a0014; }
+body[data-custom-theme="neon-cyberpunk"] ::-webkit-scrollbar-thumb {
   background: #ff00aa;
   border: 2px solid #0a0014;
   background-clip: padding-box;
 }
-body[data-theme="neon-cyberpunk"] ::-webkit-scrollbar-thumb:hover {
+body[data-custom-theme="neon-cyberpunk"] ::-webkit-scrollbar-thumb:hover {
   background: #00f5ff;
   box-shadow: 0 0 8px rgba(0, 245, 255, 0.6);
 }
-body[data-theme="neon-cyberpunk"] ::selection {
+body[data-custom-theme="neon-cyberpunk"] ::selection {
   background: rgba(255, 0, 170, 0.4);
   color: #ffffff;
 }
 
 /* Panels / cards — dark purple with glowing pink edge */
-body[data-theme="neon-cyberpunk"] .modal,
-body[data-theme="neon-cyberpunk"] .panel,
-body[data-theme="neon-cyberpunk"] .stat-cell,
-body[data-theme="neon-cyberpunk"] .preset-card,
-body[data-theme="neon-cyberpunk"] .auto-rule-card,
-body[data-theme="neon-cyberpunk"] .lan-peer-card,
-body[data-theme="neon-cyberpunk"] .plugin-card,
-body[data-theme="neon-cyberpunk"] .func-panel,
-body[data-theme="neon-cyberpunk"] .cl-version {
+body[data-custom-theme="neon-cyberpunk"] .modal,
+body[data-custom-theme="neon-cyberpunk"] .panel,
+body[data-custom-theme="neon-cyberpunk"] .stat-cell,
+body[data-custom-theme="neon-cyberpunk"] .preset-card,
+body[data-custom-theme="neon-cyberpunk"] .auto-rule-card,
+body[data-custom-theme="neon-cyberpunk"] .lan-peer-card,
+body[data-custom-theme="neon-cyberpunk"] .plugin-card,
+body[data-custom-theme="neon-cyberpunk"] .func-panel,
+body[data-custom-theme="neon-cyberpunk"] .cl-version {
   background: linear-gradient(180deg, #180a30 0%, #100620 100%);
   border: 1px solid rgba(255, 0, 170, 0.35);
   border-radius: 0;
@@ -101,11 +101,11 @@ body[data-theme="neon-cyberpunk"] .cl-version {
 }
 
 /* Modal head — pink-to-cyan gradient bar */
-body[data-theme="neon-cyberpunk"] .modal-head {
+body[data-custom-theme="neon-cyberpunk"] .modal-head {
   background: linear-gradient(90deg, rgba(255,0,170,0.18), rgba(0,245,255,0.10));
   border-bottom: 1px solid rgba(255, 0, 170, 0.5);
 }
-body[data-theme="neon-cyberpunk"] .modal-head h2 {
+body[data-custom-theme="neon-cyberpunk"] .modal-head h2 {
   color: #ff00aa;
   text-shadow: 0 0 8px rgba(255, 0, 170, 0.5);
   font-family: 'JetBrains Mono', monospace;
@@ -113,23 +113,23 @@ body[data-theme="neon-cyberpunk"] .modal-head h2 {
   letter-spacing: 0.12em;
   font-weight: 800;
 }
-body[data-theme="neon-cyberpunk"] .modal-close {
+body[data-custom-theme="neon-cyberpunk"] .modal-close {
   background: transparent;
   border: 1px solid rgba(255, 0, 170, 0.4);
   color: #ff00aa;
 }
-body[data-theme="neon-cyberpunk"] .modal-close:hover {
+body[data-custom-theme="neon-cyberpunk"] .modal-close:hover {
   background: rgba(255, 0, 170, 0.2);
   color: #ffffff;
   box-shadow: 0 0 12px rgba(255, 0, 170, 0.6);
 }
 
 /* Buttons — sharp pink frames that glow on hover */
-body[data-theme="neon-cyberpunk"] button:not(.modal-close):not(.tab-btn):not(.preset-tab):not(.preset-card):not(.theme-tile):not(.design-tile),
-body[data-theme="neon-cyberpunk"] .btn-stencil,
-body[data-theme="neon-cyberpunk"] .peer-btn,
-body[data-theme="neon-cyberpunk"] .studio-btn,
-body[data-theme="neon-cyberpunk"] .hotkey-btn {
+body[data-custom-theme="neon-cyberpunk"] button:not(.modal-close):not(.tab-btn):not(.preset-tab):not(.preset-card):not(.theme-tile):not(.design-tile),
+body[data-custom-theme="neon-cyberpunk"] .btn-stencil,
+body[data-custom-theme="neon-cyberpunk"] .peer-btn,
+body[data-custom-theme="neon-cyberpunk"] .studio-btn,
+body[data-custom-theme="neon-cyberpunk"] .hotkey-btn {
   background: rgba(255, 0, 170, 0.06);
   border: 1px solid #ff00aa;
   border-radius: 0;
@@ -142,16 +142,16 @@ body[data-theme="neon-cyberpunk"] .hotkey-btn {
   padding: 6px 14px;
   transition: all 0.15s ease;
 }
-body[data-theme="neon-cyberpunk"] button:not(.modal-close):not(.tab-btn):not(.preset-tab):not(.preset-card):not(.theme-tile):not(.design-tile):hover,
-body[data-theme="neon-cyberpunk"] .btn-stencil:hover,
-body[data-theme="neon-cyberpunk"] .peer-btn:hover,
-body[data-theme="neon-cyberpunk"] .studio-btn:hover,
-body[data-theme="neon-cyberpunk"] .hotkey-btn:hover {
+body[data-custom-theme="neon-cyberpunk"] button:not(.modal-close):not(.tab-btn):not(.preset-tab):not(.preset-card):not(.theme-tile):not(.design-tile):hover,
+body[data-custom-theme="neon-cyberpunk"] .btn-stencil:hover,
+body[data-custom-theme="neon-cyberpunk"] .peer-btn:hover,
+body[data-custom-theme="neon-cyberpunk"] .studio-btn:hover,
+body[data-custom-theme="neon-cyberpunk"] .hotkey-btn:hover {
   background: #ff00aa;
   color: #000000;
   box-shadow: 0 0 16px rgba(255, 0, 170, 0.8), 0 0 32px rgba(255, 0, 170, 0.3);
 }
-body[data-theme="neon-cyberpunk"] .btn-hazard {
+body[data-custom-theme="neon-cyberpunk"] .btn-hazard {
   background: linear-gradient(135deg, #ff00aa 0%, #cc0088 100%);
   border: 1px solid #ff00aa;
   border-radius: 0;
@@ -162,13 +162,13 @@ body[data-theme="neon-cyberpunk"] .btn-hazard {
   letter-spacing: 0.08em;
   box-shadow: 0 0 12px rgba(255, 0, 170, 0.5);
 }
-body[data-theme="neon-cyberpunk"] .btn-hazard:hover {
+body[data-custom-theme="neon-cyberpunk"] .btn-hazard:hover {
   background: linear-gradient(135deg, #ff44cc 0%, #ff00aa 100%);
   box-shadow: 0 0 24px rgba(255, 0, 170, 0.9);
 }
 
 /* Tab buttons */
-body[data-theme="neon-cyberpunk"] .tab-btn {
+body[data-custom-theme="neon-cyberpunk"] .tab-btn {
   background: transparent;
   border: 1px solid rgba(255, 0, 170, 0.25);
   border-bottom: none;
@@ -178,7 +178,7 @@ body[data-theme="neon-cyberpunk"] .tab-btn {
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
-body[data-theme="neon-cyberpunk"] .tab-btn.active {
+body[data-custom-theme="neon-cyberpunk"] .tab-btn.active {
   background: rgba(255, 0, 170, 0.1);
   border-color: #ff00aa;
   color: #ff00aa;
@@ -186,13 +186,13 @@ body[data-theme="neon-cyberpunk"] .tab-btn.active {
 }
 
 /* Inputs */
-body[data-theme="neon-cyberpunk"] input[type="text"],
-body[data-theme="neon-cyberpunk"] input[type="number"],
-body[data-theme="neon-cyberpunk"] input[type="search"],
-body[data-theme="neon-cyberpunk"] textarea,
-body[data-theme="neon-cyberpunk"] select,
-body[data-theme="neon-cyberpunk"] .text-input,
-body[data-theme="neon-cyberpunk"] .studio-select {
+body[data-custom-theme="neon-cyberpunk"] input[type="text"],
+body[data-custom-theme="neon-cyberpunk"] input[type="number"],
+body[data-custom-theme="neon-cyberpunk"] input[type="search"],
+body[data-custom-theme="neon-cyberpunk"] textarea,
+body[data-custom-theme="neon-cyberpunk"] select,
+body[data-custom-theme="neon-cyberpunk"] .text-input,
+body[data-custom-theme="neon-cyberpunk"] .studio-select {
   background: #0a0014;
   border: 1px solid rgba(0, 245, 255, 0.35);
   border-radius: 0;
@@ -201,21 +201,21 @@ body[data-theme="neon-cyberpunk"] .studio-select {
   padding: 6px 10px;
   caret-color: #ff00aa;
 }
-body[data-theme="neon-cyberpunk"] input:focus,
-body[data-theme="neon-cyberpunk"] textarea:focus,
-body[data-theme="neon-cyberpunk"] select:focus {
+body[data-custom-theme="neon-cyberpunk"] input:focus,
+body[data-custom-theme="neon-cyberpunk"] textarea:focus,
+body[data-custom-theme="neon-cyberpunk"] select:focus {
   border-color: #ff00aa;
   outline: none;
   box-shadow: 0 0 8px rgba(255, 0, 170, 0.5);
 }
 
 /* Sliders */
-body[data-theme="neon-cyberpunk"] input[type="range"]::-webkit-slider-runnable-track {
+body[data-custom-theme="neon-cyberpunk"] input[type="range"]::-webkit-slider-runnable-track {
   background: linear-gradient(90deg, #ff00aa 0%, #00f5ff 100%);
   height: 3px;
   border: none;
 }
-body[data-theme="neon-cyberpunk"] input[type="range"]::-webkit-slider-thumb {
+body[data-custom-theme="neon-cyberpunk"] input[type="range"]::-webkit-slider-thumb {
   background: #ffffff;
   border: 2px solid #ff00aa;
   border-radius: 0;
@@ -226,17 +226,17 @@ body[data-theme="neon-cyberpunk"] input[type="range"]::-webkit-slider-thumb {
 }
 
 /* Tool rail */
-body[data-theme="neon-cyberpunk"] .toolrail {
+body[data-custom-theme="neon-cyberpunk"] .toolrail {
   background: linear-gradient(180deg, #140828 0%, #0a0014 100%);
   border-right: 1px solid rgba(255, 0, 170, 0.3);
 }
-body[data-theme="neon-cyberpunk"] .trb { color: #8870b0; background: transparent; }
-body[data-theme="neon-cyberpunk"] .trb:hover {
+body[data-custom-theme="neon-cyberpunk"] .trb { color: #8870b0; background: transparent; }
+body[data-custom-theme="neon-cyberpunk"] .trb:hover {
   background: rgba(255, 0, 170, 0.1);
   color: #ff00aa;
   text-shadow: 0 0 8px rgba(255, 0, 170, 0.6);
 }
-body[data-theme="neon-cyberpunk"] .trb.active {
+body[data-custom-theme="neon-cyberpunk"] .trb.active {
   background: rgba(255, 0, 170, 0.2);
   color: #ff00aa;
   border-left: 2px solid #ff00aa;
@@ -244,10 +244,10 @@ body[data-theme="neon-cyberpunk"] .trb.active {
 }
 
 /* Field labels + headings */
-body[data-theme="neon-cyberpunk"] .field-label,
-body[data-theme="neon-cyberpunk"] .stat-label,
-body[data-theme="neon-cyberpunk"] .panel-title,
-body[data-theme="neon-cyberpunk"] .func-panel h3 {
+body[data-custom-theme="neon-cyberpunk"] .field-label,
+body[data-custom-theme="neon-cyberpunk"] .stat-label,
+body[data-custom-theme="neon-cyberpunk"] .panel-title,
+body[data-custom-theme="neon-cyberpunk"] .func-panel h3 {
   color: #00f5ff;
   font-family: 'JetBrains Mono', monospace;
   font-weight: 700;
@@ -255,8 +255,8 @@ body[data-theme="neon-cyberpunk"] .func-panel h3 {
   letter-spacing: 0.12em;
   text-shadow: 0 0 4px rgba(0, 245, 255, 0.5);
 }
-body[data-theme="neon-cyberpunk"] .hint-text { color: #8870b0; }
-body[data-theme="neon-cyberpunk"] code {
+body[data-custom-theme="neon-cyberpunk"] .hint-text { color: #8870b0; }
+body[data-custom-theme="neon-cyberpunk"] code {
   background: #1d0e3a;
   border: 1px solid rgba(255, 0, 170, 0.3);
   color: #00f5ff;
@@ -265,7 +265,7 @@ body[data-theme="neon-cyberpunk"] code {
 }
 
 /* Status pill */
-body[data-theme="neon-cyberpunk"] .status-pill {
+body[data-custom-theme="neon-cyberpunk"] .status-pill {
   background: rgba(255, 0, 170, 0.1);
   border: 1px solid #ff00aa;
   border-radius: 0;
@@ -273,7 +273,7 @@ body[data-theme="neon-cyberpunk"] .status-pill {
   text-shadow: 0 0 6px rgba(255, 0, 170, 0.5);
   font-family: 'JetBrains Mono', monospace;
 }
-body[data-theme="neon-cyberpunk"] .status-pill.running {
+body[data-custom-theme="neon-cyberpunk"] .status-pill.running {
   background: rgba(0, 255, 102, 0.15);
   border-color: #00ff66;
   color: #00ff66;
@@ -281,23 +281,23 @@ body[data-theme="neon-cyberpunk"] .status-pill.running {
 }
 
 /* Preset cards + tabs */
-body[data-theme="neon-cyberpunk"] .preset-card {
+body[data-custom-theme="neon-cyberpunk"] .preset-card {
   background: linear-gradient(180deg, #180a30 0%, #100620 100%);
   border: 1px solid rgba(255, 0, 170, 0.3);
 }
-body[data-theme="neon-cyberpunk"] .preset-card:hover {
+body[data-custom-theme="neon-cyberpunk"] .preset-card:hover {
   border-color: #ff00aa;
   box-shadow: 0 0 16px rgba(255, 0, 170, 0.5);
 }
-body[data-theme="neon-cyberpunk"] .preset-card .pc-icon.icon { color: #ff00aa; }
-body[data-theme="neon-cyberpunk"] .preset-tab {
+body[data-custom-theme="neon-cyberpunk"] .preset-card .pc-icon.icon { color: #ff00aa; }
+body[data-custom-theme="neon-cyberpunk"] .preset-tab {
   background: transparent;
   border: 1px solid rgba(255, 0, 170, 0.25);
   color: #8870b0;
   font-family: 'JetBrains Mono', monospace;
   text-transform: uppercase;
 }
-body[data-theme="neon-cyberpunk"] .preset-tab.active {
+body[data-custom-theme="neon-cyberpunk"] .preset-tab.active {
   background: rgba(255, 0, 170, 0.15);
   color: #ff00aa;
   border-color: #ff00aa;
@@ -305,7 +305,7 @@ body[data-theme="neon-cyberpunk"] .preset-tab.active {
 }
 
 /* Toast */
-body[data-theme="neon-cyberpunk"] .toast {
+body[data-custom-theme="neon-cyberpunk"] .toast {
   background: rgba(20, 8, 40, 0.95);
   border: 1px solid #ff00aa;
   border-radius: 0;
@@ -313,25 +313,25 @@ body[data-theme="neon-cyberpunk"] .toast {
   font-family: 'JetBrains Mono', monospace;
   box-shadow: 0 0 16px rgba(255, 0, 170, 0.4);
 }
-body[data-theme="neon-cyberpunk"] .toast.success {
+body[data-custom-theme="neon-cyberpunk"] .toast.success {
   border-color: #00ff66;
   box-shadow: 0 0 16px rgba(0, 255, 102, 0.4);
 }
-body[data-theme="neon-cyberpunk"] .toast.error {
+body[data-custom-theme="neon-cyberpunk"] .toast.error {
   border-color: #ff0044;
   box-shadow: 0 0 16px rgba(255, 0, 68, 0.4);
 }
 
 /* Stats / numbers */
-body[data-theme="neon-cyberpunk"] .stat-value,
-body[data-theme="neon-cyberpunk"] .big-stat-value {
+body[data-custom-theme="neon-cyberpunk"] .stat-value,
+body[data-custom-theme="neon-cyberpunk"] .big-stat-value {
   color: #00f5ff;
   font-family: 'JetBrains Mono', monospace;
   font-weight: 700;
   text-shadow: 0 0 6px rgba(0, 245, 255, 0.5);
 }
-body[data-theme="neon-cyberpunk"] .accent-grad,
-body[data-theme="neon-cyberpunk"] .grad-text {
+body[data-custom-theme="neon-cyberpunk"] .accent-grad,
+body[data-custom-theme="neon-cyberpunk"] .grad-text {
   background: linear-gradient(135deg, #ff00aa 0%, #00f5ff 100%);
   -webkit-background-clip: text;
   background-clip: text;
@@ -339,24 +339,24 @@ body[data-theme="neon-cyberpunk"] .grad-text {
 }
 
 /* Changelog modal */
-body[data-theme="neon-cyberpunk"] .cl-version.is-current {
+body[data-custom-theme="neon-cyberpunk"] .cl-version.is-current {
   border-color: #ff00aa;
   box-shadow: 0 0 20px rgba(255, 0, 170, 0.3);
 }
-body[data-theme="neon-cyberpunk"] .cl-head {
+body[data-custom-theme="neon-cyberpunk"] .cl-head {
   background: linear-gradient(90deg, rgba(255,0,170,0.15), rgba(0,245,255,0.05));
   border-bottom-color: rgba(255, 0, 170, 0.4);
 }
-body[data-theme="neon-cyberpunk"] .cl-head .cl-title {
+body[data-custom-theme="neon-cyberpunk"] .cl-head .cl-title {
   color: #ff00aa;
   text-shadow: 0 0 6px rgba(255, 0, 170, 0.5);
   font-family: 'JetBrains Mono', monospace;
 }
-body[data-theme="neon-cyberpunk"] .cl-head .cl-vchip {
+body[data-custom-theme="neon-cyberpunk"] .cl-head .cl-vchip {
   background: #ff00aa;
   color: #000000;
   border-radius: 0;
   font-family: 'JetBrains Mono', monospace;
 }
-body[data-theme="neon-cyberpunk"] .cl-changes li { color: #e0d0ff; }
-body[data-theme="neon-cyberpunk"] #changelog-version-line strong { color: #ff00aa; }
+body[data-custom-theme="neon-cyberpunk"] .cl-changes li { color: #e0d0ff; }
+body[data-custom-theme="neon-cyberpunk"] #changelog-version-line strong { color: #ff00aa; }

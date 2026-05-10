@@ -30,6 +30,11 @@
 <!-- Canonical -->
 <link rel="canonical" href="https://throttlr-themes.netlify.app/">
 
+<!-- JSZip (used to bundle manifest + CSS into a single download) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"
+        integrity="sha512-XMVd28F1oH/O71fzwBnV7HucLxVwtxf26XV8P4wPk26EDxuGZ91N8bsOttmnomcCD3CS5ZMRL50H0GgOHvegtg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 <style>
 /* ===========================================================================
    Throttlr Themes — community theme gallery
@@ -488,6 +493,11 @@ header.site-head {
   border-color: var(--hazard);
   color: var(--hazard);
 }
+.theme-btn.is-loading {
+  opacity: 0.7;
+  cursor: wait;
+}
+.theme-btn[data-busy="1"] { pointer-events: none; }
 
 /* States: loading + empty + error */
 .theme-status {
@@ -666,9 +676,10 @@ footer a:hover { color: var(--hazard); }
       <h2>How to install</h2>
       <ol>
         <li>Click <strong>Download</strong> on a theme card</li>
+        <li>Extract the ZIP — you get <code>theme.json</code> + <code>theme.css</code></li>
         <li>In Throttlr: <strong>Settings → Appearance → Open themes folder</strong></li>
-        <li>Drop the <code>.json</code> file in</li>
-        <li>Click your new theme tile</li>
+        <li>Drop both files in</li>
+        <li>Click <strong>Rescan</strong> → click your new theme tile</li>
       </ol>
     </div>
   </div>
@@ -760,7 +771,7 @@ const REPO_NAME   = 'throttlr-themes';
 const REPO_BRANCH = 'main';
 const THEMES_DIR  = 'themes';
 const API_URL     = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${THEMES_DIR}?ref=${REPO_BRANCH}`;
-const CACHE_KEY   = 'throttlr_themes_cache_v1';
+const CACHE_KEY   = 'throttlr_themes_cache_v2';
 const CACHE_TTL   = 60 * 60 * 1000; // 1 hour
 
 async function fetchThemeList() {
@@ -796,6 +807,13 @@ async function fetchThemeList() {
       data._download_url = f.download_url;
       data._filename     = f.name;
       data._size_bytes   = f.size;
+      // Derive the CSS file's raw URL from the JSON's URL — same folder,
+      // just swap the filename. This avoids extra API calls.
+      if (data.css_file) {
+        data._css_download_url = f.download_url.replace(
+          /\/[^/]+\.json$/, '/' + encodeURIComponent(data.css_file)
+        );
+      }
       return data;
     } catch (e) {
       return null;
@@ -927,9 +945,14 @@ function renderThemeCards(themes, grid) {
         ${t.base ? `<div class="theme-base-tag">based on ${escapeHtml(t.base)}</div>` : ''}
       </div>
       <div class="theme-actions">
-        <a class="theme-btn primary" href="${escapeHtml(t._download_url)}" download="${escapeHtml(t._filename)}">
+        <button class="theme-btn primary" type="button"
+                data-theme-id="${escapeHtml(t.id || '')}"
+                data-json-url="${escapeHtml(t._download_url)}"
+                data-css-url="${escapeHtml(t._css_download_url || '')}"
+                data-json-name="${escapeHtml(t._filename)}"
+                data-css-name="${escapeHtml(t.css_file || '')}">
           ↓ Download
-        </a>
+        </button>
         <a class="theme-btn" href="${escapeHtml(t._download_url)}" target="_blank" rel="noopener">View</a>
       </div>
     `;
@@ -978,6 +1001,94 @@ async function init() {
       ${escapeHtml(e.message)}
     `;
   }
+
+  // Delegate Download button clicks — bundles manifest + CSS into a ZIP
+  // and triggers a real browser download. This avoids the cross-origin
+  // pitfall where <a download="..."> is ignored when the file lives on
+  // a different origin (raw.githubusercontent.com vs netlify.app),
+  // which used to just open the raw JSON in a new tab instead.
+  document.addEventListener('click', async (e) => {
+    const btn = e.target.closest('.theme-btn.primary[data-theme-id]');
+    if (!btn) return;
+    e.preventDefault();
+    await downloadTheme(btn);
+  });
+}
+
+async function downloadTheme(btn) {
+  if (btn.dataset.busy === '1') return;
+  const themeId = btn.dataset.themeId;
+  const jsonUrl = btn.dataset.jsonUrl;
+  const cssUrl  = btn.dataset.cssUrl;
+  const jsonName = btn.dataset.jsonName || `${themeId}.json`;
+  const cssName  = btn.dataset.cssName  || '';
+
+  btn.dataset.busy = '1';
+  const originalText = btn.textContent;
+  btn.textContent = '… downloading';
+  btn.classList.add('is-loading');
+
+  try {
+    // Fetch both files in parallel
+    const fetches = [fetch(jsonUrl)];
+    if (cssUrl) fetches.push(fetch(cssUrl));
+    const responses = await Promise.all(fetches);
+    for (const r of responses) {
+      if (!r.ok) throw new Error(`HTTP ${r.status} fetching theme files`);
+    }
+    const jsonText = await responses[0].text();
+    const cssText  = responses[1] ? await responses[1].text() : null;
+
+    // If we have both files, ZIP them. If only JSON exists (theme has no
+    // companion CSS, which is unusual but valid), just download the JSON
+    // directly without zipping.
+    if (cssText !== null && typeof JSZip !== 'undefined') {
+      const zip = new JSZip();
+      zip.file(jsonName, jsonText);
+      zip.file(cssName,  cssText);
+      const blob = await zip.generateAsync({ type: 'blob' });
+      _triggerBlobDownload(blob, `${themeId}.zip`);
+    } else if (cssText !== null && typeof JSZip === 'undefined') {
+      // JSZip didn't load (CDN failed) — fall back to two separate
+      // downloads so the user still gets both files.
+      _triggerBlobDownload(new Blob([jsonText], { type: 'application/json' }), jsonName);
+      // Brief delay so the second download isn't blocked by popup heuristics
+      await new Promise(r => setTimeout(r, 250));
+      _triggerBlobDownload(new Blob([cssText],  { type: 'text/css' }), cssName);
+    } else {
+      // No CSS file — just the JSON
+      _triggerBlobDownload(new Blob([jsonText], { type: 'application/json' }), jsonName);
+    }
+
+    btn.textContent = '✓ downloaded';
+    setTimeout(() => {
+      btn.textContent = originalText;
+      btn.classList.remove('is-loading');
+      btn.dataset.busy = '0';
+    }, 1400);
+  } catch (err) {
+    btn.textContent = '✗ failed';
+    btn.classList.remove('is-loading');
+    btn.title = String(err && err.message ? err.message : err);
+    setTimeout(() => {
+      btn.textContent = originalText;
+      btn.dataset.busy = '0';
+      btn.title = '';
+    }, 2500);
+  }
+}
+
+function _triggerBlobDownload(blob, filename) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  // Some browsers require the link to be in the DOM
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  // Revoke after a tick so the download has time to start
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
 init();

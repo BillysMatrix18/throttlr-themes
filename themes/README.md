@@ -21,11 +21,12 @@ The JSON file is the manifest — it describes the theme to the gallery website 
 ## How to install a theme (for users)
 
 1. Go to [throttlr-themes.netlify.app](https://throttlr-themes.netlify.app)
-2. Click **Download** on a theme card → saves both `<theme>.json` and `<theme>.css` to your downloads
-3. Open Throttlr → **Settings → Appearance → Open themes folder**
-4. Drop both files into that folder
-5. Restart Throttlr (or click "Rescan") → your new theme appears as a tile
-6. Click the tile to apply
+2. Click **Download** on a theme card → saves a `<theme>.zip` containing both `<theme>.json` and `<theme>.css`
+3. Extract the ZIP — you get the two files
+4. Open Throttlr → **Settings → Appearance → Open themes folder**
+5. Drop both files into that folder
+6. Back in Throttlr → click **Rescan** → your new theme appears as a tile
+7. Click the tile to apply
 
 ## How to make a theme (for contributors)
 
@@ -53,7 +54,7 @@ The JSON file is the manifest — it describes the theme to the gallery website 
 
 | Field | Required | What it does |
 |---|---|---|
-| `id` | ✅ | Unique theme ID. Used in CSS selectors as `body[data-theme="<id>"]`. Must be `kebab-case`. |
+| `id` | ✅ | Unique theme ID. Used in CSS selectors as `body[data-custom-theme="<id>"]`. Must be `kebab-case`. |
 | `name` | ✅ | Display name shown on the theme tile + Settings UI |
 | `author` | ✅ | Your handle / name |
 | `version` | ✅ | Semver string — bump when you update |
@@ -70,7 +71,7 @@ The JSON file is the manifest — it describes the theme to the gallery website 
 
 ### CSS file (`<theme-id>.css`)
 
-The CSS file uses `body[data-theme="<id>"]` as the root selector for everything. This selector has higher specificity than the base theme's `body[data-design="<base>"]`, so your overrides win.
+The CSS file uses `body[data-custom-theme="<id>"]` as the root selector for everything. This selector has higher specificity than the base theme's `body[data-design="<base>"]`, so your overrides win.
 
 Minimal CSS file structure:
 
@@ -79,7 +80,7 @@ Minimal CSS file structure:
 @import url('https://fonts.googleapis.com/css2?family=YourFont&display=swap');
 
 /* Re-map the design tokens */
-body[data-theme="my-theme"] {
+body[data-custom-theme="my-theme"] {
   --bg:       #0a0014;
   --bg-2:     #140828;
   --hazard:   #ff00aa;
@@ -91,9 +92,9 @@ body[data-theme="my-theme"] {
 }
 
 /* Override specific components */
-body[data-theme="my-theme"] .modal { ... }
-body[data-theme="my-theme"] .btn-stencil { ... }
-body[data-theme="my-theme"] button { ... }
+body[data-custom-theme="my-theme"] .modal { ... }
+body[data-custom-theme="my-theme"] .btn-stencil { ... }
+body[data-custom-theme="my-theme"] button { ... }
 /* ...etc... */
 ```
 
@@ -102,7 +103,7 @@ body[data-theme="my-theme"] button { ... }
 When the user clicks your theme's tile in Settings, the app:
 
 1. Sets `body.dataset.design = base` (activates the base built-in theme as foundation)
-2. Sets `body.dataset.theme = "<your-id>"` (activates your overrides)
+2. Sets `body.dataset.customTheme = "<your-id>"` (activates your overrides)
 3. Injects your CSS file's content into a `<style id="custom-theme-css">` tag
 
 So you get full inheritance from the base theme, plus full override power for anything you want to change. If you don't override something, it falls back to the base theme's value.
@@ -131,41 +132,41 @@ The most visually impactful CSS variables in Throttlr:
 The high-impact selectors that most themes will want to restyle:
 
 ```css
-body[data-theme="..."] .modal,
-body[data-theme="..."] .panel,
-body[data-theme="..."] .stat-cell,
-body[data-theme="..."] .preset-card,
-body[data-theme="..."] .func-panel { ... }      /* panel boxes */
+body[data-custom-theme="..."] .modal,
+body[data-custom-theme="..."] .panel,
+body[data-custom-theme="..."] .stat-cell,
+body[data-custom-theme="..."] .preset-card,
+body[data-custom-theme="..."] .func-panel { ... }      /* panel boxes */
 
-body[data-theme="..."] .titlebar { ... }         /* top bar */
-body[data-theme="..."] .modal-head { ... }       /* modal headers */
-body[data-theme="..."] .tab-btn { ... }          /* tab buttons */
-body[data-theme="..."] .preset-tab { ... }       /* preset tabs */
+body[data-custom-theme="..."] .titlebar { ... }         /* top bar */
+body[data-custom-theme="..."] .modal-head { ... }       /* modal headers */
+body[data-custom-theme="..."] .tab-btn { ... }          /* tab buttons */
+body[data-custom-theme="..."] .preset-tab { ... }       /* preset tabs */
 
-body[data-theme="..."] button,
-body[data-theme="..."] .btn-stencil,
-body[data-theme="..."] .btn-hazard,
-body[data-theme="..."] .hotkey-btn { ... }       /* buttons */
+body[data-custom-theme="..."] button,
+body[data-custom-theme="..."] .btn-stencil,
+body[data-custom-theme="..."] .btn-hazard,
+body[data-custom-theme="..."] .hotkey-btn { ... }       /* buttons */
 
-body[data-theme="..."] input,
-body[data-theme="..."] select,
-body[data-theme="..."] textarea { ... }          /* inputs */
+body[data-custom-theme="..."] input,
+body[data-custom-theme="..."] select,
+body[data-custom-theme="..."] textarea { ... }          /* inputs */
 
-body[data-theme="..."] .field-label,
-body[data-theme="..."] .panel-title,
-body[data-theme="..."] .stat-label { ... }       /* headings */
+body[data-custom-theme="..."] .field-label,
+body[data-custom-theme="..."] .panel-title,
+body[data-custom-theme="..."] .stat-label { ... }       /* headings */
 
-body[data-theme="..."] .toolrail,
-body[data-theme="..."] .trb { ... }              /* left navigation rail */
+body[data-custom-theme="..."] .toolrail,
+body[data-custom-theme="..."] .trb { ... }              /* left navigation rail */
 
-body[data-theme="..."] .toast { ... }            /* notifications */
+body[data-custom-theme="..."] .toast { ... }            /* notifications */
 
-body[data-theme="..."] .stat-value,
-body[data-theme="..."] .big-stat-value { ... }   /* numeric readouts */
+body[data-custom-theme="..."] .stat-value,
+body[data-custom-theme="..."] .big-stat-value { ... }   /* numeric readouts */
 
-body[data-theme="..."] .cl-version,
-body[data-theme="..."] .cl-head,
-body[data-theme="..."] .cl-changes li { ... }    /* changelog modal */
+body[data-custom-theme="..."] .cl-version,
+body[data-custom-theme="..."] .cl-head,
+body[data-custom-theme="..."] .cl-changes li { ... }    /* changelog modal */
 ```
 
 Read the CSS files of the existing themes (`neon-cyberpunk.css`, `terminal-green.css`, `y2k-bubblegum.css`) for working examples of how to structure a full theme.
