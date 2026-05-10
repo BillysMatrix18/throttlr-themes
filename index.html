@@ -8,40 +8,30 @@
 <meta name="author" content="BillysMatrix18">
 <meta name="theme-color" content="#ffb800">
 
-<!-- Favicon -->
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="alternate icon" href="/favicon.svg">
 <link rel="apple-touch-icon" href="/favicon.svg">
 
-<!-- Open Graph (Facebook, LinkedIn, Discord, etc.) -->
-<meta property="og:title" content="Throttlr Themes — community gallery">
-<meta property="og:description" content="Free community-made color themes for Throttlr. Download, drop in, click apply.">
-<meta property="og:image" content="https://throttlr-themes.netlify.app/og-image.svg">
-<meta property="og:url" content="https://throttlr-themes.netlify.app/">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="Throttlr Themes">
+<meta property="og:title"        content="Throttlr Themes — community gallery">
+<meta property="og:description"  content="Free community-made color themes for Throttlr.">
+<meta property="og:image"        content="https://throttlr-themes.netlify.app/og-image.svg">
+<meta property="og:url"          content="https://throttlr-themes.netlify.app/">
+<meta property="og:type"         content="website">
+<meta property="og:site_name"    content="Throttlr Themes">
 
-<!-- Twitter / X card -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Throttlr Themes — community gallery">
+<meta name="twitter:card"        content="summary_large_image">
+<meta name="twitter:title"       content="Throttlr Themes — community gallery">
 <meta name="twitter:description" content="Free community-made color themes for Throttlr.">
-<meta name="twitter:image" content="https://throttlr-themes.netlify.app/og-image.svg">
+<meta name="twitter:image"       content="https://throttlr-themes.netlify.app/og-image.svg">
 
-<!-- Canonical -->
 <link rel="canonical" href="https://throttlr-themes.netlify.app/">
 
-<!-- JSZip (used to bundle manifest + CSS into a single download) -->
+<!-- JSZip — bundles theme JSON + CSS into a single download -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"
         integrity="sha512-XMVd28F1oH/O71fzwBnV7HucLxVwtxf26XV8P4wPk26EDxuGZ91N8bsOttmnomcCD3CS5ZMRL50H0GgOHvegtg=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <style>
-/* ===========================================================================
-   Throttlr Themes — community theme gallery
-   Visual style matches the main app: industrial hazard yellow + black,
-   stencil display font, hazard tape accents, dark warm-grey panels.
-   =========================================================================== */
-
 @import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Stencil+Display:wght@700;800;900&family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;700&display=swap');
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -67,25 +57,17 @@ html, body {
   overflow-x: hidden;
 }
 
-/* Hazard tape strips at top + bottom */
 .hazard-tape {
   position: relative;
   height: 18px;
-  background:
-    repeating-linear-gradient(
-      135deg,
-      var(--hazard) 0 18px,
-      #000 18px 36px
-    );
+  background: repeating-linear-gradient(135deg, var(--hazard) 0 18px, #000 18px 36px);
 }
 .hazard-tape::after {
   content: "";
-  position: absolute;
-  inset: 0;
+  position: absolute; inset: 0;
   background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.3) 100%);
 }
 
-/* ============== HEADER ============== */
 header.site-head {
   padding: 32px 24px 12px;
   max-width: 1200px;
@@ -97,68 +79,47 @@ header.site-head {
   gap: 18px;
 }
 .brand {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  text-decoration: none;
-  color: var(--bone);
+  display: flex; align-items: center; gap: 14px;
+  text-decoration: none; color: var(--bone);
 }
 .brand-mark {
-  width: 38px;
-  height: 38px;
+  width: 38px; height: 38px;
   background: var(--hazard);
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex; align-items: center; justify-content: center;
   font-family: 'Big Shoulders Stencil Display', Impact, sans-serif;
-  font-size: 22px;
-  font-weight: 900;
+  font-size: 22px; font-weight: 900;
   color: #000;
   letter-spacing: -0.04em;
 }
 .brand-mark::before {
-  content: "";
-  position: absolute;
-  inset: -3px;
-  border: 2px solid var(--hazard);
-  opacity: 0.4;
+  content: ""; position: absolute; inset: -3px;
+  border: 2px solid var(--hazard); opacity: 0.4;
 }
 .brand-name {
   font-family: 'Big Shoulders Stencil Display', Impact, sans-serif;
-  font-size: 26px;
-  font-weight: 800;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
+  font-size: 26px; font-weight: 800;
+  letter-spacing: 0.02em; text-transform: uppercase;
 }
-.brand-name em {
-  font-style: normal;
-  color: var(--hazard);
-  margin-left: 6px;
-}
+.brand-name em { font-style: normal; color: var(--hazard); margin-left: 6px; }
+
 .nav-links {
-  display: flex;
-  gap: 22px;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  display: flex; gap: 22px;
+  font-size: 13px; font-weight: 600;
+  letter-spacing: 0.04em; text-transform: uppercase;
 }
 .nav-links a {
-  color: var(--bone-dim);
-  text-decoration: none;
+  color: var(--bone-dim); text-decoration: none;
   padding: 6px 0;
   border-bottom: 2px solid transparent;
   transition: color 0.15s, border-color 0.15s;
 }
 .nav-links a:hover { color: var(--hazard); border-bottom-color: var(--hazard); }
 
-/* ============== HERO ============== */
 .hero {
   max-width: 1200px;
   margin: 12px auto 28px;
   padding: 32px 24px;
-  position: relative;
 }
 .hero-eyebrow {
   font-family: 'JetBrains Mono', monospace;
@@ -201,7 +162,6 @@ header.site-head {
 }
 .hero-meta span::before { content: "// "; color: var(--hazard); }
 
-/* ============== INSTALL STRIP ============== */
 .install-strip {
   max-width: 1200px;
   margin: 0 auto 36px;
@@ -268,7 +228,6 @@ header.site-head {
   color: var(--hazard);
 }
 
-/* ============== THEME GRID ============== */
 .section-head {
   max-width: 1200px;
   margin: 0 auto 18px;
@@ -291,15 +250,6 @@ header.site-head {
   font-size: 18px;
   margin-left: 12px;
 }
-.section-meta {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.06em;
-  color: var(--text-dim);
-  text-transform: uppercase;
-  flex-basis: 100%;
-  text-align: right;
-}
 .section-tools {
   display: flex;
   gap: 10px;
@@ -316,19 +266,11 @@ header.site-head {
   outline: none;
   transition: border-color 0.15s ease;
 }
-.theme-search-input {
-  min-width: 240px;
-}
+.theme-search-input { min-width: 240px; }
 .theme-search-input:focus,
-.theme-filter-select:focus {
-  border-color: var(--hazard);
-}
-.theme-search-input::placeholder {
-  color: var(--text-dim);
-}
-.theme-filter-select {
-  cursor: pointer;
-}
+.theme-filter-select:focus { border-color: var(--hazard); }
+.theme-search-input::placeholder { color: var(--text-dim); }
+.theme-filter-select { cursor: pointer; }
 
 .theme-grid {
   max-width: 1200px;
@@ -365,7 +307,6 @@ header.site-head {
   inset: 0;
   background: var(--prev-bg, #0c0c0a);
 }
-/* Inner mock panel — gives a sense of the theme's panel look */
 .theme-preview-panel {
   position: relative;
   background: var(--prev-panel, var(--prev-bg, #14140e));
@@ -393,7 +334,6 @@ header.site-head {
   opacity: 0.8;
   letter-spacing: 0.04em;
 }
-/* Accent strip across the top of the preview */
 .theme-preview-strip {
   position: absolute;
   top: 0; left: 0; right: 0;
@@ -403,7 +343,6 @@ header.site-head {
     var(--prev-accent2, var(--prev-accent, #ffb800)) 100%);
   z-index: 2;
 }
-/* Color dots in bottom-right showing the theme's palette */
 .theme-preview-dots {
   position: absolute;
   bottom: 10px;
@@ -446,19 +385,6 @@ header.site-head {
   margin-top: 4px;
   flex: 1;
 }
-.theme-base-tag {
-  display: inline-block;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  background: rgba(255,184,0,0.10);
-  color: var(--hazard);
-  padding: 2px 6px;
-  margin-top: 8px;
-  align-self: flex-start;
-  border: 1px solid rgba(255,184,0,0.3);
-}
 .theme-actions {
   padding: 0 16px 16px;
   display: flex;
@@ -499,7 +425,6 @@ header.site-head {
 }
 .theme-btn[data-busy="1"] { pointer-events: none; }
 
-/* States: loading + empty + error */
 .theme-status {
   max-width: 1200px;
   margin: 0 auto;
@@ -518,8 +443,7 @@ header.site-head {
 }
 .spinner {
   display: inline-block;
-  width: 14px;
-  height: 14px;
+  width: 14px; height: 14px;
   border: 2px solid var(--steel);
   border-top-color: var(--hazard);
   border-radius: 50%;
@@ -529,90 +453,6 @@ header.site-head {
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* ============== SUBMIT SECTION ============== */
-.submit-section {
-  background: var(--bg-2);
-  border-top: 1px solid var(--steel);
-  border-bottom: 1px solid var(--steel);
-  margin: 48px 0;
-  padding: 56px 24px;
-}
-.submit-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 48px;
-}
-.submit-eyebrow {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--hazard);
-  margin-bottom: 14px;
-}
-.submit-title {
-  font-family: 'Big Shoulders Stencil Display', Impact, sans-serif;
-  font-size: clamp(28px, 4vw, 44px);
-  font-weight: 900;
-  letter-spacing: -0.01em;
-  line-height: 1;
-  text-transform: uppercase;
-  margin-bottom: 18px;
-}
-.submit-text {
-  color: var(--bone-dim);
-  line-height: 1.6;
-  margin-bottom: 20px;
-}
-.submit-text strong { color: var(--bone); }
-.submit-actions {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-.cta-btn {
-  display: inline-block;
-  padding: 12px 22px;
-  background: var(--hazard);
-  color: #000;
-  text-decoration: none;
-  font-family: 'Big Shoulders Stencil Display', Impact, sans-serif;
-  font-weight: 800;
-  font-size: 14px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  border: 1px solid var(--hazard);
-}
-.cta-btn:hover { background: #ffd24a; }
-.cta-btn.outline {
-  background: transparent;
-  color: var(--hazard);
-}
-.cta-btn.outline:hover {
-  background: var(--hazard);
-  color: #000;
-}
-
-/* Format spec column */
-.format-spec {
-  background: var(--bg-3);
-  border: 1px solid var(--steel);
-  padding: 20px 24px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
-  line-height: 1.6;
-  color: var(--bone-dim);
-  overflow-x: auto;
-}
-.format-spec .key   { color: #ffb800; }
-.format-spec .str   { color: #b8d973; }
-.format-spec .num   { color: #ff9b6a; }
-.format-spec .punct { color: #6a665e; }
-.format-spec .cmt   { color: #5a5a4a; font-style: italic; }
-
-/* ============== FOOTER ============== */
 footer {
   padding: 36px 24px 64px;
   max-width: 1200px;
@@ -629,11 +469,9 @@ footer {
 footer a { color: var(--bone-dim); text-decoration: none; }
 footer a:hover { color: var(--hazard); }
 
-/* Responsive tweaks */
 @media (max-width: 720px) {
   .install-card { grid-template-columns: 1fr; }
   .install-icon { display: none; }
-  .submit-inner { grid-template-columns: 1fr; gap: 24px; }
   .nav-links { gap: 14px; font-size: 12px; }
 }
 </style>
@@ -648,9 +486,8 @@ footer a:hover { color: var(--hazard); }
     <div class="brand-name">Throttlr<em>/themes</em></div>
   </a>
   <nav class="nav-links">
-    <a href="/">Home</a>
-    <a href="https://github.com/BillysMatrix18/throttlr">GitHub</a>
-    <a href="https://github.com/BillysMatrix18/throttlr/releases">Releases</a>
+    <a href="https://github.com/BillysMatrix18/throttlr">App</a>
+    <a href="https://github.com/BillysMatrix18/throttlr-themes">GitHub</a>
   </nav>
 </header>
 
@@ -658,9 +495,9 @@ footer a:hover { color: var(--hazard); }
   <div class="hero-eyebrow">// community gallery</div>
   <h1 class="hero-title">Themes for <em>Throttlr</em></h1>
   <p class="hero-sub">
-    Community-made color schemes you can drop into Throttlr. Each one is a
-    small JSON file that re-skins the app and overlay. Pick one, download,
-    drop it in your themes folder, click apply.
+    Community-made full UI reskins for Throttlr. Each one is a small bundle
+    that re-themes the app and overlay. Pick one, download, drop it in your
+    themes folder, click apply.
   </p>
   <div class="hero-meta">
     <span>Free + open source</span>
@@ -697,7 +534,6 @@ footer a:hover { color: var(--hazard); }
       <option value="optimised">Optimised</option>
     </select>
   </div>
-  <div class="section-meta" id="cache-meta"></div>
 </div>
 
 <div class="theme-grid" id="theme-grid"></div>
@@ -705,48 +541,8 @@ footer a:hover { color: var(--hazard); }
 <div class="theme-status" id="theme-status">
   <span class="spinner"></span>
   <span class="label">Loading</span>
-  Fetching themes from GitHub…
+  Reading themes folder…
 </div>
-
-<section class="submit-section">
-  <div class="submit-inner">
-    <div>
-      <div class="submit-eyebrow">// contribute</div>
-      <h2 class="submit-title">Make a theme,<br>submit it.</h2>
-      <p class="submit-text">
-        Themes are just JSON files in the <strong>themes/</strong> folder of the
-        Throttlr GitHub repo. Fork the repo, add your file, open a pull request.
-        Once it's merged it shows up here automatically — no website redeploy needed.
-      </p>
-      <p class="submit-text">
-        Your theme can override as much or as little as you want. Set just an
-        accent color and let the rest inherit from a base theme, or override
-        every color for full control.
-      </p>
-      <div class="submit-actions">
-        <a class="cta-btn" href="https://github.com/BillysMatrix18/throttlr-themes/blob/main/themes/README.md">Read the format spec</a>
-        <a class="cta-btn outline" href="https://github.com/BillysMatrix18/throttlr-themes/tree/main/themes">Browse on GitHub</a>
-      </div>
-    </div>
-    <pre class="format-spec">
-<span class="punct">{</span>
-  <span class="key">"name"</span><span class="punct">:</span> <span class="str">"My Theme"</span><span class="punct">,</span>
-  <span class="key">"author"</span><span class="punct">:</span> <span class="str">"@yourname"</span><span class="punct">,</span>
-  <span class="key">"version"</span><span class="punct">:</span> <span class="str">"1.0.0"</span><span class="punct">,</span>
-  <span class="key">"description"</span><span class="punct">:</span> <span class="str">"What it looks like"</span><span class="punct">,</span>
-  <span class="cmt">// inherit from one of the built-ins</span>
-  <span class="key">"base"</span><span class="punct">:</span> <span class="str">"midnight"</span><span class="punct">,</span>
-  <span class="cmt">// the swatch shown on the theme card</span>
-  <span class="key">"preview"</span><span class="punct">:</span> <span class="str">"#ff66cc"</span><span class="punct">,</span>
-  <span class="cmt">// override only what you want</span>
-  <span class="key">"colors"</span><span class="punct">: {</span>
-    <span class="key">"bg"</span><span class="punct">:</span>     <span class="str">"#1a0a2a"</span><span class="punct">,</span>
-    <span class="key">"accent"</span><span class="punct">:</span> <span class="str">"#ff66cc"</span><span class="punct">,</span>
-    <span class="key">"text"</span><span class="punct">:</span>   <span class="str">"#e0d8f0"</span>
-  <span class="punct">}</span>
-<span class="punct">}</span></pre>
-  </div>
-</section>
 
 <footer>
   <div>
@@ -754,7 +550,7 @@ footer a:hover { color: var(--hazard); }
     MIT licensed. Free forever.
   </div>
   <div>
-    <a href="/">throttlr.netlify.app</a>
+    <a href="https://github.com/BillysMatrix18/throttlr-themes/blob/main/themes/README.md">How to make a theme</a>
   </div>
 </footer>
 
@@ -762,75 +558,29 @@ footer a:hover { color: var(--hazard); }
 
 <script>
 // ===========================================================================
-// Theme loader — pulls live from the GitHub themes/ folder.
-// Cached in localStorage for 1 hour to stay well under the 60 req/hour
-// unauthenticated rate limit even on a viral day.
+// Theme loader — reads /themes/_index.json (a same-origin file generated by
+// the Netlify build script). No GitHub API. No external dependencies.
+// Whatever's in that file gets shown.
 // ===========================================================================
-const REPO_OWNER  = 'BillysMatrix18';
-const REPO_NAME   = 'throttlr-themes';
-const REPO_BRANCH = 'main';
-const THEMES_DIR  = 'themes';
-const API_URL     = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${THEMES_DIR}?ref=${REPO_BRANCH}`;
-const CACHE_KEY   = 'throttlr_themes_cache_v2';
-const CACHE_TTL   = 60 * 60 * 1000; // 1 hour
 
-async function fetchThemeList() {
-  // Check localStorage first
-  try {
-    const cached = localStorage.getItem(CACHE_KEY);
-    if (cached) {
-      const { ts, listing, themes } = JSON.parse(cached);
-      if (Date.now() - ts < CACHE_TTL && Array.isArray(themes)) {
-        return { themes, fromCache: true, age_min: Math.floor((Date.now() - ts) / 60000) };
-      }
-    }
-  } catch (e) { /* ignore corrupt cache */ }
+let _allThemes = [];
 
-  // Fetch directory listing
-  const res = await fetch(API_URL);
-  if (!res.ok) {
-    if (res.status === 403) throw new Error('GitHub API rate limit hit. Try again in an hour, or check the GitHub repo directly.');
-    throw new Error(`GitHub API returned HTTP ${res.status}`);
-  }
-  const listing = await res.json();
-  if (!Array.isArray(listing)) throw new Error('Unexpected response from GitHub');
+const ALLOWED_FONTS = [
+  'Inter', 'JetBrains Mono', 'Big Shoulders Stencil Display',
+  'Quicksand', 'Fredoka', 'Press Start 2P', 'VT323', 'Space Mono',
+  'IBM Plex Mono', 'IBM Plex Sans', 'Roboto Mono', 'Source Code Pro',
+  'Orbitron', 'Audiowide', 'Major Mono Display', 'Share Tech Mono',
+];
+const _loadedFonts = new Set(['Inter', 'JetBrains Mono', 'Big Shoulders Stencil Display']);
 
-  // Filter to .json files (skip README + non-theme files)
-  const jsonFiles = listing.filter(f => f.type === 'file' && f.name.endsWith('.json'));
-
-  // Fetch each theme file in parallel
-  const themes = await Promise.all(jsonFiles.map(async (f) => {
-    try {
-      const r = await fetch(f.download_url);
-      if (!r.ok) return null;
-      const data = await r.json();
-      data._download_url = f.download_url;
-      data._filename     = f.name;
-      data._size_bytes   = f.size;
-      // Derive the CSS file's raw URL from the JSON's URL — same folder,
-      // just swap the filename. This avoids extra API calls.
-      if (data.css_file) {
-        data._css_download_url = f.download_url.replace(
-          /\/[^/]+\.json$/, '/' + encodeURIComponent(data.css_file)
-        );
-      }
-      return data;
-    } catch (e) {
-      return null;
-    }
-  }));
-  const valid = themes.filter(t => t && t.name);
-
-  // Cache
-  try {
-    localStorage.setItem(CACHE_KEY, JSON.stringify({
-      ts: Date.now(),
-      listing: jsonFiles.length,
-      themes: valid,
-    }));
-  } catch (e) { /* localStorage full or disabled */ }
-
-  return { themes: valid, fromCache: false, age_min: 0 };
+function ensureFontLoaded(fontName) {
+  if (!fontName || _loadedFonts.has(fontName)) return;
+  if (!ALLOWED_FONTS.includes(fontName)) return;
+  const link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(fontName)}:wght@400;600;700&display=swap`;
+  document.head.appendChild(link);
+  _loadedFonts.add(fontName);
 }
 
 function escapeHtml(s) {
@@ -839,94 +589,77 @@ function escapeHtml(s) {
   }[c]));
 }
 
-let _allThemes = [];
-
-function applyFilters() {
-  const search = (document.getElementById('theme-search').value || '').toLowerCase().trim();
-  const base   = (document.getElementById('theme-filter-base').value || '').toLowerCase();
-  const filtered = _allThemes.filter(t => {
-    if (base && (t.base || '').toLowerCase() !== base) return false;
-    if (search) {
-      const hay = [
-        t.name, t.author, t.description, t.base
-      ].filter(Boolean).join(' ').toLowerCase();
-      if (!hay.includes(search)) return false;
-    }
-    return true;
-  });
-  // Re-render with filtered set; keep total count showing
-  const grid = document.getElementById('theme-grid');
-  grid.innerHTML = '';
-  if (filtered.length === 0) {
-    grid.innerHTML = `
-      <div style="grid-column:1/-1;text-align:center;padding:48px 24px;
-                  font-family:'JetBrains Mono',monospace;color:var(--bone-dim);">
-        <span style="color:var(--hazard);font-weight:700;letter-spacing:.08em;
-                     text-transform:uppercase;margin-right:8px;">No matches</span>
-        Try a different search or clear the filters.
-      </div>`;
-  } else {
-    renderThemeCards(filtered, grid);
+async function loadThemes() {
+  // Cache-bust with a timestamp so we never see stale data
+  const url = `/themes/_index.json?t=${Date.now()}`;
+  const res = await fetch(url, { cache: 'no-store' });
+  if (!res.ok) {
+    throw new Error(`Could not load themes index (HTTP ${res.status}). The build script may have failed — check the Netlify deploy log.`);
   }
-  // Update the count to show filtered/total when filtering
-  const count = document.getElementById('count');
-  if (filtered.length === _allThemes.length) {
-    count.textContent = `(${_allThemes.length})`;
-  } else {
-    count.textContent = `(${filtered.length} / ${_allThemes.length})`;
-  }
+  const themes = await res.json();
+  if (!Array.isArray(themes)) throw new Error('themes/_index.json is not an array');
+  return themes;
 }
 
-// Track which Google Fonts we've already loaded so we don't double-link
-const _loadedFonts = new Set(['Inter', 'JetBrains Mono', 'Big Shoulders Stencil Display']);
+function renderThemes(themes) {
+  _allThemes = themes;
+  const grid = document.getElementById('theme-grid');
+  const status = document.getElementById('theme-status');
+  const count = document.getElementById('count');
+  count.textContent = `(${themes.length})`;
 
-function ensureFontLoaded(fontName) {
-  if (!fontName || _loadedFonts.has(fontName)) return;
-  // Whitelist of fonts we'll actually pull from Google. Anything else
-  // falls back to a generic family in CSS — keeps third-party requests bounded.
-  const allowlist = [
-    'Quicksand', 'Fredoka', 'Press Start 2P', 'VT323', 'Space Mono',
-    'IBM Plex Mono', 'IBM Plex Sans', 'Roboto Mono', 'Source Code Pro',
-    'Orbitron', 'Audiowide', 'Major Mono Display', 'Share Tech Mono',
-  ];
-  if (!allowlist.includes(fontName)) return;
-  const link = document.createElement('link');
-  link.rel = 'stylesheet';
-  link.href = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(fontName)}:wght@400;600;700&display=swap`;
-  document.head.appendChild(link);
-  _loadedFonts.add(fontName);
+  if (themes.length === 0) {
+    status.innerHTML = `
+      <span class="label">Empty</span>
+      No themes have been published yet. Drop a theme into the
+      <code>themes/</code> folder of the
+      <a href="https://github.com/BillysMatrix18/throttlr-themes" style="color:var(--hazard)">repo</a>
+      to get started.
+    `;
+    return;
+  }
+
+  status.style.display = 'none';
+  renderThemeCards(themes, grid);
+
+  document.getElementById('theme-search').addEventListener('input', applyFilters);
+  document.getElementById('theme-filter-base').addEventListener('change', applyFilters);
 }
 
 function renderThemeCards(themes, grid) {
+  grid.innerHTML = '';
   for (const t of themes) {
-    // New format uses a richer "preview" object; fall back to flat fields
-    // from the old format if they're present.
-    const preview = t.preview || {};
-    const previewBg     = preview.bg     || (t.colors && t.colors.bg)     || '#0c0c0a';
-    const previewPanel  = preview.panel  || (t.colors && t.colors.bg_panel) || previewBg;
-    const previewAccent = preview.accent || (typeof t.preview === 'string' ? t.preview : null) || '#ffb800';
+    const preview        = t.preview || {};
+    const previewBg      = preview.bg      || '#0c0c0a';
+    const previewPanel   = preview.panel   || previewBg;
+    const previewAccent  = preview.accent  || '#ffb800';
     const previewAccent2 = preview.accent2 || previewAccent;
-    const previewText   = preview.text   || (t.colors && t.colors.text)   || '#e8e6d8';
-    const previewFont   = preview.font   || 'Big Shoulders Stencil Display';
+    const previewText    = preview.text    || '#e8e6d8';
+    const previewFont    = preview.font    || 'Big Shoulders Stencil Display';
 
     ensureFontLoaded(previewFont);
 
     const card = document.createElement('article');
     card.className = 'theme-card';
-    card.style.setProperty('--prev-bg',     previewBg);
-    card.style.setProperty('--prev-panel',  previewPanel);
-    card.style.setProperty('--prev-accent', previewAccent);
+    card.style.setProperty('--prev-bg',      previewBg);
+    card.style.setProperty('--prev-panel',   previewPanel);
+    card.style.setProperty('--prev-accent',  previewAccent);
     card.style.setProperty('--prev-accent2', previewAccent2);
-    card.style.setProperty('--prev-text',   previewText);
-    card.style.setProperty('--prev-font',   `'${previewFont}', system-ui, sans-serif`);
+    card.style.setProperty('--prev-text',    previewText);
+    card.style.setProperty('--prev-font',    `'${previewFont}', system-ui, sans-serif`);
 
-    // Build palette dots showing 3 representative colors
     const dotColors = [previewAccent, previewAccent2, previewText].filter(
       (c, i, arr) => arr.indexOf(c) === i
     );
     const dotsHtml = dotColors.map(c =>
       `<span style="background:${escapeHtml(c)}"></span>`
     ).join('');
+
+    // Same-origin URLs to the actual files under /themes/
+    const jsonName = t._filename     || `${t.id}.json`;
+    const cssName  = t._css_filename || `${t.id}.css`;
+    const jsonUrl  = `/themes/${jsonName}`;
+    const cssUrl   = `/themes/${cssName}`;
 
     card.innerHTML = `
       <div class="theme-preview">
@@ -942,84 +675,61 @@ function renderThemeCards(themes, grid) {
         <div class="theme-name">${escapeHtml(t.name || 'Untitled')}</div>
         <div class="theme-author">${escapeHtml(t.author || 'unknown')}</div>
         ${t.description ? `<div class="theme-desc">${escapeHtml(t.description)}</div>` : ''}
-        ${t.base ? `<div class="theme-base-tag">based on ${escapeHtml(t.base)}</div>` : ''}
       </div>
       <div class="theme-actions">
         <button class="theme-btn primary" type="button"
                 data-theme-id="${escapeHtml(t.id || '')}"
-                data-json-url="${escapeHtml(t._download_url)}"
-                data-css-url="${escapeHtml(t._css_download_url || '')}"
-                data-json-name="${escapeHtml(t._filename)}"
-                data-css-name="${escapeHtml(t.css_file || '')}">
+                data-json-url="${escapeHtml(jsonUrl)}"
+                data-css-url="${escapeHtml(cssUrl)}"
+                data-json-name="${escapeHtml(jsonName)}"
+                data-css-name="${escapeHtml(cssName)}">
           ↓ Download
         </button>
-        <a class="theme-btn" href="${escapeHtml(t._download_url)}" target="_blank" rel="noopener">View</a>
+        <a class="theme-btn" href="${escapeHtml(jsonUrl)}" target="_blank" rel="noopener">View</a>
       </div>
     `;
     grid.appendChild(card);
   }
 }
 
-function renderThemes(themes) {
-  _allThemes = themes;
-  const grid = document.getElementById('theme-grid');
-  const status = document.getElementById('theme-status');
-  const count = document.getElementById('count');
-  count.textContent = `(${themes.length})`;
-
-  if (themes.length === 0) {
-    status.innerHTML = `
-      <span class="label">Empty</span>
-      No themes have been published yet. Be the first —
-      <a href="https://github.com/${REPO_OWNER}/${REPO_NAME}/tree/main/${THEMES_DIR}" style="color:var(--hazard)">submit one on GitHub</a>.
-    `;
-    return;
-  }
-
-  status.style.display = 'none';
-  renderThemeCards(themes, grid);
-
-  // Wire up the filters once the list is loaded
-  document.getElementById('theme-search').addEventListener('input', applyFilters);
-  document.getElementById('theme-filter-base').addEventListener('change', applyFilters);
-}
-
-async function init() {
-  const status = document.getElementById('theme-status');
-  const cacheMeta = document.getElementById('cache-meta');
-  try {
-    const { themes, fromCache, age_min } = await fetchThemeList();
-    renderThemes(themes);
-    if (fromCache) {
-      cacheMeta.textContent = `// cached ${age_min}m ago`;
-    } else {
-      cacheMeta.textContent = `// fresh from github`;
+function applyFilters() {
+  const search = (document.getElementById('theme-search').value || '').toLowerCase().trim();
+  const base   = (document.getElementById('theme-filter-base').value || '').toLowerCase();
+  const filtered = _allThemes.filter(t => {
+    if (base && (t.base || '').toLowerCase() !== base) return false;
+    if (search) {
+      const hay = [t.name, t.author, t.description, t.base]
+        .filter(Boolean).join(' ').toLowerCase();
+      if (!hay.includes(search)) return false;
     }
-  } catch (e) {
-    status.innerHTML = `
-      <span class="label" style="color:var(--blood)">Error</span>
-      ${escapeHtml(e.message)}
-    `;
-  }
-
-  // Delegate Download button clicks — bundles manifest + CSS into a ZIP
-  // and triggers a real browser download. This avoids the cross-origin
-  // pitfall where <a download="..."> is ignored when the file lives on
-  // a different origin (raw.githubusercontent.com vs netlify.app),
-  // which used to just open the raw JSON in a new tab instead.
-  document.addEventListener('click', async (e) => {
-    const btn = e.target.closest('.theme-btn.primary[data-theme-id]');
-    if (!btn) return;
-    e.preventDefault();
-    await downloadTheme(btn);
+    return true;
   });
+  const grid = document.getElementById('theme-grid');
+  grid.innerHTML = '';
+  if (filtered.length === 0) {
+    grid.innerHTML = `
+      <div style="grid-column:1/-1;text-align:center;padding:48px 24px;
+                  font-family:'JetBrains Mono',monospace;color:var(--bone-dim);">
+        <span style="color:var(--hazard);font-weight:700;letter-spacing:.08em;
+                     text-transform:uppercase;margin-right:8px;">No matches</span>
+        Try a different search or clear the filters.
+      </div>`;
+  } else {
+    renderThemeCards(filtered, grid);
+  }
+  const count = document.getElementById('count');
+  if (filtered.length === _allThemes.length) {
+    count.textContent = `(${_allThemes.length})`;
+  } else {
+    count.textContent = `(${filtered.length} / ${_allThemes.length})`;
+  }
 }
 
 async function downloadTheme(btn) {
   if (btn.dataset.busy === '1') return;
-  const themeId = btn.dataset.themeId;
-  const jsonUrl = btn.dataset.jsonUrl;
-  const cssUrl  = btn.dataset.cssUrl;
+  const themeId  = btn.dataset.themeId;
+  const jsonUrl  = btn.dataset.jsonUrl;
+  const cssUrl   = btn.dataset.cssUrl;
   const jsonName = btn.dataset.jsonName || `${themeId}.json`;
   const cssName  = btn.dataset.cssName  || '';
 
@@ -1029,34 +739,26 @@ async function downloadTheme(btn) {
   btn.classList.add('is-loading');
 
   try {
-    // Fetch both files in parallel
-    const fetches = [fetch(jsonUrl)];
-    if (cssUrl) fetches.push(fetch(cssUrl));
+    const fetches = [fetch(jsonUrl, { cache: 'no-store' })];
+    if (cssUrl) fetches.push(fetch(cssUrl, { cache: 'no-store' }));
     const responses = await Promise.all(fetches);
     for (const r of responses) {
-      if (!r.ok) throw new Error(`HTTP ${r.status} fetching theme files`);
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
     }
     const jsonText = await responses[0].text();
     const cssText  = responses[1] ? await responses[1].text() : null;
 
-    // If we have both files, ZIP them. If only JSON exists (theme has no
-    // companion CSS, which is unusual but valid), just download the JSON
-    // directly without zipping.
     if (cssText !== null && typeof JSZip !== 'undefined') {
       const zip = new JSZip();
       zip.file(jsonName, jsonText);
       zip.file(cssName,  cssText);
       const blob = await zip.generateAsync({ type: 'blob' });
       _triggerBlobDownload(blob, `${themeId}.zip`);
-    } else if (cssText !== null && typeof JSZip === 'undefined') {
-      // JSZip didn't load (CDN failed) — fall back to two separate
-      // downloads so the user still gets both files.
+    } else if (cssText !== null) {
       _triggerBlobDownload(new Blob([jsonText], { type: 'application/json' }), jsonName);
-      // Brief delay so the second download isn't blocked by popup heuristics
       await new Promise(r => setTimeout(r, 250));
       _triggerBlobDownload(new Blob([cssText],  { type: 'text/css' }), cssName);
     } else {
-      // No CSS file — just the JSON
       _triggerBlobDownload(new Blob([jsonText], { type: 'application/json' }), jsonName);
     }
 
@@ -1083,15 +785,31 @@ function _triggerBlobDownload(blob, filename) {
   const a = document.createElement('a');
   a.href = url;
   a.download = filename;
-  // Some browsers require the link to be in the DOM
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
-  // Revoke after a tick so the download has time to start
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
-init();
+document.addEventListener('click', async (e) => {
+  const btn = e.target.closest('.theme-btn.primary[data-theme-id]');
+  if (!btn) return;
+  e.preventDefault();
+  await downloadTheme(btn);
+});
+
+(async function init() {
+  const status = document.getElementById('theme-status');
+  try {
+    const themes = await loadThemes();
+    renderThemes(themes);
+  } catch (e) {
+    status.innerHTML = `
+      <span class="label" style="color:var(--blood)">Error</span>
+      ${escapeHtml(e.message)}
+    `;
+  }
+})();
 </script>
 
 </body>

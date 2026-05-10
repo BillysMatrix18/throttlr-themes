@@ -12,8 +12,8 @@ Each theme is **two files** at the top level of this folder, paired by name:
 
 ```
 themes/
-├── neon-cyberpunk.json    ← manifest (metadata + preview info)
-└── neon-cyberpunk.css     ← the actual full-theme CSS
+├── liquid-glass.json    ← manifest (metadata + preview info)
+└── liquid-glass.css     ← the actual full-theme CSS
 ```
 
 The JSON file is the manifest — it describes the theme to the gallery website (name, author, preview colors, etc). The CSS file is the actual styling that gets injected into Throttlr when the user activates the theme.
@@ -67,7 +67,7 @@ The JSON file is the manifest — it describes the theme to the gallery website 
 | `preview.accent` | ✅ | Primary accent color — drawn as the card's title |
 | `preview.accent2` | optional | Secondary accent — used in the gradient strip across the top |
 | `preview.text` | optional | Body text color — used for the small caption under the title |
-| `preview.font` | optional | Font name to render the title in. Allowed: `JetBrains Mono`, `Quicksand`, `Fredoka`, `Press Start 2P`, `VT323`, `Space Mono`, `IBM Plex Mono`, `IBM Plex Sans`, `Roboto Mono`, `Source Code Pro`, `Orbitron`, `Audiowide`, `Major Mono Display`, `Share Tech Mono`. Anything else falls back to a generic stencil/sans. |
+| `preview.font` | optional | Font name to render the title in. Allowed: `JetBrains Mono`, `Quicksand`, `Fredoka`, `Press Start 2P`, `VT323`, `Space Mono`, `IBM Plex Mono`, `IBM Plex Sans`, `Roboto Mono`, `Source Code Pro`, `Orbitron`, `Audiowide`, `Major Mono Display`, `Share Tech Mono`, `Inter`. Anything else falls back to a generic stencil/sans. |
 
 ### CSS file (`<theme-id>.css`)
 
@@ -107,69 +107,6 @@ When the user clicks your theme's tile in Settings, the app:
 3. Injects your CSS file's content into a `<style id="custom-theme-css">` tag
 
 So you get full inheritance from the base theme, plus full override power for anything you want to change. If you don't override something, it falls back to the base theme's value.
-
-### Common tokens to override
-
-The most visually impactful CSS variables in Throttlr:
-
-| Token | What it controls |
-|---|---|
-| `--bg` | Main app background |
-| `--bg-2` | Panel / card background (one level up from bg) |
-| `--bg-3` | Sub-panel / nested card |
-| `--bg-4` | Hover / active surface |
-| `--steel` | Panel borders |
-| `--hazard` | Primary accent — buttons, highlights, the hazard tape |
-| `--hazard-deep` | Darker accent variant |
-| `--hazard-grad` | Accent gradient (used for grad-text) |
-| `--bone` | Main text color |
-| `--bone-dim` | Muted / secondary text |
-| `--term` | "Running" green (semantic — usually leave alone) |
-| `--blood` | "Drop" red (semantic — usually leave alone) |
-
-### Common selectors to override
-
-The high-impact selectors that most themes will want to restyle:
-
-```css
-body[data-custom-theme="..."] .modal,
-body[data-custom-theme="..."] .panel,
-body[data-custom-theme="..."] .stat-cell,
-body[data-custom-theme="..."] .preset-card,
-body[data-custom-theme="..."] .func-panel { ... }      /* panel boxes */
-
-body[data-custom-theme="..."] .titlebar { ... }         /* top bar */
-body[data-custom-theme="..."] .modal-head { ... }       /* modal headers */
-body[data-custom-theme="..."] .tab-btn { ... }          /* tab buttons */
-body[data-custom-theme="..."] .preset-tab { ... }       /* preset tabs */
-
-body[data-custom-theme="..."] button,
-body[data-custom-theme="..."] .btn-stencil,
-body[data-custom-theme="..."] .btn-hazard,
-body[data-custom-theme="..."] .hotkey-btn { ... }       /* buttons */
-
-body[data-custom-theme="..."] input,
-body[data-custom-theme="..."] select,
-body[data-custom-theme="..."] textarea { ... }          /* inputs */
-
-body[data-custom-theme="..."] .field-label,
-body[data-custom-theme="..."] .panel-title,
-body[data-custom-theme="..."] .stat-label { ... }       /* headings */
-
-body[data-custom-theme="..."] .toolrail,
-body[data-custom-theme="..."] .trb { ... }              /* left navigation rail */
-
-body[data-custom-theme="..."] .toast { ... }            /* notifications */
-
-body[data-custom-theme="..."] .stat-value,
-body[data-custom-theme="..."] .big-stat-value { ... }   /* numeric readouts */
-
-body[data-custom-theme="..."] .cl-version,
-body[data-custom-theme="..."] .cl-head,
-body[data-custom-theme="..."] .cl-changes li { ... }    /* changelog modal */
-```
-
-Read the CSS files of the existing themes (`neon-cyberpunk.css`, `terminal-green.css`, `y2k-bubblegum.css`) for working examples of how to structure a full theme.
 
 ## How to submit a theme
 
