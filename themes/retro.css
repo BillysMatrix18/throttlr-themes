@@ -1,0 +1,885 @@
+/* =============================================================================
+   RETRO — Y2K kidcore aesthetic for Throttlr
+   Cream panels with chunky 2px black borders, coral pink title bars, sky blue
+   accents, hard-edge offset shadows (no soft glows), Pixelify Sans + DM Mono
+   fonts. Lavender grid background. Like a soft 1998 Mac OS in Sailor Moon
+   colors — opaque, illustrated, cute, no glass, no glow.
+   ============================================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;700&display=swap');
+
+body[data-custom-theme="retro"] {
+  /* Customizable inputs */
+  --wallpaper: var(--theme-u-wallpaper, #a89aa6);
+  --pink:      var(--theme-u-pink,      #ff7a9c);
+  --blue:      var(--theme-u-blue,      #7fc8e8);
+
+  /* Derived pink shades */
+  --pink-light:  color-mix(in srgb, var(--pink) 50%, white);
+  --pink-pale:   color-mix(in srgb, var(--pink) 25%, white);
+  --pink-deep:   color-mix(in srgb, var(--pink) 70%, #2d1f2a);
+  --pink-shadow: color-mix(in srgb, var(--pink) 35%, #1a0f1d);
+
+  /* Derived blue shades */
+  --blue-light:  color-mix(in srgb, var(--blue) 50%, white);
+  --blue-pale:   color-mix(in srgb, var(--blue) 25%, white);
+  --blue-deep:   color-mix(in srgb, var(--blue) 70%, #1a3a4a);
+
+  /* Derived wallpaper shades */
+  --wp-light:    color-mix(in srgb, var(--wallpaper) 70%, white);
+  --wp-grid:     color-mix(in srgb, var(--wallpaper) 80%, #1a0f1d);
+  --wp-deep:     color-mix(in srgb, var(--wallpaper) 60%, #1a0f1d);
+
+  /* Fixed colors */
+  --cream:       #fdf4ed;
+  --cream-2:     #f5e8dc;
+  --cream-3:     #ecd9c5;
+  --ink:         #1a0f1d;
+  --ink-2:       #2d1f2a;
+  --ink-dim:     #4a3340;
+  --safe:        #6dd9a0;
+  --warn:        #ffc857;
+  --crit:        #ff5a6e;
+
+  /* Re-map Throttlr design tokens — the theme is light, so we flip the dark
+     defaults to cream/ink */
+  --bg:           var(--wallpaper);
+  --bg-2:         var(--cream);
+  --bg-3:         var(--cream-2);
+  --bg-4:         var(--cream-3);
+  --steel:        var(--cream-3);
+  --steel-light:  var(--cream-2);
+  --steel-bright: var(--pink);
+  --hazard:       var(--pink);
+  --hazard-deep:  var(--pink-deep);
+  --hazard-grad:  var(--pink);
+  --term:         var(--safe);
+  --term-dim:     color-mix(in srgb, var(--safe) 60%, var(--ink));
+  --blood:        var(--crit);
+  --blood-deep:   color-mix(in srgb, var(--crit) 70%, var(--ink));
+  --bone:         var(--ink);
+  --bone-dim:     var(--ink-dim);
+
+  /* The signature Y2K shadow — hard-edge offset, no blur */
+  --shadow-sm:   2px 2px 0 var(--ink);
+  --shadow-md:   4px 4px 0 var(--ink);
+  --shadow-lg:   6px 6px 0 var(--ink);
+  --border:      2px solid var(--ink);
+
+  background: var(--wallpaper);
+  isolation: isolate;
+  color: var(--ink);
+  font-family: 'DM Sans', 'Quicksand', system-ui, sans-serif;
+  font-weight: 500;
+  -webkit-font-smoothing: antialiased;
+}
+
+body[data-custom-theme="retro"] .modal-corners,
+body[data-custom-theme="retro"] .panel-corners,
+body[data-custom-theme="retro"] .panel-corners-2 { display: none !important; }
+
+/* Hide CRT — clashes with the soft kidcore aesthetic */
+body[data-custom-theme="retro"] .crt-scanlines,
+body[data-custom-theme="retro"] .crt-noise,
+body[data-custom-theme="retro"] .crt-vignette { display: none !important; }
+
+/* Hide the diagonal pink/black hazard tape strips at top + bottom of the
+   window (those are Throttlr's "industrial" decoration). They clash with
+   the soft Y2K aesthetic. Same approach Midnight uses. */
+body[data-custom-theme="retro"] .hazard-tape,
+body[data-custom-theme="retro"] .action-bar-stripe { display: none !important; }
+
+/* ============================================================================
+   WALLPAPER — lavender base with subtle grid pattern (the "desktop")
+   ============================================================================ */
+body[data-custom-theme="retro"]::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    /* Subtle grid lines */
+    linear-gradient(0deg,
+      var(--wp-grid) 0 1px,
+      transparent 1px 100%) 0 0 / 100% 48px,
+    linear-gradient(90deg,
+      var(--wp-grid) 0 1px,
+      transparent 1px 100%) 0 0 / 48px 100%,
+    /* Soft vignette so corners are slightly darker */
+    radial-gradient(ellipse 100% 80% at 50% 50%,
+      transparent 30%,
+      color-mix(in srgb, var(--wp-deep) 40%, transparent) 100%),
+    var(--wallpaper);
+  opacity: 1;
+  pointer-events: none;
+}
+
+/* ============================================================================
+   TITLEBAR — pink coral strip with chunky border
+   ============================================================================ */
+body[data-custom-theme="retro"] .titlebar {
+  background: var(--pink);
+  border-bottom: var(--border);
+  box-shadow: 0 4px 0 var(--ink);
+  color: var(--cream);
+  position: relative;
+}
+body[data-custom-theme="retro"] .tb-title {
+  font-family: 'Pixelify Sans', 'VT323', monospace;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--cream);
+  text-shadow: 1px 1px 0 var(--ink);
+}
+body[data-custom-theme="retro"] .tb-sub {
+  color: var(--cream);
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  opacity: 0.85;
+}
+body[data-custom-theme="retro"] .titlebar-status {
+  color: var(--cream);
+  font-family: 'Pixelify Sans', monospace;
+  font-size: 14px;
+  font-weight: 700;
+  text-shadow: 1px 1px 0 var(--ink);
+}
+
+/* ===== Scrollbars — chunky cream pills with black border ===== */
+body[data-custom-theme="retro"] ::-webkit-scrollbar { width: 14px; height: 14px; }
+body[data-custom-theme="retro"] ::-webkit-scrollbar-track {
+  background: var(--cream-2);
+  border-left: 2px solid var(--ink);
+}
+body[data-custom-theme="retro"] ::-webkit-scrollbar-thumb {
+  background: var(--pink);
+  border: 2px solid var(--ink);
+  border-radius: 100px;
+  background-clip: padding-box;
+}
+body[data-custom-theme="retro"] ::selection {
+  background: var(--pink);
+  color: var(--cream);
+}
+
+/* ============================================================================
+   PANELS — cream boxes with chunky black border + hard offset shadow
+   ============================================================================ */
+body[data-custom-theme="retro"] .modal,
+body[data-custom-theme="retro"] .panel,
+body[data-custom-theme="retro"] .stat-cell,
+body[data-custom-theme="retro"] .preset-card,
+body[data-custom-theme="retro"] .auto-rule-card,
+body[data-custom-theme="retro"] .lan-peer-card,
+body[data-custom-theme="retro"] .plugin-card,
+body[data-custom-theme="retro"] .func-panel,
+body[data-custom-theme="retro"] .func-mod,
+body[data-custom-theme="retro"] .cl-version {
+  background: var(--cream);
+  border: var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow-md);
+  color: var(--ink);
+  position: relative;
+}
+body[data-custom-theme="retro"] .stat-cell,
+body[data-custom-theme="retro"] .func-mod {
+  border-radius: 10px;
+  box-shadow: var(--shadow-sm);
+}
+
+/* ===== Modal head — pink title bar with three little dots ===== */
+body[data-custom-theme="retro"] .modal-head {
+  background: var(--pink);
+  border-bottom: var(--border);
+  border-radius: 10px 10px 0 0;
+  position: relative;
+  /* Little Mac-style traffic light dots on the left */
+  padding-left: 60px !important;
+}
+body[data-custom-theme="retro"] .modal-head::before {
+  content: "";
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 10px;
+  background:
+    radial-gradient(circle 5px at 5px 50%, var(--ink) 0 5px, transparent 5px),
+    radial-gradient(circle 5px at 18px 50%, var(--cream) 0 5px, transparent 5px),
+    radial-gradient(circle 5px at 31px 50%, var(--ink) 0 5px, transparent 5px);
+}
+body[data-custom-theme="retro"] .modal-head h2 {
+  font-family: 'Pixelify Sans', monospace;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: var(--cream);
+  text-shadow: 1px 1px 0 var(--ink);
+}
+
+/* Modal close — round black-bordered cream button with X */
+body[data-custom-theme="retro"] .modal-close {
+  background: var(--cream);
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  color: var(--ink);
+  font-family: 'Pixelify Sans', monospace;
+  font-weight: 700;
+  font-size: 14px;
+  text-shadow: none;
+  box-shadow: 2px 2px 0 var(--ink);
+  transition: all 0.10s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 !important;
+}
+body[data-custom-theme="retro"] .modal-close:hover {
+  background: var(--pink);
+  color: var(--cream);
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+body[data-custom-theme="retro"] .modal-close:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0 0 0 var(--ink);
+}
+
+/* ============================================================================
+   BUTTONS — cream with chunky border + offset shadow, presses down on click
+   ============================================================================ */
+body[data-custom-theme="retro"] button:not(.modal-close):not(.tab-btn):not(.preset-tab):not(.preset-card):not(.theme-tile):not(.design-tile):not(.lethal-toggle):not(.toggle-input),
+body[data-custom-theme="retro"] .btn-stencil,
+body[data-custom-theme="retro"] .peer-btn,
+body[data-custom-theme="retro"] .studio-btn,
+body[data-custom-theme="retro"] .hotkey-btn {
+  background: var(--cream);
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  color: var(--ink);
+  font-family: 'Pixelify Sans', 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  padding: 7px 16px;
+  text-shadow: none;
+  box-shadow: 3px 3px 0 var(--ink);
+  cursor: pointer;
+  transition: all 0.08s ease;
+}
+body[data-custom-theme="retro"] button:not(.modal-close):hover,
+body[data-custom-theme="retro"] .btn-stencil:hover,
+body[data-custom-theme="retro"] .peer-btn:hover,
+body[data-custom-theme="retro"] .studio-btn:hover,
+body[data-custom-theme="retro"] .hotkey-btn:hover {
+  background: var(--blue-pale);
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+body[data-custom-theme="retro"] button:not(.modal-close):active,
+body[data-custom-theme="retro"] .btn-stencil:active,
+body[data-custom-theme="retro"] .peer-btn:active,
+body[data-custom-theme="retro"] .studio-btn:active,
+body[data-custom-theme="retro"] .hotkey-btn:active {
+  transform: translate(3px, 3px);
+  box-shadow: 0 0 0 var(--ink);
+}
+
+/* Hazard / primary button — pink fill */
+body[data-custom-theme="retro"] .btn-hazard {
+  background: var(--pink);
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  color: var(--cream);
+  font-family: 'Pixelify Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  padding: 7px 18px;
+  text-shadow: 1px 1px 0 var(--ink);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+body[data-custom-theme="retro"] .btn-hazard:hover {
+  background: color-mix(in srgb, var(--pink) 85%, white);
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0 var(--ink);
+}
+body[data-custom-theme="retro"] .btn-hazard:active {
+  transform: translate(4px, 4px);
+  box-shadow: 0 0 0 var(--ink);
+}
+
+/* ===== Modal tabs container — give it some breathing room and a clear baseline */
+body[data-custom-theme="retro"] .modal-tabs {
+  background: var(--cream-2) !important;
+  border-bottom: 2px solid var(--ink) !important;
+  padding: 8px 12px 0 12px !important;
+  gap: 2px;
+}
+
+/* ===== Tabs — chunky Y2K style, like little raised buttons */
+body[data-custom-theme="retro"] .tab-btn {
+  background: var(--cream) !important;
+  border: 2px solid var(--ink) !important;
+  border-bottom: 2px solid var(--ink) !important;
+  border-radius: 8px 8px 0 0 !important;
+  color: var(--ink) !important;
+  font-family: 'Pixelify Sans', sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+  padding: 7px 14px 6px !important;
+  margin: 0 2px -2px 0 !important;
+  position: relative;
+  box-shadow: 2px 2px 0 var(--ink);
+  transition: all 0.10s ease;
+  cursor: pointer;
+}
+body[data-custom-theme="retro"] .tab-btn:hover {
+  background: var(--blue-pale) !important;
+  color: var(--ink) !important;
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+body[data-custom-theme="retro"] .tab-btn.active {
+  background: var(--pink) !important;
+  color: var(--cream) !important;
+  border-color: var(--ink) !important;
+  text-shadow: 1px 1px 0 var(--ink) !important;
+  box-shadow: 3px 3px 0 var(--ink);
+  z-index: 1;
+}
+body[data-custom-theme="retro"] .tab-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0 0 0 var(--ink);
+}
+
+/* ===== Inputs — white with chunky border ===== */
+body[data-custom-theme="retro"] input[type="text"],
+body[data-custom-theme="retro"] input[type="number"],
+body[data-custom-theme="retro"] input[type="search"],
+body[data-custom-theme="retro"] textarea,
+body[data-custom-theme="retro"] select,
+body[data-custom-theme="retro"] .text-input,
+body[data-custom-theme="retro"] .studio-select,
+body[data-custom-theme="retro"] .param-input {
+  background: #ffffff;
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  color: var(--ink);
+  font-family: 'DM Mono', monospace;
+  font-weight: 500;
+  font-size: 13px;
+  padding: 6px 12px;
+  caret-color: var(--pink);
+  box-shadow: inset 2px 2px 0 var(--cream-3);
+}
+body[data-custom-theme="retro"] textarea { border-radius: 10px; }
+body[data-custom-theme="retro"] input::placeholder { color: var(--ink-dim); opacity: 0.55; }
+body[data-custom-theme="retro"] input:focus,
+body[data-custom-theme="retro"] textarea:focus,
+body[data-custom-theme="retro"] select:focus,
+body[data-custom-theme="retro"] .text-input:focus,
+body[data-custom-theme="retro"] .param-input:focus {
+  border-color: var(--pink);
+  outline: none;
+  background: var(--pink-pale);
+  box-shadow: inset 2px 2px 0 var(--cream-3), 3px 3px 0 var(--pink-shadow);
+}
+
+/* ===== Sliders ===== */
+body[data-custom-theme="retro"] input[type="range"]::-webkit-slider-runnable-track {
+  background: var(--cream-2);
+  height: 12px;
+  border: 2px solid var(--ink);
+  border-radius: 100px;
+  box-shadow: inset 2px 2px 0 var(--cream-3);
+}
+body[data-custom-theme="retro"] input[type="range"]::-webkit-slider-thumb {
+  background: var(--pink);
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  margin-top: -5px;
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+/* ============================================================================
+   TOOL RAIL — solid cream sidebar with chunky border
+   ============================================================================ */
+body[data-custom-theme="retro"] .toolrail {
+  background: var(--cream);
+  border-right: 2px solid var(--ink);
+  box-shadow: 4px 0 0 var(--ink);
+  position: relative;
+}
+body[data-custom-theme="retro"] .trb {
+  background: transparent;
+  color: var(--ink-dim);
+  font-family: 'Pixelify Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  border-radius: 6px;
+  margin: 2px 6px;
+  border: 2px solid transparent;
+  transition: all 0.10s ease;
+}
+body[data-custom-theme="retro"] .trb:hover {
+  background: var(--blue-pale);
+  color: var(--ink);
+}
+body[data-custom-theme="retro"] .trb.active {
+  background: var(--pink);
+  color: var(--cream);
+  text-shadow: 1px 1px 0 var(--ink);
+  border: 2px solid var(--ink);
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+/* ===== Field labels & code ===== */
+body[data-custom-theme="retro"] .field-label,
+body[data-custom-theme="retro"] .stat-label,
+body[data-custom-theme="retro"] .panel-title,
+body[data-custom-theme="retro"] .func-panel h3 {
+  color: var(--pink-deep);
+  font-family: 'Pixelify Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  text-shadow: none;
+}
+body[data-custom-theme="retro"] .panel-title::before,
+body[data-custom-theme="retro"] .field-label::before {
+  content: "♡ ";
+  color: var(--pink);
+}
+body[data-custom-theme="retro"] .hint-text {
+  color: var(--ink-dim);
+  font-family: 'DM Mono', monospace;
+  font-style: normal;
+  font-size: 11px;
+}
+body[data-custom-theme="retro"] code {
+  background: var(--cream-2);
+  border: 1px solid var(--ink);
+  color: var(--pink-deep);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+}
+
+/* Function row name */
+body[data-custom-theme="retro"] .fm-name {
+  font-family: 'Pixelify Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0;
+  color: var(--ink);
+  text-transform: none;
+}
+body[data-custom-theme="retro"] .dir-check b {
+  color: var(--ink);
+  font-family: 'Pixelify Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: none;
+}
+
+/* ===== Toggles ===== */
+body[data-custom-theme="retro"] .lethal-toggle .lt-track {
+  background: var(--cream-2);
+  border: 2px solid var(--ink);
+  border-radius: 100px;
+  box-shadow: inset 2px 2px 0 var(--cream-3);
+}
+body[data-custom-theme="retro"] .lethal-toggle .lt-knob {
+  background: var(--cream);
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  box-shadow: 1px 1px 0 var(--ink);
+}
+body[data-custom-theme="retro"] .lethal-toggle input:checked ~ .lt-track {
+  background: var(--pink);
+  border-color: var(--ink);
+}
+body[data-custom-theme="retro"] .lethal-toggle input:checked ~ .lt-track .lt-knob {
+  background: var(--cream);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+
+/* ===== Status pill — cream chunky badge ===== */
+body[data-custom-theme="retro"] .status-pill {
+  background: var(--cream);
+  border: 2px solid var(--ink);
+  border-radius: 100px;
+  color: var(--ink);
+  font-family: 'Pixelify Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  padding: 4px 14px;
+  text-shadow: none;
+  box-shadow: 2px 2px 0 var(--ink);
+}
+body[data-custom-theme="retro"] .status-pill.running {
+  background: var(--safe);
+  color: var(--ink);
+  text-shadow: none;
+}
+
+/* ===== Preset cards ===== */
+body[data-custom-theme="retro"] .preset-card {
+  transition: all 0.10s ease;
+}
+body[data-custom-theme="retro"] .preset-card:hover {
+  background: var(--pink-pale);
+  border-color: var(--ink);
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--ink);
+}
+body[data-custom-theme="retro"] .preset-card .pc-icon.icon { color: var(--pink-deep); }
+body[data-custom-theme="retro"] .preset-card .pc-name {
+  color: var(--ink);
+  font-family: 'Pixelify Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+  text-shadow: none;
+}
+body[data-custom-theme="retro"] .preset-card .pc-desc {
+  color: var(--ink-dim);
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+}
+body[data-custom-theme="retro"] .preset-tab {
+  background: var(--cream-2);
+  border: 2px solid var(--ink);
+  border-bottom: none;
+  border-radius: 10px 10px 0 0;
+  color: var(--ink-dim);
+  font-family: 'Pixelify Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: none;
+}
+body[data-custom-theme="retro"] .preset-tab.active {
+  background: var(--blue);
+  color: var(--ink);
+  text-shadow: 1px 1px 0 var(--cream);
+}
+
+/* ===== Toast — popup window with traffic-light dots ===== */
+body[data-custom-theme="retro"] .toast {
+  background: var(--cream);
+  border: 2px solid var(--ink);
+  border-radius: 12px;
+  color: var(--ink);
+  font-family: 'Pixelify Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: none;
+  padding: 12px 22px;
+  text-shadow: none;
+  box-shadow: 5px 5px 0 var(--ink);
+}
+body[data-custom-theme="retro"] .toast.success {
+  background: var(--safe);
+  color: var(--ink);
+}
+body[data-custom-theme="retro"] .toast.error {
+  background: var(--crit);
+  color: var(--cream);
+  text-shadow: 1px 1px 0 var(--ink);
+}
+
+/* ===== Stats / numbers — chunky pixel digits in pink ===== */
+body[data-custom-theme="retro"] .stat-value,
+body[data-custom-theme="retro"] .big-stat-value {
+  color: var(--pink-deep);
+  font-family: 'Pixelify Sans', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-shadow: 2px 2px 0 var(--cream-3);
+}
+body[data-custom-theme="retro"] .accent-grad,
+body[data-custom-theme="retro"] .grad-text {
+  color: var(--pink-deep);
+  font-family: 'Pixelify Sans', sans-serif;
+  font-weight: 700;
+  background: none !important;
+  -webkit-text-fill-color: var(--pink-deep) !important;
+  background-clip: initial !important;
+  -webkit-background-clip: initial !important;
+}
+
+/* ===== Changelog ===== */
+body[data-custom-theme="retro"] .cl-version.is-current {
+  border-color: var(--ink);
+  box-shadow: 6px 6px 0 var(--pink);
+}
+body[data-custom-theme="retro"] .cl-head {
+  background: var(--pink);
+  border-bottom: 2px solid var(--ink);
+  border-radius: 10px 10px 0 0;
+}
+body[data-custom-theme="retro"] .cl-head .cl-title {
+  color: var(--cream);
+  font-family: 'Pixelify Sans', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+  text-shadow: 1px 1px 0 var(--ink);
+}
+body[data-custom-theme="retro"] .cl-head .cl-vchip {
+  background: var(--cream);
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  font-family: 'DM Mono', monospace;
+  font-weight: 700;
+  border-radius: 100px;
+  padding: 2px 12px;
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  box-shadow: 1px 1px 0 var(--ink);
+}
+body[data-custom-theme="retro"] .cl-changes li {
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+}
+body[data-custom-theme="retro"] .cl-changes li::before {
+  content: "★ ";
+  color: var(--pink);
+}
+body[data-custom-theme="retro"] #changelog-version-line strong {
+  color: var(--pink-deep);
+  font-family: 'Pixelify Sans', sans-serif;
+}
+
+/* ============================================================================
+   CUSTOMIZE PANEL — same chunky cream box style
+   ============================================================================ */
+body[data-custom-theme="retro"] .theme-customize-section {
+  background: var(--cream);
+  border: 2px solid var(--ink);
+  border-radius: 12px;
+  box-shadow: var(--shadow-md);
+  padding: 18px 20px;
+}
+body[data-custom-theme="retro"] .theme-customize-row {
+  border-top: 1px dashed var(--ink-dim);
+}
+body[data-custom-theme="retro"] .theme-customize-row-label {
+  color: var(--pink-deep);
+  font-family: 'Pixelify Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+  text-shadow: none;
+}
+body[data-custom-theme="retro"] .theme-customize-row-label::before {
+  content: "♡ ";
+  color: var(--pink);
+}
+
+body[data-custom-theme="retro"] .theme-color-control input[type="color"] {
+  width: 36px;
+  height: 30px;
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  background: var(--cream);
+  padding: 2px;
+  box-shadow: 2px 2px 0 var(--ink);
+  cursor: pointer;
+}
+body[data-custom-theme="retro"] .theme-color-control input[type="color"]:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+body[data-custom-theme="retro"] .theme-color-control input[type="color"]::-webkit-color-swatch {
+  border: none;
+  border-radius: 5px;
+}
+body[data-custom-theme="retro"] .theme-color-control input[type="text"] {
+  background: #ffffff;
+  border: 2px solid var(--ink);
+  border-radius: 6px;
+  color: var(--ink);
+  font-family: 'DM Mono', monospace;
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  text-transform: lowercase;
+  padding: 4px 10px;
+  box-shadow: inset 2px 2px 0 var(--cream-3);
+}
+body[data-custom-theme="retro"] .theme-color-control input[type="text"]:focus {
+  border-color: var(--pink);
+  background: var(--pink-pale);
+  box-shadow: inset 2px 2px 0 var(--cream-3), 2px 2px 0 var(--pink-shadow);
+}
+body[data-custom-theme="retro"] .theme-color-control .stop-label {
+  font-family: 'Pixelify Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--ink-dim);
+}
+
+body[data-custom-theme="retro"] .theme-customize-row.gradient .gradient-preview {
+  height: 18px;
+  border-radius: 100px;
+  border: 2px solid var(--ink);
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+body[data-custom-theme="retro"] .theme-customize-reset {
+  font-family: 'Pixelify Sans', sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 12px !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+  background: var(--cream) !important;
+  border: 2px solid var(--ink) !important;
+  border-radius: 6px !important;
+  color: var(--ink) !important;
+  padding: 4px 12px !important;
+  text-shadow: none !important;
+  box-shadow: 2px 2px 0 var(--ink) !important;
+}
+body[data-custom-theme="retro"] .theme-customize-reset:hover {
+  background: var(--pink-pale) !important;
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 var(--ink) !important;
+}
+
+/* "More themes" CTA */
+body[data-custom-theme="retro"] .custom-themes-actions .themes-cta {
+  background: var(--pink);
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  color: var(--cream);
+  text-shadow: 1px 1px 0 var(--ink);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+body[data-custom-theme="retro"] .custom-themes-actions .themes-cta:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0 var(--ink);
+}
+body[data-custom-theme="retro"] .custom-themes-actions .themes-cta .cta-title {
+  font-family: 'Pixelify Sans', sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 16px !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+}
+body[data-custom-theme="retro"] .custom-themes-actions .themes-cta .cta-sub {
+  font-family: 'DM Mono', monospace !important;
+  font-size: 11px !important;
+  letter-spacing: 0.04em !important;
+  text-transform: none !important;
+  opacity: 0.9;
+}
+
+/* ============================================================================
+   ACTION BAR — bottom strip with stats and Start button
+   The default background is the same cream as the panels above it, so it
+   blends in. Bump it to a slightly darker beige + chunky black top border +
+   offset shadow above so it reads as a distinct "footer" surface.
+   ============================================================================ */
+body[data-custom-theme="retro"] .action-bar {
+  background: var(--cream-2) !important;
+  border-top: 2px solid var(--ink) !important;
+  box-shadow: 0 -3px 0 var(--ink) !important;
+}
+
+/* ============================================================================
+   TOPOLOGY VIEW — dark canvas → cream grid + pink/blue nodes
+   ============================================================================ */
+body[data-custom-theme="retro"] .topo-container {
+  background:
+    /* Subtle grid pattern */
+    linear-gradient(0deg,  var(--wp-grid) 0 1px, transparent 1px 100%) 0 0 / 100% 32px,
+    linear-gradient(90deg, var(--wp-grid) 0 1px, transparent 1px 100%) 0 0 / 32px 100%,
+    /* Soft cream base */
+    var(--cream);
+  border-bottom: 2px solid var(--ink);
+}
+body[data-custom-theme="retro"] .topo-info {
+  background: var(--cream);
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  box-shadow: 3px 3px 0 var(--ink);
+  backdrop-filter: none;
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: var(--ink);
+}
+body[data-custom-theme="retro"] .topo-info-empty {
+  color: var(--ink-dim);
+  font-style: normal;
+}
+body[data-custom-theme="retro"] .topo-info .ti-host {
+  font-family: 'Pixelify Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--pink-deep);
+  letter-spacing: 0;
+  text-transform: none;
+}
+body[data-custom-theme="retro"] .topo-info .ti-row { color: var(--ink); }
+body[data-custom-theme="retro"] .topo-info .ti-row span:first-child { color: var(--ink-dim); }
+
+body[data-custom-theme="retro"] .topo-legend {
+  background: var(--cream-2);
+  border-top: 2px solid var(--ink);
+  color: var(--ink);
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+}
+body[data-custom-theme="retro"] .topo-leg-item .dot.center {
+  background: var(--pink) !important;
+  border: 2px solid var(--ink);
+  box-shadow: 1px 1px 0 var(--ink) !important;
+}
+body[data-custom-theme="retro"] .topo-leg-item .dot.remote {
+  background: var(--blue) !important;
+  border: 2px solid var(--ink);
+  box-shadow: 1px 1px 0 var(--ink) !important;
+}
+body[data-custom-theme="retro"] .topo-leg-item .line {
+  background: linear-gradient(90deg, transparent, var(--pink), transparent);
+  box-shadow: 0 1px 0 var(--ink);
+}
+
+/* ============================================================================
+   MODAL OVERLAY (the dimmed backdrop behind dialogs)
+   Default is a near-black tint. For Y2K it should be lavender-tinted and
+   slightly less opaque so the wallpaper shows through.
+   ============================================================================ */
+body[data-custom-theme="retro"] .modal-overlay {
+  background: color-mix(in srgb, var(--wallpaper) 65%, var(--ink) 35%) !important;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}

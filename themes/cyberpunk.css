@@ -1,0 +1,1056 @@
+/* =============================================================================
+   CYBERPUNK v3 — sci-fi HUD aesthetic for Throttlr
+   DRAMATIC notched corners on every panel/row/card/modal, hexagonal status
+   pills, circular crosshair close button, pentagon hazard buttons,
+   animated scan lines, SVG reticles, hazard-tape edges, glow halos.
+   ============================================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@500;600;700&display=swap');
+
+body[data-custom-theme="cyberpunk"] {
+  /* Customizable inputs */
+  --neon-1:    var(--theme-u-neon-0,    #ff0080);
+  --neon-2:    var(--theme-u-neon-1,    #00f5ff);
+  --void:      var(--theme-u-bg-base,   #0a0014);
+
+  /* Derived */
+  --neon-1-soft:  color-mix(in srgb, var(--neon-1) 30%, transparent);
+  --neon-1-faint: color-mix(in srgb, var(--neon-1) 14%, transparent);
+  --neon-1-dark:  color-mix(in srgb, var(--neon-1) 50%, var(--void));
+  --neon-2-soft:  color-mix(in srgb, var(--neon-2) 30%, transparent);
+  --neon-2-faint: color-mix(in srgb, var(--neon-2) 14%, transparent);
+  --neon-2-dark:  color-mix(in srgb, var(--neon-2) 50%, var(--void));
+  --void-2:       color-mix(in srgb, var(--neon-1) 6%, var(--void));
+  --void-3:       color-mix(in srgb, var(--neon-1) 12%, var(--void));
+  --void-4:       color-mix(in srgb, var(--neon-1) 22%, var(--void));
+  --hud-text:     color-mix(in srgb, var(--neon-2) 30%, white);
+  --hud-text-dim: color-mix(in srgb, var(--neon-2) 50%, var(--void));
+  --warn:         #ffcc00;
+  --crit:         #ff3344;
+  --safe:         #aaff44;
+
+  --bg:           var(--void);
+  --bg-2:         var(--void-2);
+  --bg-3:         var(--void-3);
+  --bg-4:         var(--void-4);
+  --steel:        color-mix(in srgb, var(--neon-1) 25%, var(--void));
+  --steel-light:  color-mix(in srgb, var(--neon-1) 50%, var(--void));
+  --steel-bright: var(--neon-1);
+  --hazard:       var(--neon-1);
+  --hazard-deep:  var(--neon-1-dark);
+  --hazard-grad:  linear-gradient(135deg, var(--neon-1) 0%, var(--neon-2) 100%);
+  --term:         var(--safe);
+  --term-dim:     color-mix(in srgb, var(--safe) 50%, var(--void));
+  --blood:        var(--crit);
+  --blood-deep:   #cc1122;
+  --bone:         var(--hud-text);
+  --bone-dim:     var(--hud-text-dim);
+
+  /* DRAMATIC clip-path shapes — bigger notches, more obvious */
+  --notch-big:     polygon(28px 0, 100% 0, 100% calc(100% - 28px), calc(100% - 28px) 100%, 0 100%, 0 28px);
+  --notch-med:     polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
+  --notch-row:     polygon(18px 0, 100% 0, 100% 100%, 18px 100%, 0 calc(100% - 18px), 0 18px);
+  --notch-btn:     polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+  --notch-arrow:   polygon(0 0, calc(100% - 14px) 0, 100% 50%, calc(100% - 14px) 100%, 0 100%, 14px 50%);
+  --notch-hex:     polygon(10px 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 10px 100%, 0 50%);
+
+  background:
+    /* HUD wireframe grid — visible diagonal lines */
+    repeating-linear-gradient(45deg,
+      color-mix(in srgb, var(--neon-2) 4%, transparent) 0 1px,
+      transparent 1px 80px),
+    /* Horizontal scanlines */
+    repeating-linear-gradient(0deg,
+      color-mix(in srgb, var(--neon-2) 5%, transparent) 0 1px,
+      transparent 1px 3px),
+    /* Dual corner glows */
+    radial-gradient(ellipse 60% 80% at 0% 0%,
+      color-mix(in srgb, var(--neon-1) 22%, transparent), transparent 60%),
+    radial-gradient(ellipse 60% 80% at 100% 100%,
+      color-mix(in srgb, var(--neon-2) 16%, transparent), transparent 60%),
+    var(--void);
+  background-attachment: fixed;
+  color: var(--hud-text);
+  font-family: 'Rajdhani', 'Share Tech Mono', sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+body[data-custom-theme="cyberpunk"] .modal-corners,
+body[data-custom-theme="cyberpunk"] .panel-corners,
+body[data-custom-theme="cyberpunk"] .panel-corners-2 { display: none !important; }
+
+/* Hide Throttlr's built-in CRT overlay — Cyberpunk has its own scanline
+   pattern in the body bg + clip-path notched panels would clash with the
+   default scanline overlay. */
+body[data-custom-theme="cyberpunk"] .crt-scanlines,
+body[data-custom-theme="cyberpunk"] .crt-noise,
+body[data-custom-theme="cyberpunk"] .crt-vignette { display: none !important; }
+
+/* ===== Titlebar ===== */
+body[data-custom-theme="cyberpunk"] .titlebar {
+  background: linear-gradient(180deg, var(--void-3) 0%, var(--void) 100%);
+  border-bottom: 1px solid var(--neon-1);
+  box-shadow:
+    0 1px 0 var(--neon-1-faint),
+    0 4px 24px color-mix(in srgb, var(--neon-1) 25%, transparent);
+  color: var(--neon-2);
+  position: relative;
+}
+body[data-custom-theme="cyberpunk"] .titlebar::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -3px;
+  height: 3px;
+  background: repeating-linear-gradient(135deg,
+    var(--neon-1) 0 12px,
+    transparent 12px 22px,
+    var(--neon-2) 22px 34px,
+    transparent 34px 44px);
+  opacity: 0.7;
+}
+body[data-custom-theme="cyberpunk"] .tb-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 17px;
+  font-weight: 900;
+  color: var(--neon-2);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-shadow:
+    0 0 8px var(--neon-2),
+    1.5px 0 0 color-mix(in srgb, var(--neon-1) 50%, transparent),
+    -1.5px 0 0 color-mix(in srgb, var(--neon-2) 60%, transparent);
+}
+body[data-custom-theme="cyberpunk"] .tb-title::before {
+  content: "▣ ";
+  color: var(--neon-1);
+  text-shadow: 0 0 6px var(--neon-1);
+}
+body[data-custom-theme="cyberpunk"] .tb-sub {
+  color: var(--hud-text-dim);
+  font-family: 'Share Tech Mono', monospace;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+}
+body[data-custom-theme="cyberpunk"] .titlebar-status {
+  color: var(--safe);
+  font-family: 'Share Tech Mono', monospace;
+  font-weight: 700;
+  text-shadow: 0 0 6px var(--safe);
+}
+
+/* ===== Scrollbars ===== */
+body[data-custom-theme="cyberpunk"] ::-webkit-scrollbar { width: 12px; height: 12px; }
+body[data-custom-theme="cyberpunk"] ::-webkit-scrollbar-track {
+  background: var(--void);
+  border-left: 1px solid var(--neon-1-faint);
+}
+body[data-custom-theme="cyberpunk"] ::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--neon-1) 0%, var(--neon-2) 100%);
+  border: 2px solid var(--void);
+  background-clip: padding-box;
+  box-shadow: 0 0 6px var(--neon-1);
+}
+body[data-custom-theme="cyberpunk"] ::selection {
+  background: var(--neon-1);
+  color: var(--void);
+  text-shadow: none;
+}
+
+/* ============================================================================
+   PANELS — every panel-shaped element gets the notched treatment
+   ============================================================================ */
+
+/* Big main panels — modals + .panel (target/header/telemetry panels) */
+body[data-custom-theme="cyberpunk"] .modal,
+body[data-custom-theme="cyberpunk"] .panel {
+  background:
+    linear-gradient(180deg,
+      color-mix(in srgb, var(--neon-1) 5%, var(--void)) 0%,
+      color-mix(in srgb, var(--neon-2) 4%, var(--void)) 100%) !important;
+  border: none !important;
+  border-radius: 0 !important;
+  clip-path: var(--notch-big);
+  position: relative;
+  color: var(--hud-text) !important;
+  box-shadow:
+    inset 0 0 0 1px var(--neon-1),
+    inset 0 0 24px color-mix(in srgb, var(--neon-1) 8%, transparent) !important;
+}
+body[data-custom-theme="cyberpunk"] .modal {
+  filter: drop-shadow(0 0 14px color-mix(in srgb, var(--neon-1) 35%, transparent));
+}
+
+/* Function rows — the Lag/Drop/Throttle/etc. cards */
+body[data-custom-theme="cyberpunk"] .func-mod {
+  background:
+    linear-gradient(90deg,
+      color-mix(in srgb, var(--neon-1) 8%, var(--void)) 0%,
+      color-mix(in srgb, var(--neon-2) 5%, var(--void)) 100%) !important;
+  border: none !important;
+  border-radius: 0 !important;
+  clip-path: var(--notch-row);
+  position: relative;
+  color: var(--hud-text) !important;
+  box-shadow:
+    inset 0 0 0 1px var(--neon-1),
+    inset 0 0 18px color-mix(in srgb, var(--neon-1) 8%, transparent) !important;
+  margin-bottom: 8px;
+}
+/* Decorative left bracket on function rows — glowing vertical bar */
+body[data-custom-theme="cyberpunk"] .func-mod::before {
+  content: "";
+  position: absolute;
+  top: 8px; bottom: 8px; left: 0;
+  width: 3px;
+  background: linear-gradient(180deg, var(--neon-1) 0%, var(--neon-2) 100%);
+  box-shadow: 0 0 8px var(--neon-1);
+}
+
+/* Cards: presets, auto-rules, plugins, peers, changelog versions */
+body[data-custom-theme="cyberpunk"] .preset-card,
+body[data-custom-theme="cyberpunk"] .auto-rule-card,
+body[data-custom-theme="cyberpunk"] .lan-peer-card,
+body[data-custom-theme="cyberpunk"] .plugin-card,
+body[data-custom-theme="cyberpunk"] .cl-version,
+body[data-custom-theme="cyberpunk"] .stat-cell,
+body[data-custom-theme="cyberpunk"] .func-panel {
+  background:
+    linear-gradient(180deg,
+      color-mix(in srgb, var(--neon-1) 6%, var(--void)) 0%,
+      color-mix(in srgb, var(--neon-2) 4%, var(--void)) 100%) !important;
+  border: none !important;
+  border-radius: 0 !important;
+  clip-path: var(--notch-med);
+  position: relative;
+  color: var(--hud-text) !important;
+  box-shadow:
+    inset 0 0 0 1px var(--neon-1),
+    inset 0 0 18px color-mix(in srgb, var(--neon-1) 10%, transparent) !important;
+}
+
+/* Animated scan line on modals, function rows, big panels */
+body[data-custom-theme="cyberpunk"] .modal::before,
+body[data-custom-theme="cyberpunk"] .panel::before,
+body[data-custom-theme="cyberpunk"] .func-panel::before {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; top: 0;
+  height: 2px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    var(--neon-2) 25%,
+    var(--neon-1) 50%,
+    var(--neon-2) 75%,
+    transparent 100%);
+  opacity: 0.6;
+  pointer-events: none;
+  animation: cyber-scan 6s linear infinite;
+  filter: blur(0.5px);
+  z-index: 1;
+}
+@keyframes cyber-scan {
+  0%   { transform: translateY(0); opacity: 0; }
+  10%  { opacity: 0.7; }
+  90%  { opacity: 0.7; }
+  100% { transform: translateY(2000%); opacity: 0; }
+}
+
+/* SVG targeting reticle in top-right corner of cards */
+body[data-custom-theme="cyberpunk"] .stat-cell::after,
+body[data-custom-theme="cyberpunk"] .preset-card::after,
+body[data-custom-theme="cyberpunk"] .plugin-card::after {
+  content: "";
+  position: absolute;
+  top: 8px; right: 8px;
+  width: 16px; height: 16px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><circle cx='8' cy='8' r='6' fill='none' stroke='%2300f5ff' stroke-width='1' opacity='0.85'/><circle cx='8' cy='8' r='1.5' fill='%2300f5ff'/><line x1='8' y1='0' x2='8' y2='2.5' stroke='%2300f5ff' stroke-width='1'/><line x1='8' y1='13.5' x2='8' y2='16' stroke='%2300f5ff' stroke-width='1'/><line x1='0' y1='8' x2='2.5' y2='8' stroke='%2300f5ff' stroke-width='1'/><line x1='13.5' y1='8' x2='16' y2='8' stroke='%2300f5ff' stroke-width='1'/></svg>");
+  background-size: contain;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  filter: drop-shadow(0 0 4px var(--neon-2));
+  opacity: 0.85;
+  z-index: 2;
+}
+
+/* ===== Modal head ===== */
+body[data-custom-theme="cyberpunk"] .modal-head {
+  background: linear-gradient(90deg,
+    color-mix(in srgb, var(--neon-1) 26%, var(--void)) 0%,
+    color-mix(in srgb, var(--neon-2) 16%, var(--void)) 100%);
+  border-bottom: 1px solid var(--neon-1);
+  border-radius: 0;
+  position: relative;
+}
+body[data-custom-theme="cyberpunk"] .modal-head::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -3px;
+  height: 2px;
+  background: repeating-linear-gradient(135deg,
+    var(--neon-1) 0 10px,
+    transparent 10px 16px);
+  opacity: 0.7;
+}
+body[data-custom-theme="cyberpunk"] .modal-head h2 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 18px;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-shadow:
+    0 0 8px var(--neon-1),
+    0 0 18px color-mix(in srgb, var(--neon-1) 50%, transparent);
+}
+body[data-custom-theme="cyberpunk"] .modal-head h2::before {
+  content: "❮❮ ";
+  color: var(--neon-2);
+  text-shadow: 0 0 6px var(--neon-2);
+  opacity: 0.9;
+}
+
+/* Panel head + title */
+body[data-custom-theme="cyberpunk"] .panel-head { border-radius: 0; }
+body[data-custom-theme="cyberpunk"] .panel-num {
+  background: var(--neon-1) !important;
+  color: var(--void) !important;
+  font-family: 'Orbitron', sans-serif !important;
+  font-weight: 900 !important;
+  border-radius: 0 !important;
+  padding: 2px 8px !important;
+  box-shadow: 0 0 8px var(--neon-1);
+}
+
+/* ===== Modal close — circle with crosshair ticks ===== */
+body[data-custom-theme="cyberpunk"] .modal-close {
+  background: var(--void);
+  border: 2px solid var(--neon-1);
+  border-radius: 50%;
+  color: var(--neon-1);
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  width: 30px; height: 30px;
+  text-shadow: 0 0 4px var(--neon-1);
+  box-shadow:
+    0 0 8px color-mix(in srgb, var(--neon-1) 60%, transparent),
+    inset 0 0 6px color-mix(in srgb, var(--neon-1) 30%, transparent);
+  position: relative;
+  transition: all 0.15s ease;
+}
+body[data-custom-theme="cyberpunk"] .modal-close::before,
+body[data-custom-theme="cyberpunk"] .modal-close::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  width: 1px;
+  height: 4px;
+  background: var(--neon-1);
+  transform: translateX(-50%);
+  box-shadow: 0 0 4px var(--neon-1);
+}
+body[data-custom-theme="cyberpunk"] .modal-close::before { top: -7px; }
+body[data-custom-theme="cyberpunk"] .modal-close::after  { bottom: -7px; }
+body[data-custom-theme="cyberpunk"] .modal-close:hover {
+  background: var(--neon-1);
+  color: var(--void);
+  text-shadow: none;
+  box-shadow:
+    0 0 18px var(--neon-1),
+    0 0 36px color-mix(in srgb, var(--neon-1) 50%, transparent);
+  transform: scale(1.08);
+}
+
+/* ============================================================================
+   BUTTONS — notched corners on every button type
+   ============================================================================ */
+body[data-custom-theme="cyberpunk"] button:not(.modal-close):not(.tab-btn):not(.preset-tab):not(.preset-card):not(.theme-tile):not(.design-tile):not(.lethal-toggle):not(.toggle-input),
+body[data-custom-theme="cyberpunk"] .btn-stencil,
+body[data-custom-theme="cyberpunk"] .peer-btn,
+body[data-custom-theme="cyberpunk"] .studio-btn,
+body[data-custom-theme="cyberpunk"] .hotkey-btn {
+  background: linear-gradient(180deg,
+    color-mix(in srgb, var(--neon-1) 10%, var(--void)) 0%,
+    var(--void) 100%) !important;
+  border: none !important;
+  border-radius: 0 !important;
+  clip-path: var(--notch-btn);
+  color: var(--neon-2) !important;
+  font-family: 'Orbitron', sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 11px !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  padding: 9px 18px !important;
+  text-shadow: 0 0 4px var(--neon-2);
+  box-shadow:
+    inset 0 0 0 1px var(--neon-1),
+    inset 0 0 12px color-mix(in srgb, var(--neon-1) 20%, transparent) !important;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.15s ease;
+}
+body[data-custom-theme="cyberpunk"] button:not(.modal-close):hover,
+body[data-custom-theme="cyberpunk"] .btn-stencil:hover,
+body[data-custom-theme="cyberpunk"] .peer-btn:hover,
+body[data-custom-theme="cyberpunk"] .studio-btn:hover,
+body[data-custom-theme="cyberpunk"] .hotkey-btn:hover {
+  background: var(--neon-1) !important;
+  color: var(--void) !important;
+  text-shadow: none;
+  box-shadow:
+    inset 0 0 0 1px var(--neon-2),
+    inset 0 0 14px color-mix(in srgb, var(--neon-2) 30%, transparent) !important;
+  filter: drop-shadow(0 0 8px var(--neon-1));
+}
+
+/* Hazard / primary button — pentagon arrow */
+body[data-custom-theme="cyberpunk"] .btn-hazard {
+  background: linear-gradient(135deg, var(--neon-1) 0%, var(--neon-2) 100%) !important;
+  border: none !important;
+  border-radius: 0 !important;
+  clip-path: var(--notch-arrow);
+  color: var(--void) !important;
+  font-family: 'Orbitron', sans-serif !important;
+  font-weight: 900 !important;
+  font-size: 12px !important;
+  letter-spacing: 0.18em !important;
+  text-transform: uppercase !important;
+  padding: 10px 28px !important;
+  text-shadow: none;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2) !important;
+  filter: drop-shadow(0 0 12px var(--neon-1));
+  transition: filter 0.15s ease;
+}
+body[data-custom-theme="cyberpunk"] .btn-hazard:hover {
+  filter:
+    drop-shadow(0 0 16px var(--neon-1))
+    drop-shadow(0 0 24px color-mix(in srgb, var(--neon-2) 50%, transparent));
+}
+
+/* ===== Tabs — angled parallelograms ===== */
+body[data-custom-theme="cyberpunk"] .tab-btn {
+  background: transparent !important;
+  border: 1px solid var(--neon-1-faint) !important;
+  border-bottom: none !important;
+  border-radius: 0 !important;
+  color: var(--hud-text-dim) !important;
+  font-family: 'Orbitron', sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 10px !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 100%, 0 100%);
+  padding-right: 18px !important;
+}
+body[data-custom-theme="cyberpunk"] .tab-btn.active {
+  background: linear-gradient(180deg,
+    color-mix(in srgb, var(--neon-1) 28%, var(--void)) 0%,
+    var(--void) 100%) !important;
+  border-color: var(--neon-1) !important;
+  color: var(--neon-2) !important;
+  text-shadow: 0 0 6px var(--neon-2);
+  box-shadow:
+    inset 0 0 14px color-mix(in srgb, var(--neon-1) 25%, transparent),
+    0 -2px 12px color-mix(in srgb, var(--neon-1) 35%, transparent) !important;
+}
+
+/* ===== Inputs — notched HUD readouts ===== */
+body[data-custom-theme="cyberpunk"] input[type="text"],
+body[data-custom-theme="cyberpunk"] input[type="number"],
+body[data-custom-theme="cyberpunk"] input[type="search"],
+body[data-custom-theme="cyberpunk"] textarea,
+body[data-custom-theme="cyberpunk"] .text-input,
+body[data-custom-theme="cyberpunk"] .param-input {
+  background: var(--void) !important;
+  border: none !important;
+  border-radius: 0 !important;
+  color: var(--hud-text) !important;
+  font-family: 'Share Tech Mono', monospace !important;
+  font-weight: 400 !important;
+  font-size: 13px !important;
+  letter-spacing: 0.04em !important;
+  padding: 7px 12px !important;
+  caret-color: var(--neon-2);
+  clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
+  box-shadow:
+    inset 0 0 0 1px var(--neon-1-faint),
+    inset 0 0 8px color-mix(in srgb, var(--neon-1) 8%, transparent) !important;
+}
+body[data-custom-theme="cyberpunk"] select,
+body[data-custom-theme="cyberpunk"] .studio-select,
+body[data-custom-theme="cyberpunk"] .param-select {
+  background: var(--void) !important;
+  border: 1px solid var(--neon-1-faint) !important;
+  border-radius: 0 !important;
+  color: var(--hud-text) !important;
+  font-family: 'Share Tech Mono', monospace !important;
+  padding: 7px 12px !important;
+}
+body[data-custom-theme="cyberpunk"] input::placeholder { color: color-mix(in srgb, var(--neon-2) 40%, var(--void)); }
+body[data-custom-theme="cyberpunk"] input:focus,
+body[data-custom-theme="cyberpunk"] textarea:focus,
+body[data-custom-theme="cyberpunk"] select:focus,
+body[data-custom-theme="cyberpunk"] .text-input:focus,
+body[data-custom-theme="cyberpunk"] .param-input:focus {
+  outline: none !important;
+  color: var(--neon-2) !important;
+  text-shadow: 0 0 4px var(--neon-2);
+  box-shadow:
+    inset 0 0 0 1px var(--neon-2),
+    inset 0 0 14px color-mix(in srgb, var(--neon-2) 22%, transparent) !important;
+}
+
+/* ===== Sliders ===== */
+body[data-custom-theme="cyberpunk"] input[type="range"]::-webkit-slider-runnable-track {
+  background: linear-gradient(90deg, var(--neon-1) 0%, var(--neon-2) 100%);
+  height: 4px;
+  border: none;
+  border-radius: 0;
+  box-shadow: 0 0 10px color-mix(in srgb, var(--neon-1) 50%, transparent);
+}
+body[data-custom-theme="cyberpunk"] input[type="range"]::-webkit-slider-thumb {
+  background: var(--void);
+  border: 2px solid var(--neon-2);
+  border-radius: 0;
+  width: 14px;
+  height: 14px;
+  margin-top: -5px;
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+  box-shadow: 0 0 12px var(--neon-2);
+}
+
+/* ===== Tool rail ===== */
+body[data-custom-theme="cyberpunk"] .toolrail {
+  background: linear-gradient(180deg,
+    color-mix(in srgb, var(--neon-1) 8%, var(--void)) 0%,
+    var(--void) 100%);
+  border-right: 1px solid var(--neon-1);
+  box-shadow: 4px 0 18px color-mix(in srgb, var(--neon-1) 22%, transparent);
+}
+body[data-custom-theme="cyberpunk"] .trb {
+  background: transparent !important;
+  color: var(--hud-text-dim) !important;
+  font-family: 'Orbitron', sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 10px !important;
+  letter-spacing: 0.10em !important;
+  text-transform: uppercase !important;
+  border-radius: 0 !important;
+  position: relative;
+  margin: 2px 4px !important;
+}
+body[data-custom-theme="cyberpunk"] .trb:hover {
+  background: color-mix(in srgb, var(--neon-1) 12%, transparent) !important;
+  color: var(--neon-2) !important;
+  text-shadow: 0 0 5px var(--neon-2);
+}
+body[data-custom-theme="cyberpunk"] .trb.active {
+  background: linear-gradient(90deg,
+    color-mix(in srgb, var(--neon-1) 28%, var(--void)) 0%,
+    transparent 100%) !important;
+  color: var(--neon-2) !important;
+  text-shadow: 0 0 7px var(--neon-2);
+  border-left: 2px solid var(--neon-1) !important;
+  box-shadow:
+    inset 0 0 14px color-mix(in srgb, var(--neon-1) 22%, transparent),
+    -3px 0 14px color-mix(in srgb, var(--neon-1) 35%, transparent) !important;
+}
+body[data-custom-theme="cyberpunk"] .trb.active::after {
+  content: "▶";
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--neon-1);
+  font-size: 8px;
+  text-shadow: 0 0 4px var(--neon-1);
+}
+
+/* ===== Field labels & code ===== */
+body[data-custom-theme="cyberpunk"] .field-label,
+body[data-custom-theme="cyberpunk"] .stat-label,
+body[data-custom-theme="cyberpunk"] .panel-title,
+body[data-custom-theme="cyberpunk"] .func-panel h3,
+body[data-custom-theme="cyberpunk"] .fm-name {
+  color: var(--neon-2) !important;
+  font-family: 'Orbitron', sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.18em !important;
+  text-transform: uppercase !important;
+  text-shadow: 0 0 4px color-mix(in srgb, var(--neon-2) 60%, transparent);
+}
+body[data-custom-theme="cyberpunk"] .field-label::before,
+body[data-custom-theme="cyberpunk"] .panel-title::before {
+  content: "▸ ";
+  color: var(--neon-1);
+  text-shadow: 0 0 4px var(--neon-1);
+}
+body[data-custom-theme="cyberpunk"] .hint-text {
+  color: var(--hud-text-dim) !important;
+  font-family: 'Share Tech Mono', monospace !important;
+  font-style: normal !important;
+  letter-spacing: 0.04em !important;
+}
+body[data-custom-theme="cyberpunk"] code {
+  background: var(--void) !important;
+  border: 1px solid var(--neon-2-faint) !important;
+  color: var(--neon-2) !important;
+  padding: 1px 8px !important;
+  border-radius: 0 !important;
+  font-family: 'Share Tech Mono', monospace !important;
+  text-shadow: 0 0 4px color-mix(in srgb, var(--neon-2) 50%, transparent);
+}
+
+/* Function row name — make it stand out as a label */
+body[data-custom-theme="cyberpunk"] .fm-name {
+  font-size: 14px !important;
+  letter-spacing: 0.20em !important;
+}
+
+/* Direction-check chips (In/Out) */
+body[data-custom-theme="cyberpunk"] .dir-check {
+  font-family: 'Share Tech Mono', monospace !important;
+  letter-spacing: 0.10em !important;
+  text-transform: uppercase !important;
+}
+body[data-custom-theme="cyberpunk"] .dir-check b {
+  color: var(--neon-2) !important;
+  text-shadow: 0 0 4px var(--neon-2);
+}
+
+/* Toggles — recolor the lethal-toggle */
+body[data-custom-theme="cyberpunk"] .lethal-toggle .lt-track {
+  background: var(--void) !important;
+  border: 1px solid var(--neon-1-faint) !important;
+  border-radius: 0 !important;
+}
+body[data-custom-theme="cyberpunk"] .lethal-toggle .lt-knob {
+  background: var(--neon-1) !important;
+  border-radius: 0 !important;
+  box-shadow: 0 0 6px var(--neon-1);
+}
+body[data-custom-theme="cyberpunk"] .lethal-toggle input:checked ~ .lt-track {
+  background: color-mix(in srgb, var(--neon-2) 30%, var(--void)) !important;
+  border-color: var(--neon-2) !important;
+}
+body[data-custom-theme="cyberpunk"] .lethal-toggle input:checked ~ .lt-track .lt-knob {
+  background: var(--neon-2) !important;
+  box-shadow: 0 0 8px var(--neon-2);
+}
+
+/* ===== Status pill — HEXAGONAL ===== */
+body[data-custom-theme="cyberpunk"] .status-pill {
+  background: var(--void) !important;
+  border: none !important;
+  border-radius: 0 !important;
+  clip-path: var(--notch-hex);
+  color: var(--hud-text) !important;
+  font-family: 'Orbitron', sans-serif !important;
+  font-weight: 900 !important;
+  font-size: 10px !important;
+  letter-spacing: 0.20em !important;
+  text-transform: uppercase !important;
+  padding: 5px 22px !important;
+  box-shadow: inset 0 0 0 1px var(--neon-2-faint) !important;
+}
+body[data-custom-theme="cyberpunk"] .status-pill.running {
+  background: linear-gradient(135deg, var(--safe) 0%, color-mix(in srgb, var(--safe) 70%, var(--neon-2)) 100%) !important;
+  color: var(--void) !important;
+  text-shadow: none;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.3) !important;
+  filter: drop-shadow(0 0 8px var(--safe));
+  animation: cyber-pulse 1.6s ease-in-out infinite;
+}
+@keyframes cyber-pulse {
+  0%, 100% { filter: drop-shadow(0 0 6px var(--safe)); }
+  50%      { filter: drop-shadow(0 0 14px var(--safe)) drop-shadow(0 0 24px color-mix(in srgb, var(--safe) 50%, transparent)); }
+}
+
+/* ===== Preset cards interaction ===== */
+body[data-custom-theme="cyberpunk"] .preset-card { transition: all 0.2s ease; }
+body[data-custom-theme="cyberpunk"] .preset-card:hover {
+  background: linear-gradient(180deg,
+    color-mix(in srgb, var(--neon-2) 12%, var(--void)) 0%,
+    color-mix(in srgb, var(--neon-1) 6%, var(--void)) 100%) !important;
+  box-shadow:
+    inset 0 0 0 1px var(--neon-2),
+    inset 0 0 24px color-mix(in srgb, var(--neon-2) 14%, transparent) !important;
+  transform: translateY(-2px);
+}
+body[data-custom-theme="cyberpunk"] .preset-card .pc-icon.icon {
+  color: var(--neon-1) !important;
+  filter: drop-shadow(0 0 6px var(--neon-1));
+}
+body[data-custom-theme="cyberpunk"] .preset-card .pc-name {
+  color: var(--neon-2) !important;
+  font-family: 'Orbitron', sans-serif !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.10em !important;
+  text-transform: uppercase !important;
+  text-shadow: 0 0 5px var(--neon-2);
+}
+body[data-custom-theme="cyberpunk"] .preset-card .pc-desc {
+  color: var(--hud-text-dim) !important;
+  font-family: 'Share Tech Mono', monospace !important;
+  letter-spacing: 0.04em !important;
+}
+body[data-custom-theme="cyberpunk"] .preset-tab {
+  background: transparent !important;
+  border: 1px solid var(--neon-1-faint) !important;
+  border-radius: 0 !important;
+  color: var(--hud-text-dim) !important;
+  font-family: 'Orbitron', sans-serif !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  font-size: 10px !important;
+  letter-spacing: 0.14em !important;
+  clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 100%, 0 100%);
+  padding-right: 14px !important;
+}
+body[data-custom-theme="cyberpunk"] .preset-tab.active {
+  background: color-mix(in srgb, var(--neon-1) 22%, var(--void)) !important;
+  border-color: var(--neon-1) !important;
+  color: var(--neon-2) !important;
+  text-shadow: 0 0 6px var(--neon-2);
+}
+
+/* ===== Toast ===== */
+body[data-custom-theme="cyberpunk"] .toast {
+  background: var(--void) !important;
+  border: none !important;
+  border-radius: 0 !important;
+  clip-path: var(--notch-btn);
+  color: var(--neon-2) !important;
+  font-family: 'Orbitron', sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 12px !important;
+  letter-spacing: 0.10em !important;
+  text-transform: uppercase !important;
+  padding: 14px 24px !important;
+  text-shadow: 0 0 4px var(--neon-2);
+  box-shadow:
+    inset 0 0 0 1px var(--neon-1),
+    inset 0 0 14px color-mix(in srgb, var(--neon-1) 18%, transparent) !important;
+  filter: drop-shadow(0 0 10px color-mix(in srgb, var(--neon-1) 40%, transparent));
+}
+body[data-custom-theme="cyberpunk"] .toast.success {
+  color: var(--safe) !important;
+  text-shadow: 0 0 4px var(--safe);
+  box-shadow: inset 0 0 0 1px var(--safe), inset 0 0 14px color-mix(in srgb, var(--safe) 18%, transparent) !important;
+  filter: drop-shadow(0 0 10px color-mix(in srgb, var(--safe) 40%, transparent));
+}
+body[data-custom-theme="cyberpunk"] .toast.error {
+  color: var(--crit) !important;
+  text-shadow: 0 0 4px var(--crit);
+  box-shadow: inset 0 0 0 1px var(--crit), inset 0 0 14px color-mix(in srgb, var(--crit) 18%, transparent) !important;
+  filter: drop-shadow(0 0 10px color-mix(in srgb, var(--crit) 40%, transparent));
+  animation: cyber-glitch 0.4s ease 1;
+}
+@keyframes cyber-glitch {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-3px) translateY(1px); }
+  40% { transform: translateX(3px) translateY(-1px); }
+  60% { transform: translateX(-2px); }
+  80% { transform: translateX(2px); }
+}
+
+/* ===== Stats / numbers ===== */
+body[data-custom-theme="cyberpunk"] .stat-value,
+body[data-custom-theme="cyberpunk"] .big-stat-value {
+  color: var(--neon-2) !important;
+  font-family: 'Orbitron', sans-serif !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.04em !important;
+  text-shadow:
+    0 0 8px var(--neon-2),
+    0 0 18px color-mix(in srgb, var(--neon-2) 50%, transparent);
+}
+body[data-custom-theme="cyberpunk"] .accent-grad,
+body[data-custom-theme="cyberpunk"] .grad-text {
+  background: linear-gradient(90deg, var(--neon-1) 0%, var(--neon-2) 100%) !important;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent !important;
+  font-family: 'Orbitron', sans-serif !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.06em !important;
+}
+
+/* ===== Changelog ===== */
+body[data-custom-theme="cyberpunk"] .cl-version.is-current {
+  filter: drop-shadow(0 0 14px color-mix(in srgb, var(--neon-2) 35%, transparent));
+  box-shadow:
+    inset 0 0 0 1px var(--neon-2),
+    inset 0 0 24px color-mix(in srgb, var(--neon-2) 12%, transparent) !important;
+}
+body[data-custom-theme="cyberpunk"] .cl-head {
+  background: linear-gradient(90deg,
+    color-mix(in srgb, var(--neon-1) 22%, var(--void)) 0%,
+    color-mix(in srgb, var(--neon-2) 14%, var(--void)) 100%) !important;
+  border-bottom-color: var(--neon-1) !important;
+}
+body[data-custom-theme="cyberpunk"] .cl-head .cl-title {
+  color: var(--neon-2) !important;
+  font-family: 'Orbitron', sans-serif !important;
+  font-weight: 900 !important;
+  font-size: 16px !important;
+  letter-spacing: 0.18em !important;
+  text-transform: uppercase !important;
+  text-shadow: 0 0 6px var(--neon-2);
+}
+body[data-custom-theme="cyberpunk"] .cl-head .cl-vchip {
+  background: var(--neon-1) !important;
+  color: var(--void) !important;
+  font-family: 'Orbitron', sans-serif !important;
+  font-weight: 900 !important;
+  border-radius: 0 !important;
+  letter-spacing: 0.10em !important;
+  clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+  padding: 4px 14px !important;
+}
+body[data-custom-theme="cyberpunk"] .cl-changes li { color: var(--hud-text); font-family: 'Share Tech Mono', monospace; }
+body[data-custom-theme="cyberpunk"] .cl-changes li::before { content: "▸ "; color: var(--neon-1); text-shadow: 0 0 4px var(--neon-1); }
+body[data-custom-theme="cyberpunk"] #changelog-version-line strong {
+  color: var(--neon-2);
+  text-shadow: 0 0 4px var(--neon-2);
+}
+
+/* ============================================================================
+   CUSTOMIZE PANEL — notched section, hex swatches, scan line
+   ============================================================================ */
+body[data-custom-theme="cyberpunk"] .theme-customize-section {
+  background: linear-gradient(180deg,
+    color-mix(in srgb, var(--neon-1) 6%, var(--void)) 0%,
+    color-mix(in srgb, var(--neon-2) 4%, var(--void)) 100%) !important;
+  border: none !important;
+  border-radius: 0 !important;
+  clip-path: var(--notch-med);
+  box-shadow:
+    inset 0 0 0 1px var(--neon-1),
+    inset 0 0 24px color-mix(in srgb, var(--neon-1) 8%, transparent) !important;
+  padding: 22px 24px !important;
+  position: relative;
+}
+body[data-custom-theme="cyberpunk"] .theme-customize-section::before {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; top: 0;
+  height: 2px;
+  background: linear-gradient(90deg,
+    transparent 0%, var(--neon-2) 50%, transparent 100%);
+  opacity: 0.6;
+  pointer-events: none;
+  animation: cyber-scan 5s linear infinite;
+}
+body[data-custom-theme="cyberpunk"] .theme-customize-row {
+  border-top: 1px dashed var(--neon-1-faint) !important;
+}
+body[data-custom-theme="cyberpunk"] .theme-customize-row-label {
+  font-family: 'Orbitron', sans-serif !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.18em !important;
+  color: var(--neon-2) !important;
+  text-transform: uppercase !important;
+  text-shadow: 0 0 4px color-mix(in srgb, var(--neon-2) 60%, transparent);
+}
+body[data-custom-theme="cyberpunk"] .theme-customize-row-label::before {
+  content: "◢ ";
+  color: var(--neon-1);
+  text-shadow: 0 0 4px var(--neon-1);
+}
+
+body[data-custom-theme="cyberpunk"] .theme-color-control input[type="color"] {
+  width: 38px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: var(--void);
+  cursor: crosshair;
+  clip-path: var(--notch-hex);
+  box-shadow:
+    inset 0 0 0 1px var(--neon-1),
+    0 0 6px color-mix(in srgb, var(--neon-1) 30%, transparent);
+}
+body[data-custom-theme="cyberpunk"] .theme-color-control input[type="color"]:hover {
+  filter: drop-shadow(0 0 8px var(--neon-2));
+}
+body[data-custom-theme="cyberpunk"] .theme-color-control input[type="color"]::-webkit-color-swatch {
+  border: none;
+  border-radius: 0;
+}
+body[data-custom-theme="cyberpunk"] .theme-color-control input[type="text"] {
+  background: var(--void) !important;
+  border: none !important;
+  border-radius: 0 !important;
+  color: var(--neon-2) !important;
+  font-family: 'Share Tech Mono', monospace !important;
+  font-weight: 400 !important;
+  font-size: 12px !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  text-shadow: 0 0 4px color-mix(in srgb, var(--neon-2) 50%, transparent);
+  caret-color: var(--neon-2);
+  clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
+  box-shadow: inset 0 0 0 1px var(--neon-1-faint) !important;
+}
+body[data-custom-theme="cyberpunk"] .theme-color-control input[type="text"]:focus {
+  box-shadow:
+    inset 0 0 0 1px var(--neon-2),
+    inset 0 0 10px color-mix(in srgb, var(--neon-2) 20%, transparent) !important;
+}
+body[data-custom-theme="cyberpunk"] .theme-color-control .stop-label {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--neon-1);
+  text-shadow: 0 0 3px color-mix(in srgb, var(--neon-1) 60%, transparent);
+}
+
+body[data-custom-theme="cyberpunk"] .theme-customize-row.gradient .gradient-preview {
+  height: 14px;
+  border: none;
+  border-radius: 0;
+  clip-path: var(--notch-hex);
+  box-shadow:
+    inset 0 0 0 1px var(--neon-1),
+    0 0 8px color-mix(in srgb, var(--neon-1) 30%, transparent);
+}
+
+body[data-custom-theme="cyberpunk"] .theme-customize-reset {
+  font-family: 'Orbitron', sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 10px !important;
+  letter-spacing: 0.18em !important;
+  text-transform: uppercase !important;
+  background: var(--void) !important;
+  border: none !important;
+  border-radius: 0 !important;
+  color: var(--neon-1) !important;
+  padding: 5px 16px !important;
+  text-shadow: 0 0 4px var(--neon-1) !important;
+  clip-path: var(--notch-btn);
+  box-shadow:
+    inset 0 0 0 1px var(--neon-1),
+    inset 0 0 8px color-mix(in srgb, var(--neon-1) 18%, transparent) !important;
+}
+body[data-custom-theme="cyberpunk"] .theme-customize-reset:hover {
+  background: var(--neon-1) !important;
+  color: var(--void) !important;
+  text-shadow: none !important;
+  filter: drop-shadow(0 0 8px var(--neon-1));
+}
+
+/* Custom-themes section + CTA */
+body[data-custom-theme="cyberpunk"] .custom-themes-section { border-top-color: var(--neon-1-faint); }
+body[data-custom-theme="cyberpunk"] .custom-themes-actions .themes-cta {
+  background: linear-gradient(135deg, var(--neon-1) 0%, var(--neon-2) 100%) !important;
+  border: none !important;
+  border-radius: 0 !important;
+  color: var(--void) !important;
+  text-shadow: none !important;
+  clip-path: var(--notch-arrow);
+  filter: drop-shadow(0 0 12px var(--neon-1));
+}
+body[data-custom-theme="cyberpunk"] .custom-themes-actions .themes-cta:hover {
+  filter: drop-shadow(0 0 16px var(--neon-1)) drop-shadow(0 0 22px color-mix(in srgb, var(--neon-2) 50%, transparent));
+}
+body[data-custom-theme="cyberpunk"] .custom-themes-actions .themes-cta .cta-title {
+  font-family: 'Orbitron', sans-serif !important;
+  font-weight: 900 !important;
+  font-size: 14px !important;
+  letter-spacing: 0.16em !important;
+  text-transform: uppercase !important;
+}
+body[data-custom-theme="cyberpunk"] .custom-themes-actions .themes-cta .cta-sub {
+  font-family: 'Share Tech Mono', monospace !important;
+  font-size: 10px !important;
+  letter-spacing: 0.10em !important;
+  text-transform: uppercase !important;
+}
+
+/* ============================================================================
+   TOPOLOGY VIEW — neon HUD grid + magenta/cyan nodes
+   ============================================================================ */
+body[data-custom-theme="cyberpunk"] .topo-container {
+  background:
+    /* HUD grid lines */
+    repeating-linear-gradient(0deg,
+      color-mix(in srgb, var(--neon-2) 10%, transparent) 0 1px,
+      transparent 1px 32px),
+    repeating-linear-gradient(90deg,
+      color-mix(in srgb, var(--neon-2) 10%, transparent) 0 1px,
+      transparent 1px 32px),
+    /* Center glow */
+    radial-gradient(circle at 50% 50%,
+      color-mix(in srgb, var(--neon-1) 18%, transparent) 0%,
+      transparent 55%),
+    var(--void) !important;
+  border-bottom: 1px solid var(--neon-1);
+}
+body[data-custom-theme="cyberpunk"] .topo-info {
+  background:
+    linear-gradient(180deg,
+      color-mix(in srgb, var(--neon-1) 8%, var(--void)) 0%,
+      var(--void) 100%) !important;
+  border: none !important;
+  border-radius: 0 !important;
+  clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
+  box-shadow:
+    inset 0 0 0 1px var(--neon-1),
+    inset 0 0 18px color-mix(in srgb, var(--neon-1) 14%, transparent) !important;
+  backdrop-filter: none;
+  font-family: 'Share Tech Mono', monospace;
+  color: var(--hud-text);
+}
+body[data-custom-theme="cyberpunk"] .topo-info .ti-host {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 900;
+  font-size: 14px;
+  color: var(--neon-2);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-shadow: 0 0 6px var(--neon-2);
+}
+body[data-custom-theme="cyberpunk"] .topo-info-empty { color: var(--hud-text-dim); }
+body[data-custom-theme="cyberpunk"] .topo-info .ti-row { color: var(--hud-text); }
+body[data-custom-theme="cyberpunk"] .topo-info .ti-row span:first-child { color: var(--hud-text-dim); }
+
+body[data-custom-theme="cyberpunk"] .topo-legend {
+  background: linear-gradient(180deg,
+    color-mix(in srgb, var(--neon-1) 5%, var(--void)) 0%,
+    var(--void) 100%) !important;
+  border-top: 1px solid var(--neon-1);
+  font-family: 'Share Tech Mono', monospace;
+  color: var(--hud-text-dim);
+}
+body[data-custom-theme="cyberpunk"] .topo-leg-item .dot.center {
+  background: var(--neon-1) !important;
+  box-shadow: 0 0 12px var(--neon-1) !important;
+}
+body[data-custom-theme="cyberpunk"] .topo-leg-item .dot.remote {
+  background: var(--neon-2) !important;
+  box-shadow: 0 0 12px var(--neon-2) !important;
+}
+body[data-custom-theme="cyberpunk"] .topo-leg-item .line {
+  background: linear-gradient(90deg, transparent, var(--neon-1), var(--neon-2), transparent);
+  filter: drop-shadow(0 0 4px var(--neon-1));
+}
+
+/* ============================================================================
+   MODAL OVERLAY — neon-tinted dim
+   ============================================================================ */
+body[data-custom-theme="cyberpunk"] .modal-overlay {
+  background:
+    radial-gradient(ellipse 80% 80% at 50% 50%,
+      color-mix(in srgb, var(--neon-1) 12%, transparent) 0%,
+      transparent 70%),
+    rgba(10, 0, 20, 0.85) !important;
+  backdrop-filter: blur(6px) saturate(180%);
+  -webkit-backdrop-filter: blur(6px) saturate(180%);
+}

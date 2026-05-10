@@ -1,0 +1,37 @@
+{
+  "id":          "retro",
+  "name":        "Retro",
+  "author":      "@throttlr",
+  "version":     "1.0.1",
+  "description": "Y2K kidcore aesthetic — cream panels with chunky black borders, coral pink title bars, sky blue accents, hard-edge offset shadows, pixel fonts. Cute soft retro tech.",
+  "base":        "windows7",
+  "css_file":    "retro.css",
+  "preview": {
+    "bg":      "#a89aa6",
+    "panel":   "#fdf4ed",
+    "accent":  "#ff7a9c",
+    "accent2": "#7fc8e8",
+    "text":    "#2d1f2a",
+    "font":    "Pixelify Sans"
+  },
+  "customizable": [
+    {
+      "key":     "wallpaper",
+      "label":   "Wallpaper",
+      "type":    "color",
+      "default": "#a89aa6"
+    },
+    {
+      "key":     "pink",
+      "label":   "Pink accent",
+      "type":    "color",
+      "default": "#ff7a9c"
+    },
+    {
+      "key":     "blue",
+      "label":   "Blue accent",
+      "type":    "color",
+      "default": "#7fc8e8"
+    }
+  ]
+}

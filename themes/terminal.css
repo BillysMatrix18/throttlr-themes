@@ -1,0 +1,651 @@
+/* =============================================================================
+   TERMINAL — phosphor green CRT terminal aesthetic for Throttlr
+   VT323 + JetBrains Mono. Pure black bg, bright phosphor green text,
+   subtle scanlines, [BRACKETED] buttons, ASCII-style box borders.
+   Customizable: phosphor color + terminal background.
+   ============================================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=VT323&display=swap');
+
+body[data-custom-theme="terminal"] {
+  /* Customizable inputs — wired via the manifest's `customizable` array.
+     The user's color picks land in --theme-u-* via the override <style>;
+     we pull them into nicer-named locals for the rest of the CSS. */
+  --phos:        var(--theme-u-phosphor, #00ff66);
+  --phos-dim:    color-mix(in srgb, var(--theme-u-phosphor, #00ff66) 50%, black);
+  --phos-faint:  color-mix(in srgb, var(--theme-u-phosphor, #00ff66) 22%, black);
+  --phos-glow:   color-mix(in srgb, var(--theme-u-phosphor, #00ff66) 40%, transparent);
+  --term-bg:     var(--theme-u-bg-base, #000000);
+  --term-bg-2:   color-mix(in srgb, var(--theme-u-phosphor, #00ff66) 4%,  var(--theme-u-bg-base, #000000));
+  --term-bg-3:   color-mix(in srgb, var(--theme-u-phosphor, #00ff66) 8%,  var(--theme-u-bg-base, #000000));
+  --term-bg-4:   color-mix(in srgb, var(--theme-u-phosphor, #00ff66) 14%, var(--theme-u-bg-base, #000000));
+  --amber:       #ffb84a;   /* warnings — fixed (classic CRT amber) */
+  --crimson:     #ff3344;   /* errors — fixed */
+
+  /* Re-map Throttlr's design tokens */
+  --bg:          var(--term-bg);
+  --bg-2:        var(--term-bg-2);
+  --bg-3:        var(--term-bg-3);
+  --bg-4:        var(--term-bg-4);
+  --steel:       var(--phos-faint);
+  --steel-light: var(--phos-dim);
+  --steel-bright:var(--phos);
+  --hazard:      var(--phos);
+  --hazard-deep: var(--phos-dim);
+  --hazard-grad: linear-gradient(135deg, var(--phos) 0%, var(--amber) 100%);
+  --term:        var(--phos);
+  --term-dim:    var(--phos-dim);
+  --blood:       var(--crimson);
+  --blood-deep:  #cc1122;
+  --bone:        var(--phos);
+  --bone-dim:    var(--phos-dim);
+
+  background:
+    /* Subtle scanlines — every 3px, very dim so text stays readable */
+    repeating-linear-gradient(0deg,
+      color-mix(in srgb, var(--phos) 3%, transparent) 0 1px,
+      transparent 1px 3px),
+    /* CRT vignette — center bright, edges fade to true black */
+    radial-gradient(ellipse at center,
+      var(--term-bg) 0%,
+      color-mix(in srgb, var(--term-bg) 70%, black) 100%);
+  background-attachment: fixed;
+  color: var(--phos);
+  font-family: 'JetBrains Mono', 'Consolas', 'Courier New', monospace;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+body[data-custom-theme="terminal"] .modal-corners { display: none !important; }
+
+/* Hide Throttlr's built-in CRT overlay — Terminal has its own scanline
+   pattern in the body bg, the built-in one would double up. */
+body[data-custom-theme="terminal"] .crt-scanlines,
+body[data-custom-theme="terminal"] .crt-noise,
+body[data-custom-theme="terminal"] .crt-vignette { display: none !important; }
+
+/* ===== Titlebar ===== */
+body[data-custom-theme="terminal"] .titlebar {
+  background: var(--term-bg);
+  border-bottom: 1px solid var(--phos-dim);
+  box-shadow: 0 1px 0 var(--phos-faint);
+  color: var(--phos);
+}
+body[data-custom-theme="terminal"] .tb-title {
+  font-family: 'VT323', monospace;
+  font-size: 26px;
+  font-weight: 400;
+  color: var(--phos);
+  text-shadow: 0 0 8px var(--phos-glow);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+body[data-custom-theme="terminal"] .tb-title::before { content: "> "; opacity: 0.6; }
+body[data-custom-theme="terminal"] .tb-sub { color: var(--phos-dim); font-family: 'JetBrains Mono', monospace; }
+body[data-custom-theme="terminal"] .titlebar-status { color: var(--phos); }
+
+/* ===== Scrollbars ===== */
+body[data-custom-theme="terminal"] ::-webkit-scrollbar { width: 12px; height: 12px; }
+body[data-custom-theme="terminal"] ::-webkit-scrollbar-track {
+  background: var(--term-bg);
+  border-left: 1px solid var(--phos-faint);
+}
+body[data-custom-theme="terminal"] ::-webkit-scrollbar-thumb {
+  background: var(--phos-dim);
+  border: 2px solid var(--term-bg);
+  background-clip: padding-box;
+}
+body[data-custom-theme="terminal"] ::-webkit-scrollbar-thumb:hover {
+  background: var(--phos);
+  background-clip: padding-box;
+  border: 2px solid var(--term-bg);
+}
+body[data-custom-theme="terminal"] ::selection {
+  background: var(--phos);
+  color: var(--term-bg);
+}
+
+/* ===== Panels ===== */
+body[data-custom-theme="terminal"] .modal,
+body[data-custom-theme="terminal"] .panel,
+body[data-custom-theme="terminal"] .stat-cell,
+body[data-custom-theme="terminal"] .preset-card,
+body[data-custom-theme="terminal"] .auto-rule-card,
+body[data-custom-theme="terminal"] .lan-peer-card,
+body[data-custom-theme="terminal"] .plugin-card,
+body[data-custom-theme="terminal"] .func-panel,
+body[data-custom-theme="terminal"] .cl-version {
+  background: var(--term-bg-2);
+  border: 1px solid var(--phos-dim);
+  border-radius: 0;
+  box-shadow:
+    inset 0 0 0 1px var(--term-bg),
+    inset 0 0 0 2px var(--phos-faint);
+  color: var(--phos);
+}
+
+/* Modal head */
+body[data-custom-theme="terminal"] .modal-head {
+  background: var(--term-bg-3);
+  border-bottom: 1px dashed var(--phos-dim);
+  border-radius: 0;
+}
+body[data-custom-theme="terminal"] .modal-head h2 {
+  font-family: 'VT323', monospace;
+  font-size: 26px;
+  font-weight: 400;
+  color: var(--phos);
+  text-shadow: 0 0 6px var(--phos-glow);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+body[data-custom-theme="terminal"] .modal-head h2::before { content: "[ "; opacity: 0.7; }
+body[data-custom-theme="terminal"] .modal-head h2::after  { content: " ]"; opacity: 0.7; }
+body[data-custom-theme="terminal"] .modal-close {
+  background: transparent;
+  border: 1px solid var(--phos-dim);
+  border-radius: 0;
+  color: var(--phos);
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  width: 28px; height: 28px;
+}
+body[data-custom-theme="terminal"] .modal-close:hover {
+  background: var(--crimson);
+  border-color: var(--crimson);
+  color: var(--term-bg);
+  text-shadow: 0 0 4px var(--crimson);
+}
+
+/* ===== Buttons — [ BRACKETED ] terminal style ===== */
+body[data-custom-theme="terminal"] button:not(.modal-close):not(.tab-btn):not(.preset-tab):not(.preset-card):not(.theme-tile):not(.design-tile),
+body[data-custom-theme="terminal"] .btn-stencil,
+body[data-custom-theme="terminal"] .peer-btn,
+body[data-custom-theme="terminal"] .studio-btn,
+body[data-custom-theme="terminal"] .hotkey-btn {
+  background: transparent;
+  border: 1px solid var(--phos-dim);
+  border-radius: 0;
+  color: var(--phos);
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 7px 14px;
+  cursor: pointer;
+  transition: background 0.1s, border-color 0.1s, color 0.1s, text-shadow 0.1s;
+}
+body[data-custom-theme="terminal"] button:not(.modal-close):hover,
+body[data-custom-theme="terminal"] .btn-stencil:hover,
+body[data-custom-theme="terminal"] .peer-btn:hover,
+body[data-custom-theme="terminal"] .studio-btn:hover,
+body[data-custom-theme="terminal"] .hotkey-btn:hover {
+  background: var(--phos);
+  border-color: var(--phos);
+  color: var(--term-bg);
+  text-shadow: none;
+  box-shadow: 0 0 12px var(--phos-glow);
+}
+body[data-custom-theme="terminal"] .btn-hazard {
+  background: var(--phos);
+  border: 1px solid var(--phos);
+  border-radius: 0;
+  color: var(--term-bg);
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  box-shadow: 0 0 16px var(--phos-glow);
+}
+body[data-custom-theme="terminal"] .btn-hazard:hover {
+  background: var(--amber);
+  border-color: var(--amber);
+  color: #000;
+  box-shadow: 0 0 20px color-mix(in srgb, var(--amber) 50%, transparent);
+}
+
+/* ===== Tabs ===== */
+body[data-custom-theme="terminal"] .tab-btn {
+  background: transparent;
+  border: 1px solid var(--phos-faint);
+  border-bottom: none;
+  border-radius: 0;
+  color: var(--phos-dim);
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+body[data-custom-theme="terminal"] .tab-btn.active {
+  background: var(--term-bg-2);
+  border-color: var(--phos);
+  color: var(--phos);
+  text-shadow: 0 0 4px var(--phos-glow);
+}
+
+/* ===== Inputs ===== */
+body[data-custom-theme="terminal"] input[type="text"],
+body[data-custom-theme="terminal"] input[type="number"],
+body[data-custom-theme="terminal"] input[type="search"],
+body[data-custom-theme="terminal"] textarea,
+body[data-custom-theme="terminal"] select,
+body[data-custom-theme="terminal"] .text-input,
+body[data-custom-theme="terminal"] .studio-select {
+  background: var(--term-bg);
+  border: 1px solid var(--phos-dim);
+  border-radius: 0;
+  color: var(--phos);
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 400;
+  padding: 7px 10px;
+  caret-color: var(--phos);
+}
+body[data-custom-theme="terminal"] input:focus,
+body[data-custom-theme="terminal"] textarea:focus,
+body[data-custom-theme="terminal"] select:focus {
+  border-color: var(--phos);
+  outline: none;
+  box-shadow: 0 0 0 1px var(--phos), inset 0 0 12px var(--phos-faint);
+}
+
+/* ===== Sliders ===== */
+body[data-custom-theme="terminal"] input[type="range"]::-webkit-slider-runnable-track {
+  background: var(--term-bg-3);
+  height: 6px;
+  border: 1px solid var(--phos-dim);
+  border-radius: 0;
+}
+body[data-custom-theme="terminal"] input[type="range"]::-webkit-slider-thumb {
+  background: var(--phos);
+  border: 1px solid var(--phos);
+  border-radius: 0;
+  width: 14px;
+  height: 14px;
+  margin-top: -5px;
+  box-shadow: 0 0 8px var(--phos-glow);
+}
+
+/* ===== Tool rail ===== */
+body[data-custom-theme="terminal"] .toolrail {
+  background: var(--term-bg);
+  border-right: 1px solid var(--phos-faint);
+}
+body[data-custom-theme="terminal"] .trb {
+  background: transparent;
+  color: var(--phos-dim);
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: 0;
+}
+body[data-custom-theme="terminal"] .trb:hover {
+  background: var(--term-bg-2);
+  color: var(--phos);
+}
+body[data-custom-theme="terminal"] .trb.active {
+  background: var(--term-bg-3);
+  color: var(--phos);
+  text-shadow: 0 0 4px var(--phos-glow);
+  border-left: 2px solid var(--phos);
+}
+
+/* ===== Field labels & code ===== */
+body[data-custom-theme="terminal"] .field-label,
+body[data-custom-theme="terminal"] .stat-label,
+body[data-custom-theme="terminal"] .panel-title,
+body[data-custom-theme="terminal"] .func-panel h3 {
+  color: var(--phos);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+}
+body[data-custom-theme="terminal"] .field-label::before,
+body[data-custom-theme="terminal"] .panel-title::before { content: "// "; opacity: 0.5; }
+body[data-custom-theme="terminal"] .hint-text { color: var(--phos-dim); font-style: normal; }
+body[data-custom-theme="terminal"] code {
+  background: var(--term-bg);
+  border: 1px solid var(--phos-faint);
+  color: var(--amber);
+  padding: 1px 6px;
+  border-radius: 0;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* ===== Status pill ===== */
+body[data-custom-theme="terminal"] .status-pill {
+  background: var(--term-bg);
+  border: 1px solid var(--phos-dim);
+  border-radius: 0;
+  color: var(--phos);
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+}
+body[data-custom-theme="terminal"] .status-pill.running {
+  background: var(--phos);
+  border-color: var(--phos);
+  color: var(--term-bg);
+  box-shadow: 0 0 12px var(--phos-glow);
+  animation: term-blink 1.6s steps(2) infinite;
+}
+@keyframes term-blink { 50% { opacity: 0.85; } }
+
+/* ===== Preset cards & tabs ===== */
+body[data-custom-theme="terminal"] .preset-card {
+  background: var(--term-bg-2);
+  border: 1px solid var(--phos-faint);
+  border-radius: 0;
+}
+body[data-custom-theme="terminal"] .preset-card:hover {
+  background: var(--term-bg-3);
+  border-color: var(--phos);
+  transform: none;
+  box-shadow: inset 0 0 0 1px var(--phos-faint);
+}
+body[data-custom-theme="terminal"] .preset-card .pc-icon.icon { color: var(--phos); }
+body[data-custom-theme="terminal"] .preset-card .pc-name {
+  color: var(--phos);
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+body[data-custom-theme="terminal"] .preset-tab {
+  background: transparent;
+  border: 1px solid var(--phos-faint);
+  border-radius: 0;
+  color: var(--phos-dim);
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+}
+body[data-custom-theme="terminal"] .preset-tab.active {
+  background: var(--term-bg-2);
+  border-color: var(--phos);
+  color: var(--phos);
+}
+
+/* ===== Toast ===== */
+body[data-custom-theme="terminal"] .toast {
+  background: var(--term-bg);
+  border: 1px solid var(--phos);
+  border-radius: 0;
+  color: var(--phos);
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  box-shadow: 0 0 16px var(--phos-glow);
+}
+body[data-custom-theme="terminal"] .toast::before { content: "> "; opacity: 0.7; }
+body[data-custom-theme="terminal"] .toast.success {
+  border-color: var(--phos);
+  color: var(--phos);
+}
+body[data-custom-theme="terminal"] .toast.error {
+  border-color: var(--crimson);
+  color: var(--crimson);
+  box-shadow: 0 0 16px color-mix(in srgb, var(--crimson) 40%, transparent);
+}
+
+/* ===== Stats / numbers ===== */
+body[data-custom-theme="terminal"] .stat-value,
+body[data-custom-theme="terminal"] .big-stat-value {
+  color: var(--phos);
+  font-family: 'VT323', monospace;
+  font-weight: 400;
+  text-shadow: 0 0 8px var(--phos-glow);
+  letter-spacing: 0.02em;
+}
+body[data-custom-theme="terminal"] .accent-grad,
+body[data-custom-theme="terminal"] .grad-text {
+  background: linear-gradient(135deg, var(--phos) 0%, var(--amber) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: 'VT323', monospace;
+  font-weight: 400;
+}
+
+/* ===== Changelog ===== */
+body[data-custom-theme="terminal"] .cl-version.is-current {
+  border-color: var(--phos);
+  box-shadow: 0 0 16px var(--phos-glow);
+}
+body[data-custom-theme="terminal"] .cl-head {
+  background: var(--term-bg-3);
+  border-bottom-color: var(--phos-dim);
+}
+body[data-custom-theme="terminal"] .cl-head .cl-title {
+  color: var(--phos);
+  font-family: 'VT323', monospace;
+  font-size: 22px;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+body[data-custom-theme="terminal"] .cl-head .cl-vchip {
+  background: var(--phos);
+  color: var(--term-bg);
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  border-radius: 0;
+}
+body[data-custom-theme="terminal"] .cl-changes li { color: var(--phos); }
+body[data-custom-theme="terminal"] .cl-changes li::before { content: "$ "; color: var(--phos-dim); }
+body[data-custom-theme="terminal"] #changelog-version-line strong { color: var(--phos); }
+
+/* ============================================================================
+   CUSTOMIZE PANEL — scoped to match the terminal aesthetic
+   The user's color picker UI in Settings → Appearance picks up these styles
+   so the customize section feels like part of the terminal theme.
+   ============================================================================ */
+body[data-custom-theme="terminal"] .theme-customize-section {
+  background: var(--term-bg);
+  border: 1px solid var(--phos-dim);
+  border-radius: 0;
+  padding: 16px 18px;
+  position: relative;
+}
+body[data-custom-theme="terminal"] .theme-customize-section::before {
+  content: "// CUSTOMIZE.SH";
+  position: absolute;
+  top: -10px;
+  left: 14px;
+  background: var(--term-bg);
+  padding: 0 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  color: var(--phos-dim);
+}
+body[data-custom-theme="terminal"] .theme-customize-head .field-label::before { content: "$ "; }
+
+body[data-custom-theme="terminal"] .theme-customize-row {
+  border-top: 1px dashed var(--phos-faint);
+}
+body[data-custom-theme="terminal"] .theme-customize-row-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  color: var(--phos);
+  text-transform: uppercase;
+}
+body[data-custom-theme="terminal"] .theme-customize-row-label::before { content: "> "; opacity: 0.5; }
+
+body[data-custom-theme="terminal"] .theme-color-control input[type="color"] {
+  width: 36px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid var(--phos-dim);
+  border-radius: 0;
+  background: var(--term-bg);
+  cursor: crosshair;
+}
+body[data-custom-theme="terminal"] .theme-color-control input[type="color"]:hover {
+  border-color: var(--phos);
+  box-shadow: 0 0 8px var(--phos-glow);
+}
+body[data-custom-theme="terminal"] .theme-color-control input[type="color"]::-webkit-color-swatch {
+  border: none;
+  border-radius: 0;
+}
+body[data-custom-theme="terminal"] .theme-color-control input[type="text"] {
+  background: var(--term-bg);
+  border: 1px solid var(--phos-dim);
+  border-radius: 0;
+  color: var(--phos);
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  caret-color: var(--phos);
+}
+body[data-custom-theme="terminal"] .theme-color-control input[type="text"]:focus {
+  border-color: var(--phos);
+  box-shadow: 0 0 8px var(--phos-glow);
+}
+body[data-custom-theme="terminal"] .theme-color-control .stop-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--phos-dim);
+}
+
+/* Gradient preview strip */
+body[data-custom-theme="terminal"] .theme-customize-row.gradient .gradient-preview {
+  height: 14px;
+  border: 1px solid var(--phos-dim);
+  border-radius: 0;
+  box-shadow: inset 0 0 0 1px var(--term-bg);
+}
+
+/* Reset button — bracketed [ RESET ] style */
+body[data-custom-theme="terminal"] .theme-customize-reset {
+  font-family: 'JetBrains Mono', monospace !important;
+  font-weight: 700 !important;
+  font-size: 10px !important;
+  letter-spacing: 0.10em !important;
+  text-transform: uppercase !important;
+  background: transparent !important;
+  border: 1px solid var(--phos-dim) !important;
+  border-radius: 0 !important;
+  color: var(--phos) !important;
+  padding: 4px 10px !important;
+}
+body[data-custom-theme="terminal"] .theme-customize-reset:hover {
+  background: var(--phos) !important;
+  border-color: var(--phos) !important;
+  color: var(--term-bg) !important;
+}
+
+/* Custom-themes section heading + buttons row */
+body[data-custom-theme="terminal"] .custom-themes-section {
+  border-top-color: var(--phos-faint);
+}
+body[data-custom-theme="terminal"] .custom-themes-actions .themes-cta {
+  background: var(--term-bg);
+  border: 1px solid var(--phos);
+  border-radius: 0;
+  color: var(--phos);
+  box-shadow: 0 0 12px var(--phos-glow);
+}
+body[data-custom-theme="terminal"] .custom-themes-actions .themes-cta:hover {
+  background: var(--phos);
+  color: var(--term-bg);
+}
+body[data-custom-theme="terminal"] .custom-themes-actions .themes-cta .cta-title {
+  font-family: 'VT323', monospace !important;
+  font-size: 20px !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+}
+body[data-custom-theme="terminal"] .custom-themes-actions .themes-cta .cta-sub {
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 10px !important;
+  letter-spacing: 0.04em !important;
+  opacity: 0.75;
+}
+
+/* ============================================================================
+   TOPOLOGY VIEW — phosphor green CRT grid
+   ============================================================================ */
+body[data-custom-theme="terminal"] .topo-container {
+  background:
+    repeating-linear-gradient(0deg,
+      color-mix(in srgb, var(--phosphor) 8%, transparent) 0 1px,
+      transparent 1px 28px),
+    repeating-linear-gradient(90deg,
+      color-mix(in srgb, var(--phosphor) 8%, transparent) 0 1px,
+      transparent 1px 28px),
+    radial-gradient(circle at 50% 50%,
+      color-mix(in srgb, var(--phosphor) 10%, transparent) 0%,
+      transparent 60%),
+    var(--bg-base, #000) !important;
+  border-bottom: 1px solid color-mix(in srgb, var(--phosphor) 30%, transparent);
+}
+body[data-custom-theme="terminal"] .topo-info {
+  background: var(--bg-base, #000) !important;
+  border: 1px solid var(--phosphor) !important;
+  border-radius: 0 !important;
+  box-shadow:
+    inset 0 0 12px color-mix(in srgb, var(--phosphor) 18%, transparent),
+    0 0 14px color-mix(in srgb, var(--phosphor) 30%, transparent) !important;
+  backdrop-filter: none;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--phosphor);
+}
+body[data-custom-theme="terminal"] .topo-info .ti-host {
+  font-family: 'VT323', monospace;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--phosphor);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-shadow: 0 0 6px var(--phosphor);
+}
+body[data-custom-theme="terminal"] .topo-info-empty { color: color-mix(in srgb, var(--phosphor) 60%, transparent); }
+body[data-custom-theme="terminal"] .topo-info .ti-row { color: var(--phosphor); }
+body[data-custom-theme="terminal"] .topo-info .ti-row span:first-child { color: color-mix(in srgb, var(--phosphor) 60%, transparent); }
+body[data-custom-theme="terminal"] .topo-legend {
+  background: var(--bg-base, #000) !important;
+  border-top: 1px solid color-mix(in srgb, var(--phosphor) 30%, transparent);
+  font-family: 'JetBrains Mono', monospace;
+  color: color-mix(in srgb, var(--phosphor) 70%, transparent);
+}
+body[data-custom-theme="terminal"] .topo-leg-item .dot.center {
+  background: var(--phosphor) !important;
+  box-shadow: 0 0 10px var(--phosphor) !important;
+}
+body[data-custom-theme="terminal"] .topo-leg-item .dot.remote {
+  background: color-mix(in srgb, var(--phosphor) 70%, white) !important;
+  box-shadow: 0 0 8px color-mix(in srgb, var(--phosphor) 70%, white) !important;
+}
+body[data-custom-theme="terminal"] .topo-leg-item .line {
+  background: linear-gradient(90deg, transparent, var(--phosphor), transparent);
+  filter: drop-shadow(0 0 3px var(--phosphor));
+}
+
+/* ============================================================================
+   MODAL OVERLAY — pure dark with green tint
+   ============================================================================ */
+body[data-custom-theme="terminal"] .modal-overlay {
+  background: rgba(0, 0, 0, 0.92) !important;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}

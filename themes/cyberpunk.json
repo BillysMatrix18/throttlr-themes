@@ -1,0 +1,32 @@
+{
+  "id":          "cyberpunk",
+  "name":        "Cyberpunk",
+  "author":      "@throttlr",
+  "version":     "1.0.0",
+  "description": "Sci-fi HUD aesthetic — angular panels with corner brackets, dual-neon glow, scanlines, Orbitron + Share Tech Mono. Pure Blade Runner / Cyberpunk 2077.",
+  "base":        "industrial",
+  "css_file":    "cyberpunk.css",
+  "preview": {
+    "bg":      "#0a0014",
+    "panel":   "#140828",
+    "accent":  "#ff0080",
+    "accent2": "#00f5ff",
+    "text":    "#e0d0ff",
+    "font":    "Orbitron"
+  },
+  "customizable": [
+    {
+      "key":         "neon",
+      "label":       "Neon glow",
+      "type":        "gradient",
+      "stop_labels": ["Primary", "Secondary"],
+      "default":     ["#ff0080", "#00f5ff"]
+    },
+    {
+      "key":     "bg-base",
+      "label":   "Void color",
+      "type":    "color",
+      "default": "#0a0014"
+    }
+  ]
+}

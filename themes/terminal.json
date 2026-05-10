@@ -1,0 +1,31 @@
+{
+  "id":          "terminal",
+  "name":        "Terminal",
+  "author":      "@throttlr",
+  "version":     "1.0.0",
+  "description": "Phosphor green CRT terminal — VT323 font, scanlines, monospace everything, [BRACKETED] buttons. Pure 1980s.",
+  "base":        "industrial",
+  "css_file":    "terminal.css",
+  "preview": {
+    "bg":      "#000000",
+    "panel":   "#001a08",
+    "accent":  "#00ff66",
+    "accent2": "#33ff99",
+    "text":    "#33ff66",
+    "font":    "VT323"
+  },
+  "customizable": [
+    {
+      "key":     "phosphor",
+      "label":   "Phosphor color",
+      "type":    "color",
+      "default": "#00ff66"
+    },
+    {
+      "key":     "bg-base",
+      "label":   "Terminal background",
+      "type":    "color",
+      "default": "#000000"
+    }
+  ]
+}

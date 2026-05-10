@@ -1,0 +1,39 @@
+{
+  "id":          "frutiger-aero",
+  "name":        "Frutiger Aero",
+  "author":      "@throttlr",
+  "version":     "1.0.0",
+  "description": "Sky-blue Vista-Aero aesthetic — glassy pill buttons, aurora swooshes, bokeh sparkles, Quicksand font. Pure 2004-2013.",
+  "base":        "windows7",
+  "css_file":    "frutiger-aero.css",
+  "preview": {
+    "bg":      "#2d7a98",
+    "panel":   "rgba(255,255,255,0.20)",
+    "accent":  "#5fd5f5",
+    "accent2": "#7fe5c0",
+    "text":    "#0a2030",
+    "font":    "Quicksand"
+  },
+  "customizable": [
+    {
+      "key":         "sky",
+      "label":       "Sky gradient",
+      "type":        "gradient",
+      "stop_labels": ["Top", "Middle", "Bottom"],
+      "default":     ["#1a5670", "#2d7a98", "#58a8c5"]
+    },
+    {
+      "key":         "aurora",
+      "label":       "Aurora streaks",
+      "type":        "gradient",
+      "stop_labels": ["Streak 1", "Streak 2"],
+      "default":     ["#9fffe5", "#ffd0f0"]
+    },
+    {
+      "key":     "accent",
+      "label":   "Accent",
+      "type":    "color",
+      "default": "#5fd5f5"
+    }
+  ]
+}
