@@ -1,0 +1,471 @@
+/* =============================================================================
+   LIQUID GLASS — Apple-style translucent UI for Throttlr
+   Inspired by iOS 18 / macOS Sequoia "Liquid Glass" aesthetic. Heavy
+   frosted-glass blur on every panel, soft white 1px borders with subtle
+   inner highlights, no harsh accent colors, minimal chrome. The whole UI
+   looks like layers of frosted glass floating over a colorful backdrop.
+   ============================================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+body[data-custom-theme="liquid-glass"] {
+  --bg:           #1a1a1f;
+  --bg-2:         rgba(255, 255, 255, 0.08);
+  --bg-3:         rgba(255, 255, 255, 0.12);
+  --bg-4:         rgba(255, 255, 255, 0.18);
+  --steel:        rgba(255, 255, 255, 0.12);
+  --steel-light:  rgba(255, 255, 255, 0.18);
+  --steel-bright: rgba(255, 255, 255, 0.30);
+
+  --hazard:       #ffffff;
+  --hazard-deep:  rgba(255, 255, 255, 0.85);
+  --hazard-grad:  linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.65) 100%);
+
+  --term:         #5ce6a8;
+  --term-dim:     #3aa676;
+  --blood:        #ff7a8a;
+  --blood-deep:   #d64458;
+  --bone:         #f5f5f7;
+  --bone-dim:     rgba(245, 245, 247, 0.65);
+
+  /* Colorful gradient background — gives the glass something to refract.
+     Mimics the iOS lockscreen wallpaper feel. Heavy reds + pinks +
+     purples + oranges so the frosted panels pull rich colors through. */
+  background:
+    /* Frosted glass orbs in the background — colors come from the
+       `atmosphere` customizable in the manifest. Each gradient stop
+       becomes a CSS variable; color-mix applies the alpha so the
+       user picks pure RGB hex but the orbs render translucent. */
+    radial-gradient(ellipse 80% 60% at 15% 10%, color-mix(in srgb, var(--theme-u-atmosphere-0, #ff5064) 55%, transparent), transparent 70%),
+    radial-gradient(ellipse 70% 60% at 85% 25%, color-mix(in srgb, var(--theme-u-atmosphere-1, #ff823c) 45%, transparent), transparent 70%),
+    radial-gradient(ellipse 60% 70% at 75% 90%, color-mix(in srgb, var(--theme-u-atmosphere-2, #b446ff) 40%, transparent), transparent 70%),
+    radial-gradient(ellipse 70% 50% at 20% 85%, color-mix(in srgb, var(--theme-u-atmosphere-3, #ff3c8c) 45%, transparent), transparent 70%),
+    radial-gradient(circle at 50% 50%, rgba(140, 40, 80, 0.35), transparent 80%),
+    #1a1a1f;
+  background-attachment: fixed;
+  color: #f5f5f7;
+  font-family: 'Inter', -apple-system, 'SF Pro Text', system-ui, sans-serif;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+}
+
+body[data-custom-theme="liquid-glass"] .modal-corners { display: none !important; }
+
+/* =====  THE GLASS RECIPE  =====
+   Used on every panel. Three layers stacked:
+   1. backdrop-filter blur — picks up the colorful background
+   2. semi-transparent white tint — gives the milky "frosted" feel
+   3. white inner highlight (top edge) + soft outer shadow */
+
+body[data-custom-theme="liquid-glass"] .modal,
+body[data-custom-theme="liquid-glass"] .panel,
+body[data-custom-theme="liquid-glass"] .stat-cell,
+body[data-custom-theme="liquid-glass"] .preset-card,
+body[data-custom-theme="liquid-glass"] .auto-rule-card,
+body[data-custom-theme="liquid-glass"] .lan-peer-card,
+body[data-custom-theme="liquid-glass"] .plugin-card,
+body[data-custom-theme="liquid-glass"] .func-panel,
+body[data-custom-theme="liquid-glass"] .cl-version {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.06) 100%);
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 18px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.30),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.06),
+    0 8px 32px rgba(0, 0, 0, 0.35);
+  color: #f5f5f7;
+}
+
+/* Titlebar — the most translucent layer, sits at the very top */
+body[data-custom-theme="liquid-glass"] .titlebar {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(30px) saturate(180%);
+  -webkit-backdrop-filter: blur(30px) saturate(180%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.20);
+  color: #f5f5f7;
+}
+body[data-custom-theme="liquid-glass"] .tb-title {
+  color: #ffffff;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+body[data-custom-theme="liquid-glass"] .tb-sub { color: rgba(245, 245, 247, 0.55); }
+body[data-custom-theme="liquid-glass"] .titlebar-status { color: #5ce6a8; }
+
+/* Scrollbars — almost invisible, just a faint white pill */
+body[data-custom-theme="liquid-glass"] ::-webkit-scrollbar { width: 12px; height: 12px; }
+body[data-custom-theme="liquid-glass"] ::-webkit-scrollbar-track { background: transparent; }
+body[data-custom-theme="liquid-glass"] ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.20);
+  border-radius: 6px;
+  border: 3px solid transparent;
+  background-clip: padding-box;
+}
+body[data-custom-theme="liquid-glass"] ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.35);
+  background-clip: padding-box;
+  border: 3px solid transparent;
+}
+body[data-custom-theme="liquid-glass"] ::selection {
+  background: rgba(255, 255, 255, 0.35);
+  color: #ffffff;
+}
+
+/* Modal head */
+body[data-custom-theme="liquid-glass"] .modal-head {
+  background: rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 18px 18px 0 0;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+body[data-custom-theme="liquid-glass"] .modal-head h2 {
+  color: #ffffff;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-weight: 600;
+  font-size: 17px;
+  text-transform: none;
+  letter-spacing: -0.01em;
+}
+body[data-custom-theme="liquid-glass"] .modal-close {
+  background: rgba(255, 255, 255, 0.10);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 50%;
+  width: 30px; height: 30px;
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 18px;
+  transition: all 0.2s ease;
+}
+body[data-custom-theme="liquid-glass"] .modal-close:hover {
+  background: rgba(255, 122, 138, 0.6);
+  border-color: rgba(255, 122, 138, 0.8);
+  transform: scale(1.08);
+}
+
+/* Buttons — translucent pill with soft white edge */
+body[data-custom-theme="liquid-glass"] button:not(.modal-close):not(.tab-btn):not(.preset-tab):not(.preset-card):not(.theme-tile):not(.design-tile),
+body[data-custom-theme="liquid-glass"] .btn-stencil,
+body[data-custom-theme="liquid-glass"] .peer-btn,
+body[data-custom-theme="liquid-glass"] .studio-btn,
+body[data-custom-theme="liquid-glass"] .hotkey-btn {
+  background: rgba(255, 255, 255, 0.10);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 12px;
+  color: #ffffff;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: -0.005em;
+  text-transform: none;
+  padding: 7px 16px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.20),
+    0 1px 2px rgba(0, 0, 0, 0.10);
+  transition: all 0.2s cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+body[data-custom-theme="liquid-glass"] button:not(.modal-close):hover,
+body[data-custom-theme="liquid-glass"] .btn-stencil:hover,
+body[data-custom-theme="liquid-glass"] .peer-btn:hover,
+body[data-custom-theme="liquid-glass"] .studio-btn:hover,
+body[data-custom-theme="liquid-glass"] .hotkey-btn:hover {
+  background: rgba(255, 255, 255, 0.20);
+  border-color: rgba(255, 255, 255, 0.35);
+  transform: translateY(-1px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.30),
+    0 4px 12px rgba(0, 0, 0, 0.20);
+}
+body[data-custom-theme="liquid-glass"] button:not(.modal-close):active {
+  transform: translateY(0);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* Hazard / primary action button — solid white liquid-glass pill */
+body[data-custom-theme="liquid-glass"] .btn-hazard {
+  /* The `accent` customizable controls the primary action button color. */
+  background: var(--theme-u-accent, #ffffff);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid color-mix(in srgb, var(--theme-u-accent, #ffffff) 100%, white);
+  border-radius: 12px;
+  color: #1a1a1f;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.10),
+    0 4px 16px color-mix(in srgb, var(--theme-u-accent, #ffffff) 25%, transparent);
+}
+body[data-custom-theme="liquid-glass"] .btn-hazard:hover {
+  background: color-mix(in srgb, var(--theme-u-accent, #ffffff) 110%, white);
+  transform: translateY(-1px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    0 8px 24px color-mix(in srgb, var(--theme-u-accent, #ffffff) 35%, transparent);
+}
+
+/* Tabs — translucent pills */
+body[data-custom-theme="liquid-glass"] .tab-btn {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-bottom: none;
+  border-radius: 12px 12px 0 0;
+  color: rgba(245, 245, 247, 0.65);
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: -0.005em;
+}
+body[data-custom-theme="liquid-glass"] .tab-btn.active {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  font-weight: 600;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.30);
+}
+
+/* Inputs — sunken glass */
+body[data-custom-theme="liquid-glass"] input[type="text"],
+body[data-custom-theme="liquid-glass"] input[type="number"],
+body[data-custom-theme="liquid-glass"] input[type="search"],
+body[data-custom-theme="liquid-glass"] textarea,
+body[data-custom-theme="liquid-glass"] select,
+body[data-custom-theme="liquid-glass"] .text-input,
+body[data-custom-theme="liquid-glass"] .studio-select {
+  background: rgba(0, 0, 0, 0.20);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 10px;
+  color: #ffffff;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-weight: 500;
+  padding: 8px 14px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.30);
+}
+body[data-custom-theme="liquid-glass"] input:focus,
+body[data-custom-theme="liquid-glass"] textarea:focus,
+body[data-custom-theme="liquid-glass"] select:focus {
+  border-color: rgba(255, 255, 255, 0.40);
+  outline: none;
+  background: rgba(0, 0, 0, 0.30);
+  box-shadow:
+    inset 0 1px 2px rgba(0, 0, 0, 0.30),
+    0 0 0 4px rgba(255, 255, 255, 0.10);
+}
+
+/* Sliders — frosted track with white pill thumb */
+body[data-custom-theme="liquid-glass"] input[type="range"]::-webkit-slider-runnable-track {
+  background: rgba(255, 255, 255, 0.15);
+  height: 6px;
+  border-radius: 3px;
+  border: none;
+}
+body[data-custom-theme="liquid-glass"] input[type="range"]::-webkit-slider-thumb {
+  background: #ffffff;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  margin-top: -7px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    0 2px 6px rgba(0, 0, 0, 0.30);
+}
+
+/* Tool rail — vertical glass strip */
+body[data-custom-theme="liquid-glass"] .toolrail {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(30px) saturate(180%);
+  -webkit-backdrop-filter: blur(30px) saturate(180%);
+  border-right: 1px solid rgba(255, 255, 255, 0.10);
+}
+body[data-custom-theme="liquid-glass"] .trb {
+  background: transparent;
+  color: rgba(245, 245, 247, 0.55);
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-weight: 500;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+}
+body[data-custom-theme="liquid-glass"] .trb:hover {
+  background: rgba(255, 255, 255, 0.10);
+  color: #ffffff;
+}
+body[data-custom-theme="liquid-glass"] .trb.active {
+  background: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  font-weight: 600;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    0 1px 3px rgba(0, 0, 0, 0.20);
+}
+
+/* Field labels */
+body[data-custom-theme="liquid-glass"] .field-label,
+body[data-custom-theme="liquid-glass"] .stat-label,
+body[data-custom-theme="liquid-glass"] .panel-title,
+body[data-custom-theme="liquid-glass"] .func-panel h3 {
+  color: rgba(245, 245, 247, 0.55);
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+body[data-custom-theme="liquid-glass"] .hint-text {
+  color: rgba(245, 245, 247, 0.50);
+  font-style: normal;
+}
+body[data-custom-theme="liquid-glass"] code {
+  background: rgba(0, 0, 0, 0.30);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  color: #ffffff;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-family: 'SF Mono', 'JetBrains Mono', monospace;
+  font-size: 12px;
+}
+
+/* Status pill — translucent with the running state in subtle green glass */
+body[data-custom-theme="liquid-glass"] .status-pill {
+  background: rgba(255, 255, 255, 0.10);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 100px;
+  color: #ffffff;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-weight: 600;
+  text-transform: none;
+  padding: 5px 16px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.20);
+}
+body[data-custom-theme="liquid-glass"] .status-pill.running {
+  background: rgba(92, 230, 168, 0.22);
+  border-color: rgba(92, 230, 168, 0.5);
+  color: #5ce6a8;
+}
+
+/* Preset cards + tabs */
+body[data-custom-theme="liquid-glass"] .preset-card {
+  background: rgba(255, 255, 255, 0.10);
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 16px;
+  transition: all 0.25s cubic-bezier(0.34, 1.4, 0.64, 1);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    0 4px 16px rgba(0, 0, 0, 0.20);
+}
+body[data-custom-theme="liquid-glass"] .preset-card:hover {
+  background: rgba(255, 255, 255, 0.20);
+  border-color: rgba(255, 255, 255, 0.35);
+  transform: translateY(-3px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.40),
+    0 12px 28px rgba(0, 0, 0, 0.30);
+}
+body[data-custom-theme="liquid-glass"] .preset-card .pc-icon.icon { color: #ffffff; }
+body[data-custom-theme="liquid-glass"] .preset-card .pc-name {
+  color: #ffffff;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+}
+body[data-custom-theme="liquid-glass"] .preset-tab {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 12px 12px 0 0;
+  color: rgba(245, 245, 247, 0.55);
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-weight: 500;
+  text-transform: none;
+}
+body[data-custom-theme="liquid-glass"] .preset-tab.active {
+  background: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  font-weight: 600;
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+/* Toast — floating glass capsule */
+body[data-custom-theme="liquid-glass"] .toast {
+  background: rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(40px) saturate(200%);
+  -webkit-backdrop-filter: blur(40px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 16px;
+  color: #ffffff;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-weight: 500;
+  padding: 12px 18px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.30),
+    0 12px 36px rgba(0, 0, 0, 0.40);
+}
+body[data-custom-theme="liquid-glass"] .toast.success {
+  background: rgba(92, 230, 168, 0.22);
+  border-color: rgba(92, 230, 168, 0.4);
+}
+body[data-custom-theme="liquid-glass"] .toast.error {
+  background: rgba(255, 122, 138, 0.22);
+  border-color: rgba(255, 122, 138, 0.4);
+}
+
+/* Stats / numbers — clean white SF-Pro feel */
+body[data-custom-theme="liquid-glass"] .stat-value,
+body[data-custom-theme="liquid-glass"] .big-stat-value {
+  color: #ffffff;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+body[data-custom-theme="liquid-glass"] .accent-grad,
+body[data-custom-theme="liquid-glass"] .grad-text {
+  background: linear-gradient(135deg, #ffffff 0%, rgba(255,255,255,0.6) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 700;
+}
+
+/* Changelog modal */
+body[data-custom-theme="liquid-glass"] .cl-version.is-current {
+  border-color: rgba(255, 255, 255, 0.35);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.40),
+    0 8px 32px rgba(255, 255, 255, 0.10);
+}
+body[data-custom-theme="liquid-glass"] .cl-head {
+  background: rgba(255, 255, 255, 0.04);
+  border-bottom-color: rgba(255, 255, 255, 0.12);
+  border-radius: 18px 18px 0 0;
+}
+body[data-custom-theme="liquid-glass"] .cl-head .cl-title {
+  color: #ffffff;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: -0.01em;
+}
+body[data-custom-theme="liquid-glass"] .cl-head .cl-vchip {
+  background: rgba(255, 255, 255, 0.95);
+  color: #1a1a1f;
+  border-radius: 8px;
+  font-family: 'SF Mono', 'JetBrains Mono', monospace;
+  font-weight: 600;
+}
+body[data-custom-theme="liquid-glass"] .cl-changes li { color: rgba(245, 245, 247, 0.85); }
+body[data-custom-theme="liquid-glass"] #changelog-version-line strong { color: #ffffff; }
