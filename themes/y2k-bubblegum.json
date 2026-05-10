@@ -1,0 +1,17 @@
+{
+  "id":          "y2k-bubblegum",
+  "name":        "Y2K Bubblegum",
+  "author":      "@throttlr",
+  "version":     "1.0.0",
+  "description": "Pastel pink + sky blue with rounded corners and bouncy buttons. Pure 2002 cute web aesthetic.",
+  "base":        "midnight",
+  "css_file":    "y2k-bubblegum.css",
+  "preview": {
+    "bg":      "#ffe4f0",
+    "panel":   "#ffffff",
+    "accent":  "#ff66cc",
+    "accent2": "#66ccff",
+    "text":    "#5a3a4a",
+    "font":    "Quicksand"
+  }
+}

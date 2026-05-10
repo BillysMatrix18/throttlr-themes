@@ -1,0 +1,349 @@
+/* =============================================================================
+   TERMINAL GREEN — full GUI theme for Throttlr
+   Pure phosphor green on pure black, with CRT scanlines and a faint screen
+   curvature glow. Inherits from `optimised` base for the no-animations
+   foundation, then overrides everything visual to look like an old VT220.
+   ============================================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+body[data-theme="terminal-green"] {
+  /* All-monochrome green palette */
+  --bg:           #000000;
+  --bg-2:         #001a08;
+  --bg-3:         #002a0e;
+  --bg-4:         #003514;
+  --steel:        #00441a;
+  --steel-light:  rgba(0, 255, 68, 0.15);
+  --steel-bright: rgba(0, 255, 68, 0.30);
+
+  --hazard:       #00ff44;       /* phosphor green — primary */
+  --hazard-deep:  #00aa2c;
+  --hazard-grad:  #00ff44;       /* solid — no gradient on a CRT */
+
+  --term:         #00ff44;
+  --term-dim:     #00aa2c;
+  --blood:        #ff3344;       /* angry red, still terminal-y */
+  --blood-deep:   #cc1122;
+  --bone:         #00ff66;
+  --bone-dim:     #008833;
+
+  background:
+    /* Faint horizontal scanlines */
+    repeating-linear-gradient(
+      0deg,
+      rgba(0, 255, 68, 0.04) 0px,
+      rgba(0, 255, 68, 0.04) 1px,
+      transparent              1px,
+      transparent              3px
+    ),
+    /* Subtle phosphor glow vignette */
+    radial-gradient(ellipse at center, rgba(0, 255, 68, 0.05), transparent 70%),
+    #000000;
+  color: #00ff66;
+  font-family: 'JetBrains Mono', 'Consolas', 'Courier New', monospace;
+}
+
+/* Hide industrial corner brackets — terminal frames are just plain text */
+body[data-theme="terminal-green"] .modal-corners { display: none !important; }
+
+/* No corners, no shadows, no gradients — just sharp lines */
+body[data-theme="terminal-green"] *,
+body[data-theme="terminal-green"] *::before,
+body[data-theme="terminal-green"] *::after {
+  border-radius: 0 !important;
+  text-shadow: 0 0 1px rgba(0, 255, 68, 0.6);   /* faint phosphor smear */
+}
+
+/* Titlebar — just a green text strip on black with a single dividing line */
+body[data-theme="terminal-green"] .titlebar {
+  background: #000000;
+  border-bottom: 1px solid #00ff44;
+  color: #00ff66;
+  font-family: 'JetBrains Mono', monospace;
+}
+body[data-theme="terminal-green"] .tb-title {
+  color: #00ff44;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+body[data-theme="terminal-green"] .tb-title::before { content: "$ "; }
+body[data-theme="terminal-green"] .tb-sub { color: #00aa2c; }
+
+/* Scrollbars — solid green block, classic terminal */
+body[data-theme="terminal-green"] ::-webkit-scrollbar { width: 12px; height: 12px; }
+body[data-theme="terminal-green"] ::-webkit-scrollbar-track {
+  background: #000000;
+  border-left: 1px solid #00441a;
+}
+body[data-theme="terminal-green"] ::-webkit-scrollbar-thumb { background: #00aa2c; }
+body[data-theme="terminal-green"] ::-webkit-scrollbar-thumb:hover { background: #00ff44; }
+body[data-theme="terminal-green"] ::selection { background: #00ff44; color: #000000; }
+
+/* Panels — black with a 1px green border, like ncurses windows */
+body[data-theme="terminal-green"] .modal,
+body[data-theme="terminal-green"] .panel,
+body[data-theme="terminal-green"] .stat-cell,
+body[data-theme="terminal-green"] .preset-card,
+body[data-theme="terminal-green"] .auto-rule-card,
+body[data-theme="terminal-green"] .lan-peer-card,
+body[data-theme="terminal-green"] .plugin-card,
+body[data-theme="terminal-green"] .func-panel,
+body[data-theme="terminal-green"] .cl-version {
+  background: #000000;
+  border: 1px solid #00ff44;
+  color: #00ff66;
+}
+
+/* Modal head */
+body[data-theme="terminal-green"] .modal-head {
+  background: #001a08;
+  border-bottom: 1px solid #00ff44;
+}
+body[data-theme="terminal-green"] .modal-head h2 {
+  color: #00ff44;
+  font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+}
+body[data-theme="terminal-green"] .modal-head h2::before { content: "[ "; color: #00aa2c; }
+body[data-theme="terminal-green"] .modal-head h2::after  { content: " ]"; color: #00aa2c; }
+body[data-theme="terminal-green"] .modal-close {
+  background: transparent;
+  border: 1px solid #00ff44;
+  color: #00ff44;
+  font-family: 'JetBrains Mono', monospace;
+}
+body[data-theme="terminal-green"] .modal-close:hover {
+  background: #00ff44;
+  color: #000000;
+}
+
+/* Buttons — bare green outline, fills on hover (inverse video) */
+body[data-theme="terminal-green"] button:not(.modal-close):not(.tab-btn):not(.preset-tab):not(.preset-card):not(.theme-tile):not(.design-tile),
+body[data-theme="terminal-green"] .btn-stencil,
+body[data-theme="terminal-green"] .btn-hazard,
+body[data-theme="terminal-green"] .peer-btn,
+body[data-theme="terminal-green"] .studio-btn,
+body[data-theme="terminal-green"] .hotkey-btn {
+  background: #000000;
+  border: 1px solid #00ff44;
+  color: #00ff44;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 5px 12px;
+}
+body[data-theme="terminal-green"] button:not(.modal-close):hover,
+body[data-theme="terminal-green"] .btn-stencil:hover,
+body[data-theme="terminal-green"] .btn-hazard:hover,
+body[data-theme="terminal-green"] .peer-btn:hover,
+body[data-theme="terminal-green"] .studio-btn:hover,
+body[data-theme="terminal-green"] .hotkey-btn:hover {
+  background: #00ff44;
+  color: #000000;
+}
+body[data-theme="terminal-green"] .btn-hazard {
+  background: #00ff44;
+  color: #000000;
+  font-weight: 700;
+}
+body[data-theme="terminal-green"] .btn-hazard:hover {
+  background: #ffffff;
+  color: #000000;
+}
+
+/* Tab buttons */
+body[data-theme="terminal-green"] .tab-btn {
+  background: #000000;
+  border: 1px solid #00aa2c;
+  border-bottom: none;
+  color: #00aa2c;
+  font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+body[data-theme="terminal-green"] .tab-btn.active {
+  background: #001a08;
+  border-color: #00ff44;
+  color: #00ff44;
+}
+
+/* Inputs — block cursor, solid green caret */
+body[data-theme="terminal-green"] input[type="text"],
+body[data-theme="terminal-green"] input[type="number"],
+body[data-theme="terminal-green"] input[type="search"],
+body[data-theme="terminal-green"] textarea,
+body[data-theme="terminal-green"] select,
+body[data-theme="terminal-green"] .text-input,
+body[data-theme="terminal-green"] .studio-select {
+  background: #000000;
+  border: 1px solid #00aa2c;
+  color: #00ff66;
+  font-family: 'JetBrains Mono', monospace;
+  padding: 5px 10px;
+  caret-color: #00ff44;
+}
+body[data-theme="terminal-green"] input:focus,
+body[data-theme="terminal-green"] textarea:focus,
+body[data-theme="terminal-green"] select:focus {
+  border-color: #00ff44;
+  outline: none;
+  background: #001a08;
+}
+
+/* Sliders */
+body[data-theme="terminal-green"] input[type="range"]::-webkit-slider-runnable-track {
+  background: #00aa2c;
+  height: 2px;
+  border: none;
+}
+body[data-theme="terminal-green"] input[type="range"]::-webkit-slider-thumb {
+  background: #00ff44;
+  border: none;
+  width: 6px;
+  height: 16px;
+  margin-top: -7px;
+}
+
+/* Tool rail */
+body[data-theme="terminal-green"] .toolrail {
+  background: #000000;
+  border-right: 1px solid #00aa2c;
+}
+body[data-theme="terminal-green"] .trb {
+  background: transparent;
+  color: #008833;
+  font-family: 'JetBrains Mono', monospace;
+}
+body[data-theme="terminal-green"] .trb:hover { color: #00ff44; }
+body[data-theme="terminal-green"] .trb.active {
+  background: #001a08;
+  color: #00ff44;
+  border-left: 2px solid #00ff44;
+}
+
+/* Field labels — uppercase terminal headers */
+body[data-theme="terminal-green"] .field-label,
+body[data-theme="terminal-green"] .stat-label,
+body[data-theme="terminal-green"] .panel-title,
+body[data-theme="terminal-green"] .func-panel h3 {
+  color: #00ff44;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.10em;
+}
+body[data-theme="terminal-green"] .panel-title::before,
+body[data-theme="terminal-green"] .func-panel h3::before { content: "> "; color: #00aa2c; }
+body[data-theme="terminal-green"] .hint-text { color: #008833; font-style: italic; }
+body[data-theme="terminal-green"] .hint-text::before { content: "# "; color: #00aa2c; }
+body[data-theme="terminal-green"] code {
+  background: #001a08;
+  border: 1px solid #00aa2c;
+  color: #00ff66;
+  padding: 1px 5px;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Status pill */
+body[data-theme="terminal-green"] .status-pill {
+  background: #000000;
+  border: 1px solid #00aa2c;
+  color: #00aa2c;
+  font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase;
+}
+body[data-theme="terminal-green"] .status-pill.running {
+  background: #00ff44;
+  color: #000000;
+  border-color: #00ff44;
+  font-weight: 700;
+}
+
+/* Preset cards + tabs */
+body[data-theme="terminal-green"] .preset-card {
+  background: #000000;
+  border: 1px solid #00aa2c;
+}
+body[data-theme="terminal-green"] .preset-card:hover {
+  border-color: #00ff44;
+  background: #001a08;
+}
+body[data-theme="terminal-green"] .preset-card .pc-icon.icon { color: #00ff44; }
+body[data-theme="terminal-green"] .preset-tab {
+  background: #000000;
+  border: 1px solid #00aa2c;
+  color: #00aa2c;
+  font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase;
+}
+body[data-theme="terminal-green"] .preset-tab.active {
+  background: #001a08;
+  color: #00ff44;
+  border-color: #00ff44;
+}
+
+/* Toast */
+body[data-theme="terminal-green"] .toast {
+  background: #000000;
+  border: 1px solid #00ff44;
+  color: #00ff66;
+  font-family: 'JetBrains Mono', monospace;
+}
+body[data-theme="terminal-green"] .toast::before {
+  content: "[*] ";
+  color: #00ff44;
+  font-weight: 700;
+}
+body[data-theme="terminal-green"] .toast.success::before { content: "[OK] "; }
+body[data-theme="terminal-green"] .toast.error {
+  border-color: #ff3344;
+  color: #ff3344;
+}
+body[data-theme="terminal-green"] .toast.error::before {
+  content: "[ERR] ";
+  color: #ff3344;
+}
+
+/* Stats / numbers — bright green like a POST output */
+body[data-theme="terminal-green"] .stat-value,
+body[data-theme="terminal-green"] .big-stat-value {
+  color: #00ff44;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  text-shadow: 0 0 4px rgba(0, 255, 68, 0.5);
+}
+body[data-theme="terminal-green"] .accent-grad,
+body[data-theme="terminal-green"] .grad-text {
+  background: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
+  -webkit-text-fill-color: #00ff44;
+  color: #00ff44;
+}
+
+/* Changelog modal */
+body[data-theme="terminal-green"] .cl-version.is-current {
+  border-color: #00ff44;
+  background: #001a08;
+}
+body[data-theme="terminal-green"] .cl-head {
+  background: #001a08;
+  border-bottom-color: #00ff44;
+}
+body[data-theme="terminal-green"] .cl-head .cl-title {
+  color: #00ff44;
+  font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase;
+}
+body[data-theme="terminal-green"] .cl-head .cl-vchip {
+  background: #00ff44;
+  color: #000000;
+  font-family: 'JetBrains Mono', monospace;
+}
+body[data-theme="terminal-green"] .cl-changes li { color: #00ff66; }
+body[data-theme="terminal-green"] #changelog-version-line strong { color: #00ff44; }

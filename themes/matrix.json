@@ -1,0 +1,23 @@
+{
+  "name":        "Matrix",
+  "author":      "@throttlr",
+  "version":     "1.0.0",
+  "description": "Phosphor green on pure black. Wake up.",
+  "base":        "industrial",
+  "preview":     "#00ff66",
+  "colors": {
+    "bg":         "#000000",
+    "bg_panel":   "#020a05",
+    "bg_raised":  "#031808",
+    "accent":     "#00ff66",
+    "accent_dim": "#008833",
+    "text":       "#aaffaa",
+    "text_dim":   "#447755",
+    "border":     "#0a3318"
+  },
+  "overlay": {
+    "bg":     "#000000",
+    "accent": "#00ff66",
+    "text":   "#aaffaa"
+  }
+}

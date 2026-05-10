@@ -347,36 +347,72 @@ header.site-head {
   transform: translateY(-2px);
 }
 .theme-preview {
-  height: 140px;
+  height: 180px;
   position: relative;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
 }
 .theme-preview-bg {
   position: absolute;
   inset: 0;
+  background: var(--prev-bg, #0c0c0a);
 }
-.theme-preview-tape {
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 14px;
-  background: repeating-linear-gradient(
-    135deg,
-    var(--accent) 0 14px,
-    #000 14px 28px
-  );
+/* Inner mock panel — gives a sense of the theme's panel look */
+.theme-preview-panel {
+  position: relative;
+  background: var(--prev-panel, var(--prev-bg, #14140e));
+  border: 1px solid var(--prev-accent, #ffb800);
+  padding: 14px 18px;
+  width: 90%;
+  max-width: 240px;
+  text-align: center;
+  z-index: 1;
 }
 .theme-preview-name {
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  font-family: 'Big Shoulders Stencil Display', Impact, sans-serif;
-  font-size: 28px;
-  font-weight: 900;
+  font-family: var(--prev-font, 'Big Shoulders Stencil Display', Impact, sans-serif);
+  font-size: 22px;
+  font-weight: 700;
   letter-spacing: 0.02em;
-  color: var(--accent);
+  color: var(--prev-accent, #ffb800);
   text-transform: uppercase;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.5);
-  pointer-events: none;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.theme-preview-sub {
+  font-family: var(--prev-font, 'JetBrains Mono', monospace);
+  font-size: 11px;
+  color: var(--prev-text, #e8e6d8);
+  opacity: 0.8;
+  letter-spacing: 0.04em;
+}
+/* Accent strip across the top of the preview */
+.theme-preview-strip {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg,
+    var(--prev-accent, #ffb800) 0%,
+    var(--prev-accent2, var(--prev-accent, #ffb800)) 100%);
+  z-index: 2;
+}
+/* Color dots in bottom-right showing the theme's palette */
+.theme-preview-dots {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  display: flex;
+  gap: 4px;
+  z-index: 2;
+}
+.theme-preview-dots span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid rgba(0,0,0,0.3);
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.1);
 }
 .theme-info {
   padding: 14px 16px 16px;
@@ -823,23 +859,66 @@ function applyFilters() {
   }
 }
 
+// Track which Google Fonts we've already loaded so we don't double-link
+const _loadedFonts = new Set(['Inter', 'JetBrains Mono', 'Big Shoulders Stencil Display']);
+
+function ensureFontLoaded(fontName) {
+  if (!fontName || _loadedFonts.has(fontName)) return;
+  // Whitelist of fonts we'll actually pull from Google. Anything else
+  // falls back to a generic family in CSS — keeps third-party requests bounded.
+  const allowlist = [
+    'Quicksand', 'Fredoka', 'Press Start 2P', 'VT323', 'Space Mono',
+    'IBM Plex Mono', 'IBM Plex Sans', 'Roboto Mono', 'Source Code Pro',
+    'Orbitron', 'Audiowide', 'Major Mono Display', 'Share Tech Mono',
+  ];
+  if (!allowlist.includes(fontName)) return;
+  const link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(fontName)}:wght@400;600;700&display=swap`;
+  document.head.appendChild(link);
+  _loadedFonts.add(fontName);
+}
+
 function renderThemeCards(themes, grid) {
   for (const t of themes) {
-    const accent = (t.preview || (t.colors && t.colors.accent) || '#ffb800');
-    const bg     = (t.colors && t.colors.bg) || '#0c0c0a';
-    const text   = (t.colors && t.colors.text) || '#e8e6d8';
+    // New format uses a richer "preview" object; fall back to flat fields
+    // from the old format if they're present.
+    const preview = t.preview || {};
+    const previewBg     = preview.bg     || (t.colors && t.colors.bg)     || '#0c0c0a';
+    const previewPanel  = preview.panel  || (t.colors && t.colors.bg_panel) || previewBg;
+    const previewAccent = preview.accent || (typeof t.preview === 'string' ? t.preview : null) || '#ffb800';
+    const previewAccent2 = preview.accent2 || previewAccent;
+    const previewText   = preview.text   || (t.colors && t.colors.text)   || '#e8e6d8';
+    const previewFont   = preview.font   || 'Big Shoulders Stencil Display';
+
+    ensureFontLoaded(previewFont);
 
     const card = document.createElement('article');
     card.className = 'theme-card';
-    card.style.setProperty('--accent', accent);
-    card.style.setProperty('--bg', bg);
-    card.style.setProperty('--text', text);
+    card.style.setProperty('--prev-bg',     previewBg);
+    card.style.setProperty('--prev-panel',  previewPanel);
+    card.style.setProperty('--prev-accent', previewAccent);
+    card.style.setProperty('--prev-accent2', previewAccent2);
+    card.style.setProperty('--prev-text',   previewText);
+    card.style.setProperty('--prev-font',   `'${previewFont}', system-ui, sans-serif`);
+
+    // Build palette dots showing 3 representative colors
+    const dotColors = [previewAccent, previewAccent2, previewText].filter(
+      (c, i, arr) => arr.indexOf(c) === i
+    );
+    const dotsHtml = dotColors.map(c =>
+      `<span style="background:${escapeHtml(c)}"></span>`
+    ).join('');
 
     card.innerHTML = `
       <div class="theme-preview">
-        <div class="theme-preview-bg" style="background:${escapeHtml(bg)}"></div>
-        <div class="theme-preview-tape"></div>
-        <div class="theme-preview-name">${escapeHtml(t.name || 'Untitled')}</div>
+        <div class="theme-preview-bg"></div>
+        <div class="theme-preview-strip"></div>
+        <div class="theme-preview-panel">
+          <div class="theme-preview-name">${escapeHtml(t.name || 'Untitled')}</div>
+          <div class="theme-preview-sub">${escapeHtml(previewFont)} · ${escapeHtml(previewAccent)}</div>
+        </div>
+        <div class="theme-preview-dots">${dotsHtml}</div>
       </div>
       <div class="theme-info">
         <div class="theme-name">${escapeHtml(t.name || 'Untitled')}</div>
