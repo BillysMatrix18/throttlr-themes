@@ -1,0 +1,908 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Throttlr · Themes</title>
+<meta name="description" content="Community-made themes for Throttlr — free open-source per-app network throttling tool for Windows. Download, drop into your themes folder, click apply.">
+<meta name="author" content="BillysMatrix18">
+<meta name="theme-color" content="#ffb800">
+
+<!-- Favicon -->
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/favicon.svg">
+
+<!-- Open Graph (Facebook, LinkedIn, Discord, etc.) -->
+<meta property="og:title" content="Throttlr Themes — community gallery">
+<meta property="og:description" content="Free community-made color themes for Throttlr. Download, drop in, click apply.">
+<meta property="og:image" content="https://throttlr-themes.netlify.app/og-image.svg">
+<meta property="og:url" content="https://throttlr-themes.netlify.app/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Throttlr Themes">
+
+<!-- Twitter / X card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Throttlr Themes — community gallery">
+<meta name="twitter:description" content="Free community-made color themes for Throttlr.">
+<meta name="twitter:image" content="https://throttlr-themes.netlify.app/og-image.svg">
+
+<!-- Canonical -->
+<link rel="canonical" href="https://throttlr-themes.netlify.app/">
+
+<style>
+/* ===========================================================================
+   Throttlr Themes — community theme gallery
+   Visual style matches the main app: industrial hazard yellow + black,
+   stencil display font, hazard tape accents, dark warm-grey panels.
+   =========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Stencil+Display:wght@700;800;900&family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;700&display=swap');
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:           #0c0c0a;
+  --bg-2:         #14140e;
+  --bg-3:         #1d1c14;
+  --hazard:       #ffb800;
+  --hazard-deep:  #c48a00;
+  --bone:         #e8e6d8;
+  --bone-dim:     #aaa6a0;
+  --text-dim:     #6a665e;
+  --steel:        #2a2820;
+  --blood:        #c41e3a;
+}
+
+html, body {
+  background: var(--bg);
+  color: var(--bone);
+  font-family: 'Inter', system-ui, sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Hazard tape strips at top + bottom */
+.hazard-tape {
+  position: relative;
+  height: 18px;
+  background:
+    repeating-linear-gradient(
+      135deg,
+      var(--hazard) 0 18px,
+      #000 18px 36px
+    );
+}
+.hazard-tape::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.3) 100%);
+}
+
+/* ============== HEADER ============== */
+header.site-head {
+  padding: 32px 24px 12px;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+  color: var(--bone);
+}
+.brand-mark {
+  width: 38px;
+  height: 38px;
+  background: var(--hazard);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Big Shoulders Stencil Display', Impact, sans-serif;
+  font-size: 22px;
+  font-weight: 900;
+  color: #000;
+  letter-spacing: -0.04em;
+}
+.brand-mark::before {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border: 2px solid var(--hazard);
+  opacity: 0.4;
+}
+.brand-name {
+  font-family: 'Big Shoulders Stencil Display', Impact, sans-serif;
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+.brand-name em {
+  font-style: normal;
+  color: var(--hazard);
+  margin-left: 6px;
+}
+.nav-links {
+  display: flex;
+  gap: 22px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.nav-links a {
+  color: var(--bone-dim);
+  text-decoration: none;
+  padding: 6px 0;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+}
+.nav-links a:hover { color: var(--hazard); border-bottom-color: var(--hazard); }
+
+/* ============== HERO ============== */
+.hero {
+  max-width: 1200px;
+  margin: 12px auto 28px;
+  padding: 32px 24px;
+  position: relative;
+}
+.hero-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--hazard);
+  margin-bottom: 14px;
+}
+.hero-title {
+  font-family: 'Big Shoulders Stencil Display', Impact, sans-serif;
+  font-size: clamp(42px, 7vw, 84px);
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  line-height: 0.95;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+}
+.hero-title em {
+  font-style: normal;
+  background: linear-gradient(135deg, var(--hazard), #ff7700);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.hero-sub {
+  font-size: 16px;
+  color: var(--bone-dim);
+  max-width: 680px;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+.hero-meta {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--text-dim);
+}
+.hero-meta span::before { content: "// "; color: var(--hazard); }
+
+/* ============== INSTALL STRIP ============== */
+.install-strip {
+  max-width: 1200px;
+  margin: 0 auto 36px;
+  padding: 0 24px;
+}
+.install-card {
+  background: var(--bg-2);
+  border: 1px solid var(--steel);
+  padding: 22px 26px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 22px;
+  align-items: center;
+}
+.install-icon {
+  font-family: 'Big Shoulders Stencil Display', Impact, sans-serif;
+  font-size: 64px;
+  color: var(--hazard);
+  line-height: 1;
+}
+.install-text h2 {
+  font-family: 'Big Shoulders Stencil Display', Impact, sans-serif;
+  font-size: 22px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.install-text ol {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  font-size: 14px;
+  color: var(--bone-dim);
+  counter-reset: step;
+}
+.install-text ol li {
+  counter-increment: step;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.install-text ol li::before {
+  content: counter(step);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px; height: 22px;
+  background: var(--hazard);
+  color: #000;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 800;
+  font-size: 12px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.install-text code {
+  background: var(--bg-3);
+  border: 1px solid var(--steel);
+  padding: 2px 6px;
+  border-radius: 2px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--hazard);
+}
+
+/* ============== THEME GRID ============== */
+.section-head {
+  max-width: 1200px;
+  margin: 0 auto 18px;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+.section-title {
+  font-family: 'Big Shoulders Stencil Display', Impact, sans-serif;
+  font-size: 28px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.section-title .count {
+  color: var(--hazard);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 18px;
+  margin-left: 12px;
+}
+.section-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  flex-basis: 100%;
+  text-align: right;
+}
+.section-tools {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.theme-search-input,
+.theme-filter-select {
+  background: var(--bg-2);
+  border: 1px solid var(--steel);
+  color: var(--bone);
+  padding: 8px 12px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+.theme-search-input {
+  min-width: 240px;
+}
+.theme-search-input:focus,
+.theme-filter-select:focus {
+  border-color: var(--hazard);
+}
+.theme-search-input::placeholder {
+  color: var(--text-dim);
+}
+.theme-filter-select {
+  cursor: pointer;
+}
+
+.theme-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px 48px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 18px;
+}
+
+.theme-card {
+  background: var(--bg-2);
+  border: 1px solid var(--steel);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+.theme-card:hover {
+  border-color: var(--hazard);
+  transform: translateY(-2px);
+}
+.theme-preview {
+  height: 140px;
+  position: relative;
+  overflow: hidden;
+}
+.theme-preview-bg {
+  position: absolute;
+  inset: 0;
+}
+.theme-preview-tape {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 14px;
+  background: repeating-linear-gradient(
+    135deg,
+    var(--accent) 0 14px,
+    #000 14px 28px
+  );
+}
+.theme-preview-name {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Big Shoulders Stencil Display', Impact, sans-serif;
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  color: var(--accent);
+  text-transform: uppercase;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  pointer-events: none;
+}
+.theme-info {
+  padding: 14px 16px 16px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.theme-name {
+  font-family: 'Big Shoulders Stencil Display', Impact, sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+.theme-author {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--text-dim);
+}
+.theme-author::before { content: "by "; }
+.theme-desc {
+  font-size: 13px;
+  color: var(--bone-dim);
+  line-height: 1.4;
+  margin-top: 4px;
+  flex: 1;
+}
+.theme-base-tag {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: rgba(255,184,0,0.10);
+  color: var(--hazard);
+  padding: 2px 6px;
+  margin-top: 8px;
+  align-self: flex-start;
+  border: 1px solid rgba(255,184,0,0.3);
+}
+.theme-actions {
+  padding: 0 16px 16px;
+  display: flex;
+  gap: 8px;
+}
+.theme-btn {
+  flex: 1;
+  background: transparent;
+  border: 1px solid var(--steel);
+  color: var(--bone);
+  padding: 8px 12px;
+  font-family: 'Big Shoulders Stencil Display', Impact, sans-serif;
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.theme-btn.primary {
+  background: var(--hazard);
+  border-color: var(--hazard);
+  color: #000;
+}
+.theme-btn.primary:hover {
+  background: #ffd24a;
+  border-color: #ffd24a;
+}
+.theme-btn:hover {
+  border-color: var(--hazard);
+  color: var(--hazard);
+}
+
+/* States: loading + empty + error */
+.theme-status {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 24px 64px;
+  text-align: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--bone-dim);
+}
+.theme-status .label {
+  color: var(--hazard);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-right: 8px;
+}
+.spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--steel);
+  border-top-color: var(--hazard);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ============== SUBMIT SECTION ============== */
+.submit-section {
+  background: var(--bg-2);
+  border-top: 1px solid var(--steel);
+  border-bottom: 1px solid var(--steel);
+  margin: 48px 0;
+  padding: 56px 24px;
+}
+.submit-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+}
+.submit-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--hazard);
+  margin-bottom: 14px;
+}
+.submit-title {
+  font-family: 'Big Shoulders Stencil Display', Impact, sans-serif;
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+}
+.submit-text {
+  color: var(--bone-dim);
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+.submit-text strong { color: var(--bone); }
+.submit-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.cta-btn {
+  display: inline-block;
+  padding: 12px 22px;
+  background: var(--hazard);
+  color: #000;
+  text-decoration: none;
+  font-family: 'Big Shoulders Stencil Display', Impact, sans-serif;
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: 1px solid var(--hazard);
+}
+.cta-btn:hover { background: #ffd24a; }
+.cta-btn.outline {
+  background: transparent;
+  color: var(--hazard);
+}
+.cta-btn.outline:hover {
+  background: var(--hazard);
+  color: #000;
+}
+
+/* Format spec column */
+.format-spec {
+  background: var(--bg-3);
+  border: 1px solid var(--steel);
+  padding: 20px 24px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--bone-dim);
+  overflow-x: auto;
+}
+.format-spec .key   { color: #ffb800; }
+.format-spec .str   { color: #b8d973; }
+.format-spec .num   { color: #ff9b6a; }
+.format-spec .punct { color: #6a665e; }
+.format-spec .cmt   { color: #5a5a4a; font-style: italic; }
+
+/* ============== FOOTER ============== */
+footer {
+  padding: 36px 24px 64px;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--text-dim);
+}
+footer a { color: var(--bone-dim); text-decoration: none; }
+footer a:hover { color: var(--hazard); }
+
+/* Responsive tweaks */
+@media (max-width: 720px) {
+  .install-card { grid-template-columns: 1fr; }
+  .install-icon { display: none; }
+  .submit-inner { grid-template-columns: 1fr; gap: 24px; }
+  .nav-links { gap: 14px; font-size: 12px; }
+}
+</style>
+</head>
+<body>
+
+<div class="hazard-tape"></div>
+
+<header class="site-head">
+  <a href="/" class="brand">
+    <div class="brand-mark">T</div>
+    <div class="brand-name">Throttlr<em>/themes</em></div>
+  </a>
+  <nav class="nav-links">
+    <a href="/">Home</a>
+    <a href="https://github.com/BillysMatrix18/throttlr">GitHub</a>
+    <a href="https://github.com/BillysMatrix18/throttlr/releases">Releases</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-eyebrow">// community gallery</div>
+  <h1 class="hero-title">Themes for <em>Throttlr</em></h1>
+  <p class="hero-sub">
+    Community-made color schemes you can drop into Throttlr. Each one is a
+    small JSON file that re-skins the app and overlay. Pick one, download,
+    drop it in your themes folder, click apply.
+  </p>
+  <div class="hero-meta">
+    <span>Free + open source</span>
+    <span>One-click download</span>
+    <span>Submit your own via PR</span>
+  </div>
+</section>
+
+<section class="install-strip">
+  <div class="install-card">
+    <div class="install-icon">↓</div>
+    <div class="install-text">
+      <h2>How to install</h2>
+      <ol>
+        <li>Click <strong>Download</strong> on a theme card</li>
+        <li>In Throttlr: <strong>Settings → Appearance → Open themes folder</strong></li>
+        <li>Drop the <code>.json</code> file in</li>
+        <li>Click your new theme tile</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<div class="section-head">
+  <h2 class="section-title">Available themes <span class="count" id="count"></span></h2>
+  <div class="section-tools">
+    <input type="search" id="theme-search" class="theme-search-input" placeholder="Search by name or author…" autocomplete="off">
+    <select id="theme-filter-base" class="theme-filter-select">
+      <option value="">All bases</option>
+      <option value="industrial">Industrial</option>
+      <option value="midnight">Midnight</option>
+      <option value="windows7">Windows 7</option>
+      <option value="optimised">Optimised</option>
+    </select>
+  </div>
+  <div class="section-meta" id="cache-meta"></div>
+</div>
+
+<div class="theme-grid" id="theme-grid"></div>
+
+<div class="theme-status" id="theme-status">
+  <span class="spinner"></span>
+  <span class="label">Loading</span>
+  Fetching themes from GitHub…
+</div>
+
+<section class="submit-section">
+  <div class="submit-inner">
+    <div>
+      <div class="submit-eyebrow">// contribute</div>
+      <h2 class="submit-title">Make a theme,<br>submit it.</h2>
+      <p class="submit-text">
+        Themes are just JSON files in the <strong>themes/</strong> folder of the
+        Throttlr GitHub repo. Fork the repo, add your file, open a pull request.
+        Once it's merged it shows up here automatically — no website redeploy needed.
+      </p>
+      <p class="submit-text">
+        Your theme can override as much or as little as you want. Set just an
+        accent color and let the rest inherit from a base theme, or override
+        every color for full control.
+      </p>
+      <div class="submit-actions">
+        <a class="cta-btn" href="https://github.com/BillysMatrix18/throttlr-themes/blob/main/themes/README.md">Read the format spec</a>
+        <a class="cta-btn outline" href="https://github.com/BillysMatrix18/throttlr-themes/tree/main/themes">Browse on GitHub</a>
+      </div>
+    </div>
+    <pre class="format-spec">
+<span class="punct">{</span>
+  <span class="key">"name"</span><span class="punct">:</span> <span class="str">"My Theme"</span><span class="punct">,</span>
+  <span class="key">"author"</span><span class="punct">:</span> <span class="str">"@yourname"</span><span class="punct">,</span>
+  <span class="key">"version"</span><span class="punct">:</span> <span class="str">"1.0.0"</span><span class="punct">,</span>
+  <span class="key">"description"</span><span class="punct">:</span> <span class="str">"What it looks like"</span><span class="punct">,</span>
+  <span class="cmt">// inherit from one of the built-ins</span>
+  <span class="key">"base"</span><span class="punct">:</span> <span class="str">"midnight"</span><span class="punct">,</span>
+  <span class="cmt">// the swatch shown on the theme card</span>
+  <span class="key">"preview"</span><span class="punct">:</span> <span class="str">"#ff66cc"</span><span class="punct">,</span>
+  <span class="cmt">// override only what you want</span>
+  <span class="key">"colors"</span><span class="punct">: {</span>
+    <span class="key">"bg"</span><span class="punct">:</span>     <span class="str">"#1a0a2a"</span><span class="punct">,</span>
+    <span class="key">"accent"</span><span class="punct">:</span> <span class="str">"#ff66cc"</span><span class="punct">,</span>
+    <span class="key">"text"</span><span class="punct">:</span>   <span class="str">"#e0d8f0"</span>
+  <span class="punct">}</span>
+<span class="punct">}</span></pre>
+  </div>
+</section>
+
+<footer>
+  <div>
+    Built by <a href="https://github.com/BillysMatrix18">@BillysMatrix18</a>.
+    MIT licensed. Free forever.
+  </div>
+  <div>
+    <a href="/">throttlr.netlify.app</a>
+  </div>
+</footer>
+
+<div class="hazard-tape"></div>
+
+<script>
+// ===========================================================================
+// Theme loader — pulls live from the GitHub themes/ folder.
+// Cached in localStorage for 1 hour to stay well under the 60 req/hour
+// unauthenticated rate limit even on a viral day.
+// ===========================================================================
+const REPO_OWNER  = 'BillysMatrix18';
+const REPO_NAME   = 'throttlr-themes';
+const REPO_BRANCH = 'main';
+const THEMES_DIR  = 'themes';
+const API_URL     = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${THEMES_DIR}?ref=${REPO_BRANCH}`;
+const CACHE_KEY   = 'throttlr_themes_cache_v1';
+const CACHE_TTL   = 60 * 60 * 1000; // 1 hour
+
+async function fetchThemeList() {
+  // Check localStorage first
+  try {
+    const cached = localStorage.getItem(CACHE_KEY);
+    if (cached) {
+      const { ts, listing, themes } = JSON.parse(cached);
+      if (Date.now() - ts < CACHE_TTL && Array.isArray(themes)) {
+        return { themes, fromCache: true, age_min: Math.floor((Date.now() - ts) / 60000) };
+      }
+    }
+  } catch (e) { /* ignore corrupt cache */ }
+
+  // Fetch directory listing
+  const res = await fetch(API_URL);
+  if (!res.ok) {
+    if (res.status === 403) throw new Error('GitHub API rate limit hit. Try again in an hour, or check the GitHub repo directly.');
+    throw new Error(`GitHub API returned HTTP ${res.status}`);
+  }
+  const listing = await res.json();
+  if (!Array.isArray(listing)) throw new Error('Unexpected response from GitHub');
+
+  // Filter to .json files (skip README + non-theme files)
+  const jsonFiles = listing.filter(f => f.type === 'file' && f.name.endsWith('.json'));
+
+  // Fetch each theme file in parallel
+  const themes = await Promise.all(jsonFiles.map(async (f) => {
+    try {
+      const r = await fetch(f.download_url);
+      if (!r.ok) return null;
+      const data = await r.json();
+      data._download_url = f.download_url;
+      data._filename     = f.name;
+      data._size_bytes   = f.size;
+      return data;
+    } catch (e) {
+      return null;
+    }
+  }));
+  const valid = themes.filter(t => t && t.name);
+
+  // Cache
+  try {
+    localStorage.setItem(CACHE_KEY, JSON.stringify({
+      ts: Date.now(),
+      listing: jsonFiles.length,
+      themes: valid,
+    }));
+  } catch (e) { /* localStorage full or disabled */ }
+
+  return { themes: valid, fromCache: false, age_min: 0 };
+}
+
+function escapeHtml(s) {
+  return String(s || '').replace(/[&<>"']/g, c => ({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  }[c]));
+}
+
+let _allThemes = [];
+
+function applyFilters() {
+  const search = (document.getElementById('theme-search').value || '').toLowerCase().trim();
+  const base   = (document.getElementById('theme-filter-base').value || '').toLowerCase();
+  const filtered = _allThemes.filter(t => {
+    if (base && (t.base || '').toLowerCase() !== base) return false;
+    if (search) {
+      const hay = [
+        t.name, t.author, t.description, t.base
+      ].filter(Boolean).join(' ').toLowerCase();
+      if (!hay.includes(search)) return false;
+    }
+    return true;
+  });
+  // Re-render with filtered set; keep total count showing
+  const grid = document.getElementById('theme-grid');
+  grid.innerHTML = '';
+  if (filtered.length === 0) {
+    grid.innerHTML = `
+      <div style="grid-column:1/-1;text-align:center;padding:48px 24px;
+                  font-family:'JetBrains Mono',monospace;color:var(--bone-dim);">
+        <span style="color:var(--hazard);font-weight:700;letter-spacing:.08em;
+                     text-transform:uppercase;margin-right:8px;">No matches</span>
+        Try a different search or clear the filters.
+      </div>`;
+  } else {
+    renderThemeCards(filtered, grid);
+  }
+  // Update the count to show filtered/total when filtering
+  const count = document.getElementById('count');
+  if (filtered.length === _allThemes.length) {
+    count.textContent = `(${_allThemes.length})`;
+  } else {
+    count.textContent = `(${filtered.length} / ${_allThemes.length})`;
+  }
+}
+
+function renderThemeCards(themes, grid) {
+  for (const t of themes) {
+    const accent = (t.preview || (t.colors && t.colors.accent) || '#ffb800');
+    const bg     = (t.colors && t.colors.bg) || '#0c0c0a';
+    const text   = (t.colors && t.colors.text) || '#e8e6d8';
+
+    const card = document.createElement('article');
+    card.className = 'theme-card';
+    card.style.setProperty('--accent', accent);
+    card.style.setProperty('--bg', bg);
+    card.style.setProperty('--text', text);
+
+    card.innerHTML = `
+      <div class="theme-preview">
+        <div class="theme-preview-bg" style="background:${escapeHtml(bg)}"></div>
+        <div class="theme-preview-tape"></div>
+        <div class="theme-preview-name">${escapeHtml(t.name || 'Untitled')}</div>
+      </div>
+      <div class="theme-info">
+        <div class="theme-name">${escapeHtml(t.name || 'Untitled')}</div>
+        <div class="theme-author">${escapeHtml(t.author || 'unknown')}</div>
+        ${t.description ? `<div class="theme-desc">${escapeHtml(t.description)}</div>` : ''}
+        ${t.base ? `<div class="theme-base-tag">based on ${escapeHtml(t.base)}</div>` : ''}
+      </div>
+      <div class="theme-actions">
+        <a class="theme-btn primary" href="${escapeHtml(t._download_url)}" download="${escapeHtml(t._filename)}">
+          ↓ Download
+        </a>
+        <a class="theme-btn" href="${escapeHtml(t._download_url)}" target="_blank" rel="noopener">View</a>
+      </div>
+    `;
+    grid.appendChild(card);
+  }
+}
+
+function renderThemes(themes) {
+  _allThemes = themes;
+  const grid = document.getElementById('theme-grid');
+  const status = document.getElementById('theme-status');
+  const count = document.getElementById('count');
+  count.textContent = `(${themes.length})`;
+
+  if (themes.length === 0) {
+    status.innerHTML = `
+      <span class="label">Empty</span>
+      No themes have been published yet. Be the first —
+      <a href="https://github.com/${REPO_OWNER}/${REPO_NAME}/tree/main/${THEMES_DIR}" style="color:var(--hazard)">submit one on GitHub</a>.
+    `;
+    return;
+  }
+
+  status.style.display = 'none';
+  renderThemeCards(themes, grid);
+
+  // Wire up the filters once the list is loaded
+  document.getElementById('theme-search').addEventListener('input', applyFilters);
+  document.getElementById('theme-filter-base').addEventListener('change', applyFilters);
+}
+
+async function init() {
+  const status = document.getElementById('theme-status');
+  const cacheMeta = document.getElementById('cache-meta');
+  try {
+    const { themes, fromCache, age_min } = await fetchThemeList();
+    renderThemes(themes);
+    if (fromCache) {
+      cacheMeta.textContent = `// cached ${age_min}m ago`;
+    } else {
+      cacheMeta.textContent = `// fresh from github`;
+    }
+  } catch (e) {
+    status.innerHTML = `
+      <span class="label" style="color:var(--blood)">Error</span>
+      ${escapeHtml(e.message)}
+    `;
+  }
+}
+
+init();
+</script>
+
+</body>
+</html>

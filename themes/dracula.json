@@ -1,0 +1,23 @@
+{
+  "name":        "Dracula",
+  "author":      "@throttlr",
+  "version":     "1.0.0",
+  "description": "The classic Dracula palette — purple + pink + cyan on a slate background.",
+  "base":        "midnight",
+  "preview":     "#bd93f9",
+  "colors": {
+    "bg":         "#282a36",
+    "bg_panel":   "#343746",
+    "bg_raised":  "#44475a",
+    "accent":     "#bd93f9",
+    "accent_dim": "#7d5fa9",
+    "text":       "#f8f8f2",
+    "text_dim":   "#6272a4",
+    "border":     "#44475a"
+  },
+  "overlay": {
+    "bg":     "#282a36",
+    "accent": "#bd93f9",
+    "text":   "#f8f8f2"
+  }
+}

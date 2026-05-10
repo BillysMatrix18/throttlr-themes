@@ -1,0 +1,23 @@
+{
+  "name":        "Solarized Dark",
+  "author":      "@throttlr",
+  "version":     "1.0.0",
+  "description": "The classic developer-y palette. Easy on the eyes for long sessions.",
+  "base":        "midnight",
+  "preview":     "#268bd2",
+  "colors": {
+    "bg":         "#002b36",
+    "bg_panel":   "#073642",
+    "bg_raised":  "#0d4854",
+    "accent":     "#268bd2",
+    "accent_dim": "#1f6f9f",
+    "text":       "#fdf6e3",
+    "text_dim":   "#839496",
+    "border":     "#0d4854"
+  },
+  "overlay": {
+    "bg":     "#002b36",
+    "accent": "#268bd2",
+    "text":   "#fdf6e3"
+  }
+}

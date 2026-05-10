@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>404 — Throttlr Themes</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Stencil+Display:wght@800;900&family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500&display=swap');
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  background: #0c0c0a;
+  color: #e8e6d8;
+  font-family: 'Inter', system-ui, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  overflow: hidden;
+}
+.hazard-tape {
+  position: fixed;
+  left: 0; right: 0;
+  height: 18px;
+  background:
+    repeating-linear-gradient(135deg, #ffb800 0 18px, #000 18px 36px);
+}
+.hazard-tape.top    { top: 0; }
+.hazard-tape.bottom { bottom: 0; }
+.wrap {
+  text-align: center;
+  max-width: 600px;
+}
+.code {
+  font-family: 'Big Shoulders Stencil Display', Impact, sans-serif;
+  font-size: clamp(120px, 22vw, 240px);
+  line-height: 1;
+  font-weight: 900;
+  background: linear-gradient(135deg, #ffb800, #ff7700);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.02em;
+}
+.title {
+  font-family: 'Big Shoulders Stencil Display', Impact, sans-serif;
+  font-size: 32px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 14px;
+}
+.eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #ffb800;
+  margin: 18px 0 8px;
+}
+.msg {
+  color: #aaa6a0;
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+.btn {
+  display: inline-block;
+  padding: 12px 22px;
+  background: #ffb800;
+  color: #000;
+  text-decoration: none;
+  font-family: 'Big Shoulders Stencil Display', Impact, sans-serif;
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.btn:hover { background: #ffd24a; }
+</style>
+</head>
+<body>
+<div class="hazard-tape top"></div>
+<div class="wrap">
+  <div class="code">404</div>
+  <div class="eyebrow">// page not found</div>
+  <h1 class="title">Lost a packet</h1>
+  <p class="msg">
+    The page you're looking for doesn't exist, or got dropped somewhere
+    between here and there. Maybe try the gallery instead.
+  </p>
+  <a class="btn" href="/">← Back to themes</a>
+</div>
+<div class="hazard-tape bottom"></div>
+</body>
+</html>
