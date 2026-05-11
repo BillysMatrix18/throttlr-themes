@@ -2,7 +2,7 @@
   "id":          "liquid-glass",
   "name":        "Liquid Glass",
   "author":      "@throttlr",
-  "version":     "1.1.0",
+  "version":     "1.0.0",
   "description": "Apple Liquid Glass aesthetic — translucent frosted panels, soft white borders, minimal chrome. Sees through to whatever is behind the window.",
   "base":        "midnight",
   "css_file":    "liquid-glass.css",
@@ -13,20 +13,5 @@
     "accent2": "#ffffff",
     "text":    "#f5f5f7",
     "font":    "Inter"
-  },
-  "customizable": [
-    {
-      "key":         "atmosphere",
-      "label":       "Atmosphere",
-      "type":        "gradient",
-      "stop_labels": ["Top-left", "Top-right", "Bottom-right", "Bottom-left"],
-      "default":     ["#ff5064", "#ff823c", "#b446ff", "#ff3c8c"]
-    },
-    {
-      "key":     "accent",
-      "label":   "Accent tint",
-      "type":    "color",
-      "default": "#ffffff"
-    }
-  ]
+  }
 }

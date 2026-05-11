@@ -30,21 +30,6 @@ The JSON file is the manifest — it describes the theme to the gallery website 
 
 ## How to make a theme (for contributors)
 
-### Preview screenshot (optional but strongly recommended)
-
-Drop a screenshot of your theme into `/previews/` at the root of the repo, named to match your theme's `id`:
-
-```
-previews/
-└── my-theme.png   ← matches your theme.json's "id"
-```
-
-When users click **View** on your theme's card in the gallery, this image is what they see. Without it they get a "no screenshot yet" placeholder instead.
-
-Accepted formats: `.png`, `.jpg`, `.jpeg`, `.webp`. Looked up in that priority order. PNG is preferred for crisp UI screenshots.
-
-Recommended size: around 2000×1100 (the dimensions of a maximized Throttlr window). The modal scales it down responsively but a high-res source looks better when users zoom.
-
 ### Manifest (`<theme-id>.json`)
 
 ```json

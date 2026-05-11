@@ -32,15 +32,11 @@ body[data-custom-theme="liquid-glass"] {
      Mimics the iOS lockscreen wallpaper feel. Heavy reds + pinks +
      purples + oranges so the frosted panels pull rich colors through. */
   background:
-    /* Frosted glass orbs in the background — colors come from the
-       `atmosphere` customizable in the manifest. Each gradient stop
-       becomes a CSS variable; color-mix applies the alpha so the
-       user picks pure RGB hex but the orbs render translucent. */
-    radial-gradient(ellipse 80% 60% at 15% 10%, color-mix(in srgb, var(--theme-u-atmosphere-0, #ff5064) 55%, transparent), transparent 70%),
-    radial-gradient(ellipse 70% 60% at 85% 25%, color-mix(in srgb, var(--theme-u-atmosphere-1, #ff823c) 45%, transparent), transparent 70%),
-    radial-gradient(ellipse 60% 70% at 75% 90%, color-mix(in srgb, var(--theme-u-atmosphere-2, #b446ff) 40%, transparent), transparent 70%),
-    radial-gradient(ellipse 70% 50% at 20% 85%, color-mix(in srgb, var(--theme-u-atmosphere-3, #ff3c8c) 45%, transparent), transparent 70%),
-    radial-gradient(circle at 50% 50%, rgba(140, 40, 80, 0.35), transparent 80%),
+    radial-gradient(ellipse 80% 60% at 15% 10%,  rgba(255, 80, 100, 0.55), transparent 70%),
+    radial-gradient(ellipse 70% 60% at 85% 25%,  rgba(255, 130, 60, 0.45), transparent 70%),
+    radial-gradient(ellipse 60% 70% at 75% 90%,  rgba(180, 70, 255, 0.40), transparent 70%),
+    radial-gradient(ellipse 70% 50% at 20% 85%,  rgba(255, 60, 140, 0.45), transparent 70%),
+    radial-gradient(circle at 50% 50%,           rgba(140, 40, 80, 0.35),  transparent 80%),
     #1a1a1f;
   background-attachment: fixed;
   color: #f5f5f7;
@@ -49,18 +45,7 @@ body[data-custom-theme="liquid-glass"] {
   -webkit-font-smoothing: antialiased;
 }
 
-body[data-custom-theme="liquid-glass"] .modal-corners,
-body[data-custom-theme="liquid-glass"] .panel-corners,
-body[data-custom-theme="liquid-glass"] .panel-corners-2 { display: none !important; }
-
-/* Hide built-in CRT effects — they fight the frosted glass aesthetic */
-body[data-custom-theme="liquid-glass"] .crt-scanlines,
-body[data-custom-theme="liquid-glass"] .crt-noise,
-body[data-custom-theme="liquid-glass"] .crt-vignette { display: none !important; }
-
-/* Hide the diagonal hazard tape strips — industrial decoration. */
-body[data-custom-theme="liquid-glass"] .hazard-tape,
-body[data-custom-theme="liquid-glass"] .action-bar-stripe { display: none !important; }
+body[data-custom-theme="liquid-glass"] .modal-corners { display: none !important; }
 
 /* =====  THE GLASS RECIPE  =====
    Used on every panel. Three layers stacked:
@@ -202,11 +187,10 @@ body[data-custom-theme="liquid-glass"] button:not(.modal-close):active {
 
 /* Hazard / primary action button — solid white liquid-glass pill */
 body[data-custom-theme="liquid-glass"] .btn-hazard {
-  /* The `accent` customizable controls the primary action button color. */
-  background: var(--theme-u-accent, #ffffff);
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid color-mix(in srgb, var(--theme-u-accent, #ffffff) 100%, white);
+  border: 1px solid rgba(255, 255, 255, 1);
   border-radius: 12px;
   color: #1a1a1f;
   font-family: 'Inter', -apple-system, sans-serif;
@@ -215,14 +199,14 @@ body[data-custom-theme="liquid-glass"] .btn-hazard {
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 1),
     inset 0 -1px 0 rgba(0, 0, 0, 0.10),
-    0 4px 16px color-mix(in srgb, var(--theme-u-accent, #ffffff) 25%, transparent);
+    0 4px 16px rgba(255, 255, 255, 0.20);
 }
 body[data-custom-theme="liquid-glass"] .btn-hazard:hover {
-  background: color-mix(in srgb, var(--theme-u-accent, #ffffff) 110%, white);
+  background: rgba(255, 255, 255, 1);
   transform: translateY(-1px);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 1),
-    0 8px 24px color-mix(in srgb, var(--theme-u-accent, #ffffff) 35%, transparent);
+    0 8px 24px rgba(255, 255, 255, 0.30);
 }
 
 /* Tabs — translucent pills */
@@ -480,157 +464,3 @@ body[data-custom-theme="liquid-glass"] .cl-head .cl-vchip {
 }
 body[data-custom-theme="liquid-glass"] .cl-changes li { color: rgba(245, 245, 247, 0.85); }
 body[data-custom-theme="liquid-glass"] #changelog-version-line strong { color: #ffffff; }
-
-/* ============================================================================
-   CUSTOMIZE PANEL — frosted glass styling, matches the rest of the theme
-   ============================================================================ */
-body[data-custom-theme="liquid-glass"] .theme-customize-section {
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(40px) saturate(180%);
-  -webkit-backdrop-filter: blur(40px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 18px;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.25),
-    0 8px 24px rgba(0, 0, 0, 0.20);
-  padding: 18px 20px;
-}
-body[data-custom-theme="liquid-glass"] .theme-customize-row {
-  border-top-color: rgba(255, 255, 255, 0.10);
-}
-body[data-custom-theme="liquid-glass"] .theme-customize-row-label {
-  color: rgba(245, 245, 247, 0.55);
-  font-family: 'Inter', -apple-system, sans-serif;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-/* Color picker — frosted swatch with rounded edge to match Liquid Glass */
-body[data-custom-theme="liquid-glass"] .theme-color-control input[type="color"] {
-  width: 38px;
-  height: 30px;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.06);
-  padding: 2px;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.20);
-}
-body[data-custom-theme="liquid-glass"] .theme-color-control input[type="color"]::-webkit-color-swatch {
-  border: none;
-  border-radius: 5px;
-}
-body[data-custom-theme="liquid-glass"] .theme-color-control input[type="text"] {
-  background: rgba(0, 0, 0, 0.25);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 8px;
-  color: #ffffff;
-  font-family: 'SF Mono', 'JetBrains Mono', monospace;
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0;
-  text-transform: lowercase;
-}
-body[data-custom-theme="liquid-glass"] .theme-color-control input[type="text"]:focus {
-  border-color: rgba(255, 255, 255, 0.40);
-  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.10);
-}
-body[data-custom-theme="liquid-glass"] .theme-color-control .stop-label {
-  font-family: 'Inter', -apple-system, sans-serif;
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: rgba(245, 245, 247, 0.55);
-}
-
-/* Gradient preview — pill-shaped to match Liquid Glass's rounded language */
-body[data-custom-theme="liquid-glass"] .theme-customize-row.gradient .gradient-preview {
-  height: 16px;
-  border-radius: 100px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.30);
-}
-
-/* Reset button — frosted glass pill */
-body[data-custom-theme="liquid-glass"] .theme-customize-reset {
-  font-family: 'Inter', -apple-system, sans-serif !important;
-  font-weight: 500 !important;
-  font-size: 11px !important;
-  letter-spacing: 0 !important;
-  text-transform: none !important;
-  background: rgba(255, 255, 255, 0.10) !important;
-  backdrop-filter: blur(20px) !important;
-  -webkit-backdrop-filter: blur(20px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.18) !important;
-  border-radius: 100px !important;
-  color: #ffffff !important;
-  padding: 5px 14px !important;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.20) !important;
-}
-body[data-custom-theme="liquid-glass"] .theme-customize-reset:hover {
-  background: rgba(255, 255, 255, 0.20) !important;
-  border-color: rgba(255, 255, 255, 0.35) !important;
-  transform: translateY(-1px);
-}
-
-/* ============================================================================
-   TOPOLOGY VIEW — frosted glass with subtle gradient
-   ============================================================================ */
-body[data-custom-theme="liquid-glass"] .topo-container {
-  background:
-    radial-gradient(circle at 50% 50%,
-      color-mix(in srgb, var(--accent) 10%, transparent) 0%,
-      transparent 60%),
-    color-mix(in srgb, var(--bg-base, #0a0e1a) 92%, transparent);
-  border-bottom: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
-}
-body[data-custom-theme="liquid-glass"] .topo-info {
-  background: rgba(20, 25, 40, 0.65);
-  backdrop-filter: blur(18px) saturate(160%);
-  -webkit-backdrop-filter: blur(18px) saturate(160%);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 12px;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.30),
-    0 8px 28px rgba(0, 0, 0, 0.50);
-  font-family: 'Inter', system-ui, sans-serif;
-}
-body[data-custom-theme="liquid-glass"] .topo-info .ti-host {
-  font-family: 'Inter', sans-serif;
-  font-weight: 700;
-  font-size: 14px;
-  color: var(--accent);
-  letter-spacing: 0;
-  text-transform: none;
-}
-body[data-custom-theme="liquid-glass"] .topo-legend {
-  background: rgba(20, 25, 40, 0.45);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-top: 1px solid rgba(255, 255, 255, 0.10);
-  font-family: 'Inter', sans-serif;
-}
-body[data-custom-theme="liquid-glass"] .topo-leg-item .dot.center {
-  background: var(--accent) !important;
-  box-shadow: 0 0 10px color-mix(in srgb, var(--accent) 60%, transparent) !important;
-}
-body[data-custom-theme="liquid-glass"] .topo-leg-item .dot.remote {
-  background: #7fbfff !important;
-  box-shadow: 0 0 8px rgba(127, 191, 255, 0.6) !important;
-}
-body[data-custom-theme="liquid-glass"] .topo-leg-item .line {
-  background: linear-gradient(90deg, transparent, var(--accent), transparent);
-}
-
-/* ============================================================================
-   MODAL OVERLAY — frosted heavy blur, characteristic glass effect
-   ============================================================================ */
-body[data-custom-theme="liquid-glass"] .modal-overlay {
-  background: rgba(10, 14, 26, 0.55) !important;
-  backdrop-filter: blur(18px) saturate(180%);
-  -webkit-backdrop-filter: blur(18px) saturate(180%);
-}

@@ -34,6 +34,13 @@
   [headers.values]
     Cache-Control = "public, max-age=86400"
 
+# Preview screenshots — same caching policy as themes since they're paired
+# with each theme and don't change frequently.
+[[headers]]
+  for = "/previews/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
 # Standard security headers — best practice for a static site.
 [[headers]]
   for = "/*"

@@ -474,6 +474,255 @@ footer a:hover { color: var(--hazard); }
   .install-icon { display: none; }
   .nav-links { gap: 14px; font-size: 12px; }
 }
+
+/* ============================================================
+   Preview modal — opens on "View" click. Full-size screenshot of
+   the theme + metadata + downloadable button.
+   ============================================================ */
+.preview-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.preview-modal[hidden] { display: none; }
+
+.preview-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.78);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  animation: preview-fade-in 0.18s ease-out;
+}
+
+.preview-window {
+  position: relative;
+  width: min(1080px, 100%);
+  max-height: calc(100vh - 48px);
+  background: var(--bg-2);
+  border: 1px solid rgba(255, 184, 0, 0.22);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6),
+              0 0 0 1px rgba(255, 184, 0, 0.05) inset;
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(280px, 1fr);
+  overflow: hidden;
+  animation: preview-pop-in 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes preview-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes preview-pop-in {
+  from { opacity: 0; transform: translateY(8px) scale(0.985); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.preview-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  color: var(--bone);
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  transition: background 0.12s ease, color 0.12s ease, border-color 0.12s ease;
+}
+.preview-close:hover {
+  background: var(--hazard);
+  border-color: var(--hazard);
+  color: #000;
+}
+
+.preview-image-wrap {
+  position: relative;
+  background:
+    repeating-linear-gradient(45deg,
+      rgba(255, 184, 0, 0.025) 0 12px,
+      transparent 12px 24px),
+    var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 360px;
+  overflow: hidden;
+}
+.preview-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-height: calc(100vh - 48px);
+  object-fit: cover;
+  object-position: center;
+}
+.preview-image[hidden] { display: none; }
+.preview-image-fallback {
+  text-align: center;
+  padding: 48px 32px;
+  color: var(--bone-dim);
+}
+.preview-image-fallback[hidden] { display: none; }
+.preview-fallback-icon {
+  font-size: 64px;
+  color: var(--text-dim);
+  margin-bottom: 12px;
+  line-height: 1;
+}
+.preview-fallback-title {
+  font-family: 'Big Shoulders Stencil Display', Impact, sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 18px;
+  color: var(--bone);
+  margin-bottom: 6px;
+}
+.preview-fallback-sub {
+  font-size: 13px;
+  max-width: 280px;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+.preview-fallback-sub code {
+  background: var(--bg-3);
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--hazard);
+}
+
+.preview-body {
+  padding: 28px 28px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border-left: 1px solid rgba(255, 184, 0, 0.10);
+  overflow-y: auto;
+}
+
+.preview-meta { display: flex; flex-direction: column; gap: 10px; }
+.preview-title {
+  font-family: 'Big Shoulders Stencil Display', Impact, sans-serif;
+  font-weight: 900;
+  font-size: 32px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--bone);
+  line-height: 1.05;
+}
+.preview-byline {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  align-items: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--bone-dim);
+  letter-spacing: 0.04em;
+}
+.preview-author { color: var(--hazard); font-weight: 700; }
+.preview-version { color: var(--bone-dim); }
+.preview-base {
+  color: var(--bone-dim);
+  text-transform: uppercase;
+  padding: 1px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 2px;
+  font-size: 10px;
+  font-weight: 700;
+}
+.preview-divider { opacity: 0.4; }
+.preview-desc {
+  color: var(--bone);
+  font-size: 14px;
+  line-height: 1.55;
+  margin-top: 4px;
+}
+
+.preview-swatches {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.preview-swatches-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--bone-dim);
+}
+.preview-swatches-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.preview-swatch {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px 6px 6px;
+  background: var(--bg-3);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+.preview-swatch-color {
+  width: 22px;
+  height: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  flex-shrink: 0;
+}
+.preview-swatch-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  line-height: 1.1;
+}
+.preview-swatch-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  color: var(--bone-dim);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.preview-swatch-hex {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--bone);
+  font-weight: 700;
+}
+
+.preview-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 8px;
+}
+.preview-actions .theme-btn { flex: 1; justify-content: center; }
+
+@media (max-width: 820px) {
+  .preview-window {
+    grid-template-columns: 1fr;
+    max-height: calc(100vh - 32px);
+  }
+  .preview-image-wrap { min-height: 220px; max-height: 50vh; }
+  .preview-body { border-left: none; border-top: 1px solid rgba(255,184,0,0.10); }
+  .preview-modal { padding: 16px; }
+}
 </style>
 </head>
 <body>
@@ -542,6 +791,48 @@ footer a:hover { color: var(--hazard); }
   <span class="spinner"></span>
   <span class="label">Loading</span>
   Reading themes folder…
+</div>
+
+<!-- =================================================================
+     Preview modal — opens when user clicks "View" on a theme card.
+     Shows a full-size screenshot of the theme in action (from
+     /previews/<id>.png) plus the theme metadata and color swatches.
+     Replaces the old "open the raw .json file in a new tab" behavior
+     which just showed people a wall of unformatted text.
+     ================================================================= -->
+<div class="preview-modal" id="preview-modal" hidden>
+  <div class="preview-backdrop" data-close-preview></div>
+  <div class="preview-window" role="dialog" aria-modal="true" aria-labelledby="preview-title">
+    <button class="preview-close" type="button" data-close-preview aria-label="Close preview">×</button>
+    <div class="preview-image-wrap">
+      <img class="preview-image" id="preview-image" alt="" loading="lazy">
+      <div class="preview-image-fallback" id="preview-image-fallback" hidden>
+        <div class="preview-fallback-icon">⊘</div>
+        <div class="preview-fallback-title">No screenshot yet</div>
+        <div class="preview-fallback-sub">This theme doesn't have a preview screenshot in <code>/previews/</code> yet.</div>
+      </div>
+    </div>
+    <div class="preview-body">
+      <div class="preview-meta">
+        <h2 class="preview-title" id="preview-title">—</h2>
+        <div class="preview-byline">
+          <span class="preview-author" id="preview-author">—</span>
+          <span class="preview-divider">·</span>
+          <span class="preview-version" id="preview-version">—</span>
+          <span class="preview-divider">·</span>
+          <span class="preview-base" id="preview-base">—</span>
+        </div>
+        <p class="preview-desc" id="preview-desc">—</p>
+      </div>
+      <div class="preview-swatches" id="preview-swatches"></div>
+      <div class="preview-actions">
+        <button class="theme-btn primary" type="button" id="preview-download-btn">
+          ↓ Download
+        </button>
+        <button class="theme-btn" type="button" data-close-preview>Close</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <footer>
@@ -685,7 +976,10 @@ function renderThemeCards(themes, grid) {
                 data-css-name="${escapeHtml(cssName)}">
           ↓ Download
         </button>
-        <a class="theme-btn" href="${escapeHtml(jsonUrl)}" target="_blank" rel="noopener">View</a>
+        <button class="theme-btn view-btn" type="button"
+                data-theme-id="${escapeHtml(t.id || '')}">
+          View
+        </button>
       </div>
     `;
     grid.appendChild(card);
@@ -791,11 +1085,156 @@ function _triggerBlobDownload(blob, filename) {
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
+// ===========================================================================
+// Preview modal — opens when user clicks "View" on a theme card. Shows a
+// real screenshot from /previews/<id>.png alongside the manifest details.
+// Replaces the old "open the raw .json file in a new tab" behavior which
+// just showed unformatted text to anyone who clicked it.
+// ===========================================================================
+let _currentPreviewTheme = null;
+
+function openPreview(themeId) {
+  const theme = (_allThemes || []).find(t => t.id === themeId);
+  if (!theme) return;
+  _currentPreviewTheme = theme;
+
+  // Image: convention is /previews/<id>.png. Fall back to .jpg, then to a
+  // "no screenshot yet" placeholder if neither loads.
+  const img       = document.getElementById('preview-image');
+  const fallback  = document.getElementById('preview-image-fallback');
+  const candidates = [
+    `/previews/${theme.id}.png`,
+    `/previews/${theme.id}.jpg`,
+    `/previews/${theme.id}.jpeg`,
+    `/previews/${theme.id}.webp`,
+  ];
+  let candidateIdx = 0;
+  function tryNext() {
+    if (candidateIdx >= candidates.length) {
+      img.hidden = true;
+      fallback.hidden = false;
+      return;
+    }
+    img.src = candidates[candidateIdx++];
+  }
+  img.hidden = false;
+  fallback.hidden = true;
+  img.alt = `${theme.name || theme.id} — preview`;
+  img.onerror = tryNext;
+  img.onload = () => { /* loaded ok, leave it */ };
+  candidateIdx = 0;
+  tryNext();
+
+  // Metadata
+  document.getElementById('preview-title').textContent   = theme.name || theme.id || 'Untitled';
+  document.getElementById('preview-author').textContent  = theme.author || 'unknown';
+  document.getElementById('preview-version').textContent = theme.version ? `v${theme.version}` : '';
+  document.getElementById('preview-base').textContent    = (theme.base || 'base').toUpperCase();
+  const descEl = document.getElementById('preview-desc');
+  if (theme.description) {
+    descEl.textContent = theme.description;
+    descEl.style.display = '';
+  } else {
+    descEl.style.display = 'none';
+  }
+
+  // Color swatches — derive from the preview color hints in the manifest
+  const swatchesEl = document.getElementById('preview-swatches');
+  swatchesEl.innerHTML = '';
+  const swatchSpec = [
+    { key: 'bg',      label: 'Background' },
+    { key: 'panel',   label: 'Panel' },
+    { key: 'accent',  label: 'Primary' },
+    { key: 'accent2', label: 'Secondary' },
+    { key: 'text',    label: 'Text' },
+  ];
+  const previewMeta = theme.preview || {};
+  const swatchesAvailable = swatchSpec.filter(s => previewMeta[s.key]);
+  if (swatchesAvailable.length > 0) {
+    const titleEl = document.createElement('div');
+    titleEl.className = 'preview-swatches-title';
+    titleEl.textContent = '// Color palette';
+    swatchesEl.appendChild(titleEl);
+    const row = document.createElement('div');
+    row.className = 'preview-swatches-row';
+    swatchesAvailable.forEach(s => {
+      const wrap = document.createElement('div');
+      wrap.className = 'preview-swatch';
+      const sw = document.createElement('span');
+      sw.className = 'preview-swatch-color';
+      sw.style.background = previewMeta[s.key];
+      const info = document.createElement('div');
+      info.className = 'preview-swatch-info';
+      const lab = document.createElement('span');
+      lab.className = 'preview-swatch-label';
+      lab.textContent = s.label;
+      const hex = document.createElement('span');
+      hex.className = 'preview-swatch-hex';
+      hex.textContent = previewMeta[s.key];
+      info.appendChild(lab);
+      info.appendChild(hex);
+      wrap.appendChild(sw);
+      wrap.appendChild(info);
+      row.appendChild(wrap);
+    });
+    swatchesEl.appendChild(row);
+  }
+
+  document.getElementById('preview-modal').hidden = false;
+  document.body.style.overflow = 'hidden';
+}
+
+function closePreview() {
+  document.getElementById('preview-modal').hidden = true;
+  document.body.style.overflow = '';
+  _currentPreviewTheme = null;
+}
+
+// Close on backdrop or X click
+document.addEventListener('click', (e) => {
+  if (e.target.closest('[data-close-preview]')) {
+    closePreview();
+  }
+});
+// Close on Escape
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && !document.getElementById('preview-modal').hidden) {
+    closePreview();
+  }
+});
+
+// Wire the in-modal Download button to call the same downloadTheme as the
+// card button — we just synthesize a dummy element with the same data
+// attributes so we don't duplicate any of the existing logic.
+document.getElementById('preview-download-btn').addEventListener('click', async () => {
+  const theme = _currentPreviewTheme;
+  if (!theme) return;
+  const jsonName = theme._filename     || `${theme.id}.json`;
+  const cssName  = theme._css_filename || `${theme.id}.css`;
+  const dummy = document.createElement('button');
+  dummy.dataset.themeId  = theme.id;
+  dummy.dataset.jsonUrl  = `/themes/${jsonName}`;
+  dummy.dataset.cssUrl   = `/themes/${cssName}`;
+  dummy.dataset.jsonName = jsonName;
+  dummy.dataset.cssName  = cssName;
+  await downloadTheme(dummy);
+});
+
 document.addEventListener('click', async (e) => {
   const btn = e.target.closest('.theme-btn.primary[data-theme-id]');
   if (!btn) return;
+  // Skip the preview-modal's own download button — it's handled above
+  if (btn.id === 'preview-download-btn') return;
   e.preventDefault();
   await downloadTheme(btn);
+});
+
+// View-button click → open preview modal
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('.view-btn[data-theme-id]');
+  if (!btn) return;
+  e.preventDefault();
+  openPreview(btn.dataset.themeId);
 });
 
 (async function init() {

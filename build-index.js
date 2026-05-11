@@ -12,8 +12,9 @@
 const fs = require('fs');
 const path = require('path');
 
-const THEMES_DIR  = path.join(__dirname, 'themes');
-const INDEX_FILE  = path.join(THEMES_DIR, '_index.json');
+const THEMES_DIR   = path.join(__dirname, 'themes');
+const PREVIEWS_DIR = path.join(__dirname, 'previews');
+const INDEX_FILE   = path.join(THEMES_DIR, '_index.json');
 
 if (!fs.existsSync(THEMES_DIR)) {
   console.error(`themes/ folder doesn't exist at ${THEMES_DIR}`);
@@ -21,6 +22,19 @@ if (!fs.existsSync(THEMES_DIR)) {
 }
 
 const allFiles = fs.readdirSync(THEMES_DIR);
+// Look in previews/ for screenshot files paired by theme id.
+// Accepted extensions in priority order.
+const previewExts = ['.png', '.jpg', '.jpeg', '.webp'];
+function findPreviewFor(themeId) {
+  if (!fs.existsSync(PREVIEWS_DIR)) return null;
+  for (const ext of previewExts) {
+    const fname = `${themeId}${ext}`;
+    if (fs.existsSync(path.join(PREVIEWS_DIR, fname))) {
+      return `/previews/${fname}`;
+    }
+  }
+  return null;
+}
 
 // Find theme manifests — every .json file except the index itself
 const manifestFiles = allFiles.filter(f =>
@@ -50,6 +64,10 @@ for (const filename of manifestFiles) {
     manifest._filename     = filename;
     manifest._css_filename = cssFilename;
     manifest._css_exists   = cssExists;
+    // Preview screenshot (looked up by theme id in /previews/). The
+    // website still falls back to a tile-style preview if this is missing,
+    // but the View modal looks great when a real screenshot exists.
+    manifest._preview_url  = findPreviewFor(manifest.id);
 
     themes.push(manifest);
   } catch (e) {
@@ -67,7 +85,8 @@ console.log(`\n✓ Generated themes/_index.json`);
 console.log(`  Themes:  ${themes.length}`);
 themes.forEach(t => {
   const cssMark = t._css_exists ? '✓' : '⚠ missing CSS';
-  console.log(`    • ${t.id.padEnd(20)} ${cssMark}`);
+  const previewMark = t._preview_url ? '📷' : '  ';
+  console.log(`    ${previewMark} ${t.id.padEnd(20)} ${cssMark}`);
 });
 if (skipped.length) {
   console.log(`  Skipped: ${skipped.length}`);
